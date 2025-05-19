@@ -1,0 +1,15 @@
+{
+	"defaultDifficulty": "hard", 
+	"difficulties": [
+		{"id": "easy"},
+		{
+			"id": "normal",
+			"audio": {
+				"instrumental": "Inst",
+				"player": "Voices-Pico",
+				"opponent": "Voices-Darnell"
+			}
+		},
+		{"id": "hard"}
+	]
+}
