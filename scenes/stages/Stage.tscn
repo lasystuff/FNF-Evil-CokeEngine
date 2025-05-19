@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbsmuk40o24jr"]
+
+[ext_resource type="Script" uid="uid://bwdq22xkt6b1e" path="res://scenes/nodes/Stage2D.gd" id="1_4hqte"]
+[ext_resource type="Texture2D" uid="uid://cisqib1cym6py" path="res://assets/images/stages/default/stageback.png" id="2_6ryxg"]
+[ext_resource type="Texture2D" uid="uid://dbsafwuusqn12" path="res://assets/images/stages/default/stagecurtains.png" id="3_a5gho"]
+[ext_resource type="Texture2D" uid="uid://but0qtku5cro3" path="res://assets/images/stages/default/stagefront.png" id="4_xecc6"]
+
+[node name="Stage" type="Node2D"]
+script = ExtResource("1_4hqte")
+metadata/_custom_type_script = "uid://bwdq22xkt6b1e"
+
+[node name="Stageback" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="sprite" type="Sprite2D" parent="Stageback"]
+texture = ExtResource("2_6ryxg")
+
+[node name="stagefront" type="Parallax2D" parent="."]
+scale = Vector2(1.1, 1.1)
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="sprite" type="Sprite2D" parent="stagefront"]
+position = Vector2(0, 408)
+texture = ExtResource("4_xecc6")
+
+[node name="Stagecurtains" type="Parallax2D" parent="."]
+scale = Vector2(0.9, 0.9)
+scroll_scale = Vector2(1.3, 1.3)
+scroll_offset = Vector2(288, 136)
+
+[node name="sprite" type="Sprite2D" parent="Stagecurtains"]
+texture = ExtResource("3_a5gho")
+
+[node name="bfPosition" type="Node2D" parent="."]
+position = Vector2(384, 0)
+scale = Vector2(0.9, 0.9)
+
+[node name="opponentPosition" type="Node2D" parent="."]
+position = Vector2(384, 0)
+scale = Vector2(0.9, 0.9)

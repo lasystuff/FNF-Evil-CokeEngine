@@ -16,7 +16,9 @@ func _initLua():
 	lua = LuaState.new()
 	lua.open_libraries()
 
-	lua.globals["print"] = func(s): print(s)
+	lua.globals["makeCallable"] = func(f):
+		if (lua.globals.to_dictionary().has(f)):
+			return lua.globals[f].to_callable()
 
 func callLua(function:String, args:Array = []):
 	if (lua != null && lua.globals.to_dictionary().has(function)):

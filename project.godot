@@ -19,10 +19,11 @@ config/icon="uid://cv3d8x1kitcia"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_sparrow/plugin.cfg", "res://addons/lua-gdextension/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdanimate/plugin.cfg", "res://addons/godot_sparrow/plugin.cfg", "res://addons/lua-gdextension/plugin.cfg")
 
 [rendering]
 
