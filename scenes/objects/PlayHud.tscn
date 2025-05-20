@@ -9,6 +9,7 @@
 script = ExtResource("1_8x0yt")
 
 [node name="cinematic" type="Node2D" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="cinematic"]
 offset_right = 1280.0
@@ -43,12 +44,12 @@ player = true
 position = Vector2(600, 632)
 
 [node name="scoreText" type="RichTextLabel" parent="."]
-offset_left = 8.0
-offset_top = 664.0
-offset_right = 1280.0
-offset_bottom = 688.0
+offset_left = 4.0
+offset_top = 672.0
+offset_right = 1276.0
+offset_bottom = 696.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
+theme_override_constants/outline_size = 6
 theme_override_fonts/normal_font = ExtResource("2_oy87d")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true

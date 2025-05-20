@@ -18,6 +18,7 @@ config/icon="uid://cv3d8x1kitcia"
 [autoload]
 
 Init="*res://scenes/backends/Init.gd"
+GlobalSound="*res://scenes/backends/GlobalSound.gd"
 
 [display]
 

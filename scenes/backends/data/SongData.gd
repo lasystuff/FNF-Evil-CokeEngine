@@ -8,31 +8,43 @@ static func getSong(song:String, difficulty:String = "normal", variation:String 
 	var songPath = "res://assets/data/songs/" + song
 	var chartPath = songPath + "/" + song + difficulty + ".json"
 	if FileAccess.file_exists(chartPath):
-		var json = JSON.parse_string(FileAccess.get_file_as_string("res://assets/songs/" + "/metadata.json"))
+		var json = JSON.parse_string(FileAccess.get_file_as_string(chartPath))
+		addExData(json.song, variation)
 		return json.song
 	else:
 		print("FUCK GUH UHHH NO CHART FUCKING FOUND!!!!!!! (" + chartPath + ") returning Test song instead! sorry bro")
 		return getSong("test", "hard")
-	
+
+# add shitty stuffs to json
+static func addExData(data, variation):
+	if !data.has("variation"):
+		data.variation = variation
+	if !data.has("stage"):
+		data.stage = "Stage"
+
 static func normalizeDiff(diff:String):
 	if diff == "normal" || diff == "erect":
-		diff = ""
-	return "-" + diff
+		return ""
+	else: return "-" + diff
 		
-static func getAudio(song:String, variation:String):
+static func getAudio(songData):
+	var songPath = "res://assets/songs/" + songData.song + "/"
+	
 	var list = {
-		"instrumental": "Inst",
-		"player": "Voices",
-		"opponent": ""
+		"instrumental": songPath + "Inst.ogg", # Instrumental is required anyway
+		"player": null,
+		"opponent": null
 	}
 	
-	var songPath = "res://assets/data/songs/" + song
-	var songData = getSong(song, "", variation)
-	
-	if FileAccess.file_exists(songPath + "/Inst-" + variation + ".ogg"):
-		list["instrumental"] = "Inst-" + variation
+	if ResourceLoader.exists(songPath + "Inst-" + songData.variation + ".ogg"):
+		list["instrumental"] = songPath + "Inst-" + songData.variation + ".ogg"
 
-	if FileAccess.file_exists(songPath + "/Voices-" + songData.player1 + ".ogg"):
-		list["player"] = "Voices-" + songData.player1
-	if FileAccess.file_exists(songPath + "/Voices-" + songData.player2 + ".ogg"):
-		list["opponent"] = "Voices-" + songData.player2
+	if ResourceLoader.exists(songPath + "Voices-" + songData.player1 + ".ogg"):
+		list["player"] = songPath + "Voices-" + songData.player1 + ".ogg"
+	elif ResourceLoader.exists(songPath + "Voices.ogg"): # Classic Vocals
+		list["player"] = songPath + "Voices.ogg"
+
+	if ResourceLoader.exists(songPath + "Voices-" + songData.player2 + ".ogg"):
+		list["opponent"] = songPath + "Voices-" + songData.player2 + ".ogg"
+	
+	return list

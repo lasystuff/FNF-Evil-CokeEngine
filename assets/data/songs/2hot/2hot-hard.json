@@ -2,8 +2,8 @@
 	"song": {
 		"speed": 2.6,
 		"stage": "PhillyStreets",
-		"player1": "PicoWeekend",
-		"player2": "Darnell",
+		"player1": "pico",
+		"player2": "darnell",
 		"notes": [
 			{
 				"lengthInSteps": 16,
