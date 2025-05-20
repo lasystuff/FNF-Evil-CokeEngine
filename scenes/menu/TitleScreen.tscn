@@ -1,0 +1,300 @@
+[gd_scene load_steps=14 format=3 uid="uid://danh2dbmofsdr"]
+
+[ext_resource type="Script" uid="uid://cuxgqqvprn33" path="res://scenes/menu/TitleScreen.gd" id="1_4ya2e"]
+[ext_resource type="SpriteFrames" uid="uid://bhfykteqv8r0y" path="res://assets/images/gfDanceTitle.xml" id="1_y8icr"]
+[ext_resource type="Shader" uid="uid://b0urpyv8xtqx1" path="res://assets/shaders/vignette.gdshader" id="2_2c24u"]
+[ext_resource type="AudioStream" uid="uid://t5l5urei1e37" path="res://assets/music/freakyMenu.ogg" id="2_7cdwj"]
+[ext_resource type="FontFile" uid="uid://ct8hyetd06ooo" path="res://assets/fonts/akira_expanded.otf" id="2_jxhl4"]
+[ext_resource type="SpriteFrames" uid="uid://kvslu5hybv3g" path="res://assets/images/logoBumpin.xml" id="2_y8icr"]
+
+[sub_resource type="Animation" id="Animation_2c24u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("cinemabar:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PressEnter:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("logo:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("bgwhite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("bgwhite:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("gfdance:offset")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("logo:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jxhl4"]
+resource_name = "bop"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("logo:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bgwhite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.566667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0, 0, 0, 0.0588235)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("gfdance:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.707107, 1),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("logo:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(0.535887, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_y8icr"]
+resource_name = "intro"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bgwhite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667),
+"transitions": PackedFloat32Array(1, 1.51572),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cinemabar:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.533333),
+"transitions": PackedFloat32Array(0.466516, 1),
+"update": 0,
+"values": [Vector2(1, 2), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PressEnter:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.6, 1),
+"transitions": PackedFloat32Array(0.757858, 1),
+"update": 0,
+"values": [Vector2(0, 1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("logo:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.366667, 1),
+"transitions": PackedFloat32Array(2.82843, 1),
+"update": 0,
+"values": [Vector2(0, 650), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("gfdance:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(0.435275, 1),
+"update": 0,
+"values": [Vector2(0, 700), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y8icr"]
+_data = {
+&"RESET": SubResource("Animation_2c24u"),
+&"bop": SubResource("Animation_jxhl4"),
+&"intro": SubResource("Animation_y8icr")
+}
+
+[sub_resource type="Gradient" id="Gradient_jxhl4"]
+offsets = PackedFloat32Array(0, 0)
+colors = PackedColorArray(1, 1, 1, 1, 0.823924, 0.823924, 0.823924, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2c24u"]
+gradient = SubResource("Gradient_jxhl4")
+width = 720
+height = 1280
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8icr"]
+shader = ExtResource("2_2c24u")
+shader_parameter/vignette_intensity = 0.072
+shader_parameter/vignette_opacity = 1.0
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+shader_parameter/vinnette_size = 15.0
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_4ya2e")
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7cdwj")
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y8icr")
+}
+
+[node name="bg" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+rotation = 1.5708
+texture = SubResource("GradientTexture2D_2c24u")
+
+[node name="bgwhite" type="ColorRect" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="gfdance" type="AnimatedSprite2D" parent="."]
+position = Vector2(912, 400)
+scale = Vector2(0.9, 0.9)
+sprite_frames = ExtResource("1_y8icr")
+animation = &"gfDance"
+
+[node name="logo" type="AnimatedSprite2D" parent="."]
+clip_children = 2
+position = Vector2(376, 320)
+sprite_frames = ExtResource("2_y8icr")
+animation = &"logo bumpin"
+
+[node name="cinemabar" type="Node2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="rect1" type="ColorRect" parent="cinemabar"]
+offset_left = -640.0
+offset_top = 280.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="rect2" type="ColorRect" parent="cinemabar"]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = -280.0
+color = Color(0, 0, 0, 1)
+
+[node name="PressEnter" type="RichTextLabel" parent="."]
+offset_left = 352.0
+offset_top = 661.0
+offset_right = 928.0
+offset_bottom = 698.0
+theme_override_fonts/normal_font = ExtResource("2_jxhl4")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[wave amp=35 freq=4][PRESS [color=yellow]ENTER[/color] TO BEGIN][/wave]"
+horizontal_alignment = 1
+
+[node name="vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_y8icr")
+offset_right = 1280.0
+offset_bottom = 720.0

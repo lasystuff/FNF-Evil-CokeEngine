@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://djc0xavgi00no"]
+
+[ext_resource type="Script" uid="uid://dbuh2jt115g51" path="res://scenes/objects/PlayHud.gd" id="1_8x0yt"]
+[ext_resource type="Texture2D" uid="uid://cwhbymxbsbgai" path="res://assets/images/ui/healthBar.png" id="1_417fb"]
+[ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="2_oy87d"]
+[ext_resource type="PackedScene" uid="uid://f42vrpuof0jv" path="res://scenes/objects/HealthIcon.tscn" id="3_qvji3"]
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_8x0yt")
+
+[node name="cinematic" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="cinematic"]
+offset_right = 1280.0
+offset_bottom = 96.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="cinematic"]
+offset_top = 624.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="healthBar" type="TextureProgressBar" parent="."]
+offset_left = 340.0
+offset_top = 632.0
+offset_right = 941.0
+offset_bottom = 651.0
+max_value = 1.0
+step = 0.001
+value = 0.5
+fill_mode = 1
+texture_under = ExtResource("1_417fb")
+texture_progress = ExtResource("1_417fb")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0, 1, 0, 1)
+
+[node name="iconP1" parent="." instance=ExtResource("3_qvji3")]
+position = Vector2(672, 632)
+player = true
+
+[node name="iconP2" parent="." instance=ExtResource("3_qvji3")]
+position = Vector2(600, 632)
+
+[node name="scoreText" type="RichTextLabel" parent="."]
+offset_left = 8.0
+offset_top = 664.0
+offset_right = 1280.0
+offset_bottom = 688.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_oy87d")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Score: 0 // Misses: 0 // Accuracy: 100% - [color=cyan]FC[/color]"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1

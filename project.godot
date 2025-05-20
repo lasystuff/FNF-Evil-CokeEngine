@@ -15,6 +15,10 @@ run/main_scene="uid://dk6b45hm4esc1"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="uid://cv3d8x1kitcia"
 
+[autoload]
+
+Init="*res://scenes/backends/Init.gd"
+
 [display]
 
 window/size/viewport_width=1280
@@ -27,4 +31,5 @@ enabled=PackedStringArray("res://addons/gdanimate/plugin.cfg", "res://addons/god
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

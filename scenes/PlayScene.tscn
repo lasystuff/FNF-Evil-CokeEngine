@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://dh4fobbiel1cv"]
+
+[ext_resource type="AudioStream" uid="uid://dwesgnes7rvaw" path="res://assets/songs/2hot/Inst.ogg" id="1_ityjc"]
+[ext_resource type="Script" uid="uid://pwlh13n5jcbh" path="res://scenes/PlayScene.gd" id="1_ot0y2"]
+[ext_resource type="AudioStream" uid="uid://cqpj2pr4xo5a7" path="res://assets/songs/2hot/Voices-pico.ogg" id="2_ot0y2"]
+[ext_resource type="AudioStream" uid="uid://bofxxkdmldi1c" path="res://assets/songs/2hot/Voices-darnell.ogg" id="3_21h8x"]
+[ext_resource type="PackedScene" uid="uid://djc0xavgi00no" path="res://scenes/objects/PlayHud.tscn" id="5_21h8x"]
+
+[node name="PlayScene" type="Node2D"]
+script = ExtResource("1_ot0y2")
+
+[node name="inst" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_ityjc")
+autoplay = true
+
+[node name="playerVoices" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ot0y2")
+autoplay = true
+
+[node name="opponentVoices" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_21h8x")
+autoplay = true
+
+[node name="PlayHud" parent="." instance=ExtResource("5_21h8x")]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://f42vrpuof0jv"]
+
+[ext_resource type="Texture2D" uid="uid://curd6qv7wmy4o" path="res://assets/images/ui/icons/face.png" id="1_3r0p2"]
+
+[sub_resource type="GDScript" id="GDScript_3r0p2"]
+resource_name = "HealthIcon"
+script/source = "extends Sprite2D
+
+var health:float = 1
+@export var player:bool = false
+
+# Called when the node enters the scene tree for the first time.
+func load(character:String) -> void:
+	var iconPath = \"res://assets/images/ui/icons/\" + character + \".png\"
+	if FileAccess.file_exists(iconPath):
+		self.texture = load(iconPath)
+	else:
+		self.texture = preload(\"res://assets/images/ui/icons/face.png\")
+	
+	frame = 0
+
+func _process(delta: float) -> void:
+	flip_h = player
+	if health < 0.2:
+		if (player): frame = 1
+		else: frame = 0
+	else: if health > 1.8:
+		if (player): frame = 2
+		else: frame = 1
+	else:
+		frame = 0
+"
+
+[node name="HealthIcon" type="Sprite2D"]
+texture = ExtResource("1_3r0p2")
+hframes = 3
+script = SubResource("GDScript_3r0p2")
