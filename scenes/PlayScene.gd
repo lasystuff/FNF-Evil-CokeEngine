@@ -11,7 +11,11 @@ static var song:
 
 var stage = null
 
-var camFollow = Vector2(0, 0)
+var player = null
+var opponent = null
+
+var camFollow = Node2D.new()
+var camFollowExt = Node2D.new()
 var camZoom:float = 0.7
 var camZoomAdd:float = 0
 
@@ -30,7 +34,7 @@ var score:float = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if song == null:
-		playlist.push_back(SongData.getSong("bopeebo-erect", "hard"))
+		playlist.push_back(SongData.getSong("lit-up-bf", "hard"))
 		
 	var audio = SongData.getAudio(song)
 	
@@ -47,6 +51,7 @@ func _ready() -> void:
 	$playHud/opponentStrums.scrollSpeed = song.speed
 	$playHud/playerStrums.scrollSpeed = song.speed
 	$playHud/playerStrums.noteHit.connect(goodNoteHit)
+	$playHud/opponentStrums.noteHit.connect(opponentNoteHit)
 	# pushing notes
 	for section in song.notes:
 		for note in section.sectionNotes:
@@ -72,10 +77,27 @@ func _ready() -> void:
 	stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
 	
+	player = FNFCharacter2D.new("bf")
+	add_child(player)
+	player.flip_h = !player.flip_h
+	opponent = FNFCharacter2D.new("dad")
+	add_child(opponent)
+	
+	player.playAnim("idle")
+	opponent.playAnim("idle")
+	
+	# stage var shit
+	camZoom = stage.zoom
+	
+	player.position += stage.get_node("playerPos").global_position
+	opponent.position += stage.get_node("opponentPos").global_position
+	
 	startCountdown()
 
 var curCountdown:int = 0
 func startCountdown():
+	moveCamBySection()
+	$playHud.initHud()
 	onCountdown = true
 	Conductor.songPosition = 0
 	Conductor.songPosition -= Conductor.crotchet * 5
@@ -131,6 +153,7 @@ func _process(delta: float) -> void:
 		Conductor.songPosition = instTime * 1000
 
 	# Peak absolutely cinema guys
+	$camera.global_position = camFollow.global_position + camFollowExt.global_position
 	camZoomAdd = lerpf(0, camZoomAdd, exp(-delta * 6.25))
 	$camera.zoom.x = camZoom + camZoomAdd
 	$camera.zoom.y = $camera.zoom.x
@@ -142,10 +165,63 @@ func _process(delta: float) -> void:
 
 func beatHit():
 	super()
+	if curBeat % 2 == 0:
+		if !player.singing:
+			player.playAnim("idle")
+		if !opponent.singing:
+			opponent.playAnim("idle")
 	if curBeat % 4 == 0:
 		camZoomAdd = 0.02
 	$playHud.beatHit(curBeat)
 
-func goodNoteHit(note):
-	print("hit")
-	health += 0.03
+func goodNoteHit(note, isSustain):
+	if !isSustain:
+		score += 350
+		health += 0.03
+	else:
+		score += 0.1
+	doSingAnimation(player, note.noteData)
+
+func opponentNoteHit(note, isSustain):
+	doSingAnimation(opponent, note.noteData)
+
+var animArray = ["singLEFT", "singDOWN", "singUP", "singRIGHT"]
+func doSingAnimation(char:FNFCharacter2D, data:int):
+	if char.interruptible:
+		char.playAnim(animArray[data], true)
+	
+	if (song.notes[curSection].mustHitSection && char == player || !song.notes[curSection].mustHitSection && char == opponent):
+		var exCampos = Vector2(0, 0)
+		match data:
+			0:
+				exCampos = Vector2(-10, 0)
+			1:
+				exCampos = Vector2(0, 10)
+			2:
+				exCampos = Vector2(0, -10)
+			3:
+				exCampos = Vector2(10, 0)
+		moveCameraExtend(exCampos)
+
+func sectionHit():
+	super()
+	moveCamBySection()
+
+func moveCamBySection():
+	if song.notes[curSection].mustHitSection:
+		moveCamera(player.position + player.cameraPosition + stage.playerCameraOffset)
+	else:
+		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
+
+var defaultCameraTrans = Tween.TRANS_EXPO
+var defaultCameraEase = Tween.EASE_OUT
+
+func moveCamera(position:Vector2, speed:float = 1.9, trans:Tween.TransitionType = defaultCameraTrans, ease:Tween.EaseType = defaultCameraEase):
+	var camFollowTween = get_tree().create_tween()
+	camFollowTween.set_trans(trans).set_ease(ease)
+	camFollowTween.tween_property(camFollow, "position", position, speed)
+
+func moveCameraExtend(position:Vector2, speed:float = 1.4, trans:Tween.TransitionType = defaultCameraTrans, ease:Tween.EaseType = defaultCameraEase):
+	var camFollowExtTween = get_tree().create_tween()
+	camFollowExtTween.set_trans(trans).set_ease(ease)
+	camFollowExtTween.tween_property(camFollowExt, "position", position, speed)

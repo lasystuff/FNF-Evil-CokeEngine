@@ -3,31 +3,40 @@ extends Node2D
 
 var parentNote#:Note
 var length:float = 0
-const sustainWidth:float = 44
+const sustainHeight:float = 87
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
+var lastLengthOld = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if parentNote != null:
+		# destroying sustain lol shitty implement
+		if !parentNote.autoFollow:
+			var lastLength = ((parentNote.strumTime + parentNote.sustainLength) - Conductor.songPosition) * (parentNote.strumline.scrollSpeed*0.45)
+			var susLengthAdjust = (lastLength / Conductor.stepCrotchet)
+			self.length = susLengthAdjust
+			if lastLengthOld != susLengthAdjust:
+				lastLengthOld = susLengthAdjust
+				parentNote.strumline.noteHit.emit(parentNote, true)
+			# destroying shit
+			if susLengthAdjust <= 0:
+				self.queue_free()
+
+
 		self.global_position = parentNote.global_position
-		$sustain.scale.y = 4 + (1.5 * length)
-	$tail.position.y = (sustainWidth * $sustain.scale.y) - 1.3
+		$sustain.scale.y = length
+	$tail.position.y = (sustainHeight * $sustain.scale.y)
 
 func updateAnim():
 	match parentNote.noteData:
 		0:
-			$sustain.play("purple hold piece")
-			$tail.play("pruple end hold") # BRO
+			$sustain.frame = 0
+			$tail.frame = 1
 		1:
-			$sustain.play("blue hold piece")
-			$tail.play("blue hold end")
+			$sustain.frame = 2
+			$tail.frame = 3
 		2:
-			$sustain.play("green hold piece")
-			$tail.play("green hold end")
+			$sustain.frame = 4
+			$tail.frame = 5
 		3:
-			$sustain.play("red hold piece")
-			$tail.play("red hold end")
+			$sustain.frame = 6
+			$tail.frame = 7

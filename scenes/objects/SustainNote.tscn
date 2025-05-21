@@ -1,20 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://cjvhgbfweky3l"]
 
 [ext_resource type="Script" uid="uid://do2j4i74pjc12" path="res://scenes/objects/SustainNote.gd" id="1_72nqy"]
-[ext_resource type="SpriteFrames" uid="uid://bjaatvolbqtbq" path="res://assets/images/ui/NOTE_assets.xml" id="1_ko1n6"]
+[ext_resource type="Texture2D" uid="uid://ygwfwq5qh68j" path="res://assets/images/ui/NoteSustains.png" id="2_pc0d6"]
 
 [node name="SustainNote" type="Node2D"]
-z_index = -1
+show_behind_parent = true
 script = ExtResource("1_72nqy")
 
-[node name="sustain" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -4.76837e-07)
-sprite_frames = ExtResource("1_ko1n6")
-animation = &"blue hold piece"
-offset = Vector2(0, 22)
+[node name="sustain" type="Sprite2D" parent="."]
+texture = ExtResource("2_pc0d6")
+offset = Vector2(0, 43.5)
+hframes = 8
 
-[node name="tail" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 48)
-sprite_frames = ExtResource("1_ko1n6")
-animation = &"blue hold end"
-offset = Vector2(0, 22)
+[node name="tail" type="Sprite2D" parent="."]
+position = Vector2(0, 87)
+texture = ExtResource("2_pc0d6")
+offset = Vector2(0, 43.5)
+hframes = 8
+frame = 1

@@ -1,8 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://dk6b45hm4esc1"]
+[gd_scene load_steps=3 format=3 uid="uid://dk6b45hm4esc1"]
 
 [ext_resource type="Script" uid="uid://incgdd7rvjkj" path="res://scenes/Main.gd" id="1_r150o"]
+[ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="2_rvslj"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_r150o")
 
 [node name="SceneLoader" type="Node2D" parent="."]
+
+[node name="DebugDisplay" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="label" type="RichTextLabel" parent="DebugDisplay"]
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 256.0
+offset_bottom = 48.0
+theme_override_fonts/normal_font = ExtResource("2_rvslj")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "FPS: 50
+Memory: 0 MB [color=\"gray\"]/ 500 MB[/color]
+[color=\"red\"]Evil[/color] Coke Engine Indev"
+scroll_active = false
+
+[node name="labelExtra" type="RichTextLabel" parent="DebugDisplay"]
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 384.0
+offset_bottom = 124.0
+theme_override_fonts/normal_font = ExtResource("2_rvslj")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Total Rendered Object: 0
+Total Draw Calls (in Frame): 
+
+Audio Output Latency:"
+scroll_active = false

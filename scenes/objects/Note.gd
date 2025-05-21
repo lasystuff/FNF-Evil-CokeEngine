@@ -13,7 +13,11 @@ var strumTime:float = 0
 var noteData:int = 0
 var sustainLength:int = 0
 
+var strumline;
+var sustain;
+
 var status = NEUTRAL
+var autoFollow:bool = true # for sustain notes
 
 func _init(time:float, id:int, susLength:float) -> void:
 	self.strumTime = time
@@ -43,6 +47,7 @@ func _ready() -> void:
 		sustainNote.length = susLengthAdjust
 		self.add_child(sustainNote)
 		sustainNote.updateAnim()
+		self.sustain = sustainNote
 	else:
 		sustainLength = 0
 

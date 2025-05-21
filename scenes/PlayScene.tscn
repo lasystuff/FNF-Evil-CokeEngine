@@ -14,7 +14,7 @@ script = ExtResource("1_ot0y2")
 [node name="opponentVoices" type="AudioStreamPlayer" parent="."]
 
 [node name="camera" type="Camera2D" parent="."]
-position = Vector2(640, 360)
+position = Vector2(58, 76)
 
 [node name="playHud" parent="." instance=ExtResource("5_21h8x")]
 

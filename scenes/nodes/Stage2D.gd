@@ -5,5 +5,9 @@ class_name FNFStage2D
 @export var camera_speed:float = 1.9
 @export var hide_gf:bool = false
 
-@export var bfCameraOffset:Vector2 = Vector2()
+@export var playerCameraOffset:Vector2 = Vector2()
 @export var opponentCameraOffset:Vector2 = Vector2()
+
+func _ready() -> void:
+	$playerPos.visible = false
+	$opponentPos.visible = false

@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbsmuk40o24jr"]
+[gd_scene load_steps=7 format=3 uid="uid://dbsmuk40o24jr"]
 
 [ext_resource type="Script" uid="uid://bwdq22xkt6b1e" path="res://scenes/nodes/Stage2D.gd" id="1_4hqte"]
 [ext_resource type="Texture2D" uid="uid://cisqib1cym6py" path="res://assets/images/stages/default/stageback.png" id="2_6ryxg"]
 [ext_resource type="Texture2D" uid="uid://dbsafwuusqn12" path="res://assets/images/stages/default/stagecurtains.png" id="3_a5gho"]
 [ext_resource type="Texture2D" uid="uid://but0qtku5cro3" path="res://assets/images/stages/default/stagefront.png" id="4_xecc6"]
+[ext_resource type="Texture2D" uid="uid://hhqdwy7d08t4" path="res://art/silhouetteBF.png" id="5_ej7ts"]
+[ext_resource type="Texture2D" uid="uid://bwsclponhe3a6" path="res://art/silhouetteDad.png" id="6_7b51v"]
 
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_4hqte")
+zoom = 1.1
 metadata/_custom_type_script = "uid://bwdq22xkt6b1e"
 
 [node name="Stageback" type="Parallax2D" parent="."]
@@ -32,10 +35,12 @@ scroll_offset = Vector2(288, 136)
 position = Vector2(-320, -151.111)
 texture = ExtResource("3_a5gho")
 
-[node name="bfPosition" type="Node2D" parent="."]
-position = Vector2(384, 0)
+[node name="playerPos" type="Sprite2D" parent="."]
+position = Vector2(320, 120)
 scale = Vector2(0.9, 0.9)
+texture = ExtResource("5_ej7ts")
 
-[node name="opponentPosition" type="Node2D" parent="."]
-position = Vector2(384, 0)
+[node name="opponentPos" type="Sprite2D" parent="."]
+position = Vector2(-392, -8)
 scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_7b51v")

@@ -4,10 +4,10 @@ extends Node2D
 var spawnDistance:float = 3000
 var queuedNotes:Array = []
 
-var scrollSpeed:float = 2.3
+var scrollSpeed:float = 1
 var botplay:bool = true
 
-signal noteHit(note:Note)
+signal noteHit(note:Note, sustain:bool)
 signal noteMiss(note:Note)
 
 func addNoteData(raw:Dictionary) -> void:
@@ -27,18 +27,21 @@ func _process(delta: float) -> void:
 		if raw.strumTime - Conductor.songPosition < spawnDistance:
 			var note = Note.new(raw.strumTime, raw.noteData, raw.sustainLength)
 			$noteSpawner.add_child(note)
+			note.strumline = self
 			queuedNotes.erase(raw)
 			
 	# updating note pos & hit if this strumline on botplay
 	for note in $noteSpawner.get_children():
+		if !note.autoFollow:
+			continue
 		var targetX = strums[note.noteData].global_position.x
 		var targetY = strums[note.noteData].global_position.y
 		note.global_position.x = targetX
-		note.global_position.y = (targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed))
+		note.global_position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
 		updateNoteStatus(note)
 		
 		if botplay && Conductor.songPosition >= note.strumTime && note.status == Note.HITTABLE:
-			noteHit.emit(note)
+			noteHit.emit(note, false)
 
 	var animArray = ["arrowLEFT", "arrowDOWN", "arrowUP", "arrowRIGHT"]
 	for strum in strums:
@@ -57,14 +60,18 @@ func updateNoteStatus(note:Note):
 	else:
 		note.status = Note.NEUTRAL
 
-func _noteHit(note):
-	note.status = Note.HIT
-
-	if note.sustainLength >= 0:
-		# oh! worst take for sustain note! nice!
-		note.self_modulate = Color.TRANSPARENT
+func _noteHit(note, isSustain):
+	if (!isSustain):
+		note.status = Note.HIT
+		if note.sustainLength >= 0:
+			note.autoFollow = false
+			# oh! worst take for sustain note! nice!
+			note.self_modulate = Color.TRANSPARENT
+		else:
+			note.queue_free()
 	else:
-		note.queue_free()
+		if note.sustain.length <= 0:
+			note.queue_free()
 	
 	var anims = ["left confirm", "down confirm", "up confirm", "right confirm"]
 	strums[note.noteData].play(anims[note.noteData])
