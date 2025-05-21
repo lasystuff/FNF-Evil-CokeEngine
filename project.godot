@@ -19,6 +19,7 @@ config/icon="uid://cv3d8x1kitcia"
 
 Init="*res://scenes/backends/Init.gd"
 GlobalSound="*res://scenes/backends/GlobalSound.gd"
+Constant="*res://scenes/Constant.gd"
 
 [display]
 

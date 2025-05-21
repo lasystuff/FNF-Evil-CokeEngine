@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://ihmvrl1nn75c"]
+
+[ext_resource type="SpriteFrames" uid="uid://bjaatvolbqtbq" path="res://assets/images/ui/NOTE_assets.xml" id="1_hr7gl"]
+[ext_resource type="Script" uid="uid://cp10pubg0pxxe" path="res://scenes/objects/Strumline.gd" id="1_j51n0"]
+
+[node name="Strumline" type="Node2D"]
+script = ExtResource("1_j51n0")
+
+[node name="left" type="AnimatedSprite2D" parent="."]
+position = Vector2(-168, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_hr7gl")
+animation = &"arrowLEFT"
+
+[node name="down" type="AnimatedSprite2D" parent="."]
+position = Vector2(-56, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_hr7gl")
+animation = &"arrowDOWN"
+
+[node name="up" type="AnimatedSprite2D" parent="."]
+position = Vector2(56, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_hr7gl")
+animation = &"arrowUP"
+
+[node name="right" type="AnimatedSprite2D" parent="."]
+position = Vector2(168, 0)
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("1_hr7gl")
+animation = &"arrowRIGHT"
+
+[node name="noteSpawner" type="Node2D" parent="."]

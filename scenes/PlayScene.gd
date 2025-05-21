@@ -18,10 +18,19 @@ var camZoomAdd:float = 0
 var onCountdown:bool = false
 var songStarted:bool = false
 
+var health:float = 1:
+	set(value):
+		if value > 2:
+			value = 2
+		health = value
+		return value
+var misses:int = 0
+var score:float = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if song == null:
-		playlist.push_back(SongData.getSong("2hot", "hard"))
+		playlist.push_back(SongData.getSong("bopeebo-erect", "hard"))
 		
 	var audio = SongData.getAudio(song)
 	
@@ -33,6 +42,27 @@ func _ready() -> void:
 		
 	Conductor.bpm = song.bpm
 	Conductor.mapBPMChanges(song)
+	
+	$playHud.game = self
+	$playHud/opponentStrums.scrollSpeed = song.speed
+	$playHud/playerStrums.scrollSpeed = song.speed
+	$playHud/playerStrums.noteHit.connect(goodNoteHit)
+	# pushing notes
+	for section in song.notes:
+		for note in section.sectionNotes:
+			var mustHit:bool = section.mustHitSection;
+			if (note[1] > 3):
+				mustHit = !section.mustHitSection
+			
+			var rawData = {
+				"strumTime": note[0],
+				"noteData": int(note[1]) % 4,
+				"sustainLength": note[2]
+			}
+			if (mustHit):
+				$playHud/playerStrums.addNoteData(rawData)
+			else:
+				$playHud/opponentStrums.addNoteData(rawData)
 
 	# init stages
 	var targetStage = song.stage
@@ -55,12 +85,11 @@ func startCountdown():
 	add_child(countdownTimer)
 	countdownTimer.timeout.connect(func():
 		var countSprite = Sprite2D.new()
-		countSprite.position = Vector2(get_viewport_rect().size.x/2, get_viewport_rect().size.y/2)
 		countSprite.scale = Vector2(0.52, 0.52)
 		var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		sprTween.tween_property(countSprite, "modulate", Color.TRANSPARENT, Conductor.crotchet / 1000 *1.1)
 		sprTween.tween_property(countSprite, "scale", Vector2(0.5, 0.5), Conductor.crotchet / 1000)
-		$PlayHud/countdownSpawner.add_child(countSprite)
+		$playHud/countdownSpawner.add_child(countSprite)
 		
 		match curCountdown:
 			0:
@@ -77,7 +106,7 @@ func startCountdown():
 				countSprite.texture = load("res://assets/images/ui/countdown/go.png")
 			4:
 				countdownTimer.stop()
-				$PlayHud/countdownSpawner.queue_free()
+				$playHud/countdownSpawner.queue_free()
 				onCountdown = false
 				startSong()
 
@@ -105,9 +134,18 @@ func _process(delta: float) -> void:
 	camZoomAdd = lerpf(0, camZoomAdd, exp(-delta * 6.25))
 	$camera.zoom.x = camZoom + camZoomAdd
 	$camera.zoom.y = $camera.zoom.x
+	$playHud.scale.x = 1 + camZoomAdd
+	$playHud.scale.y = $playHud.scale.x
+	# terrible fix of canvaslayer offsetting
+	$playHud.offset.x = (-Constant.width/2)*($playHud.scale.x-1)
+	$playHud.offset.y = (-Constant.height/2)*($playHud.scale.y-1)
 
 func beatHit():
 	super()
 	if curBeat % 4 == 0:
 		camZoomAdd = 0.02
-	$PlayHud.beatHit(curBeat)
+	$playHud.beatHit(curBeat)
+
+func goodNoteHit(note):
+	print("hit")
+	health += 0.03
