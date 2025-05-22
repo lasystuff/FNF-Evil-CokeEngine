@@ -1,12 +1,97 @@
-[gd_scene load_steps=3 format=3 uid="uid://dk6b45hm4esc1"]
+[gd_scene load_steps=11 format=3 uid="uid://dk6b45hm4esc1"]
 
 [ext_resource type="Script" uid="uid://incgdd7rvjkj" path="res://scenes/Main.gd" id="1_r150o"]
 [ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="2_rvslj"]
+
+[sub_resource type="Gradient" id="Gradient_rvslj"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0bbpv"]
+gradient = SubResource("Gradient_rvslj")
+width = 1280
+height = 1440
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Animation" id="Animation_rarhs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition/grad:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rvslj"]
+resource_name = "gradIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition/grad:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.7411, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 1440)]
+}
+
+[sub_resource type="Animation" id="Animation_0bbpv"]
+resource_name = "gradOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition/grad:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.287174, 1),
+"update": 0,
+"values": [Vector2(0, 1440), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_vcsgt"]
+resource_name = "quickIn"
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_c01mt"]
+resource_name = "quickOut"
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vcsgt"]
+_data = {
+&"RESET": SubResource("Animation_rarhs"),
+&"gradIn": SubResource("Animation_rvslj"),
+&"gradOut": SubResource("Animation_0bbpv"),
+&"quickIn": SubResource("Animation_vcsgt"),
+&"quickOut": SubResource("Animation_c01mt")
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_r150o")
 
 [node name="SceneLoader" type="Node2D" parent="."]
+
+[node name="Transition" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="grad" type="Sprite2D" parent="Transition"]
+position = Vector2(640, -720)
+texture = SubResource("GradientTexture2D_0bbpv")
+
+[node name="animation" type="AnimationPlayer" parent="Transition"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_vcsgt")
+}
 
 [node name="DebugDisplay" type="CanvasLayer" parent="."]
 layer = 128
@@ -37,3 +122,5 @@ Total Draw Calls (in Frame):
 
 Audio Output Latency:"
 scroll_active = false
+
+[connection signal="animation_finished" from="Transition/animation" to="." method="_on_transition_animation_finished"]

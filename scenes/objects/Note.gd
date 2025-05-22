@@ -19,6 +19,12 @@ var sustain;
 var status = NEUTRAL
 var autoFollow:bool = true # for sustain notes
 
+var hitDiff:float = 0:
+	set(value):
+		if value < 0:
+			value *= -1
+		hitDiff = value
+
 func _init(time:float, id:int, susLength:float) -> void:
 	self.strumTime = time
 	self.noteData = id

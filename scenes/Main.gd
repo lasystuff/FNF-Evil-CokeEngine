@@ -1,8 +1,13 @@
 extends Node2D
 
+const defaultTransIn = "gradkIn"
+const defaultTransOut = "gradOut"
+
+var nextTransIn = "quickIn"
+var nextTransOut = "gradOut"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$SceneLoader.add_child(load("res://scenes/PlayScene.tscn").instantiate())
+	switchScene(load("res://scenes/PlayScene.tscn"))
 
 var oldMem = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,3 +28,18 @@ func _process(delta: float) -> void:
 	$DebugDisplay/labelExtra.text = "Total Object: " + str(int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)))
 	$DebugDisplay/labelExtra.text += "\nTotal Draw Calls (in Frame): " + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
 	$DebugDisplay/labelExtra.text += "\n\nAudio Output Latency: " + str(AudioServer.get_output_latency() * 1000.0)
+
+var nextState
+func switchScene(scene):
+	nextState = scene.instantiate()
+	$Transition/animation.play(nextTransIn)
+
+func _on_transition_animation_finished(anim_name: StringName) -> void:
+	if anim_name == nextTransIn:
+		if $SceneLoader.get_children().size() > 0:
+			$SceneLoader.get_child(0).queue_free()
+		$SceneLoader.add_child(nextState)
+		$Transition/animation.play(nextTransOut)
+		
+		nextTransIn = defaultTransIn
+		nextTransOut = defaultTransOut

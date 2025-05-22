@@ -31,6 +31,10 @@ var health:float = 1:
 var misses:int = 0
 var score:float = 0
 
+var accuracy:float = 1
+var everyNote:float = 0
+var hitNoteDiffs:float = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if song == null:
@@ -50,8 +54,14 @@ func _ready() -> void:
 	$playHud.game = self
 	$playHud/opponentStrums.scrollSpeed = song.speed
 	$playHud/playerStrums.scrollSpeed = song.speed
+	
+	$playHud/opponentStrums.botplay = true
+	$playHud/playerStrums.botplay = true
+	
 	$playHud/playerStrums.noteHit.connect(goodNoteHit)
+	$playHud/playerStrums.noteMiss.connect(noteMissCallback)
 	$playHud/opponentStrums.noteHit.connect(opponentNoteHit)
+	
 	# pushing notes
 	for section in song.notes:
 		for note in section.sectionNotes:
@@ -64,7 +74,7 @@ func _ready() -> void:
 				"noteData": int(note[1]) % 4,
 				"sustainLength": note[2]
 			}
-			if (mustHit):
+			if mustHit:
 				$playHud/playerStrums.addNoteData(rawData)
 			else:
 				$playHud/opponentStrums.addNoteData(rawData)
@@ -162,6 +172,8 @@ func _process(delta: float) -> void:
 	# terrible fix of canvaslayer offsetting
 	$playHud.offset.x = (-Constant.width/2)*($playHud.scale.x-1)
 	$playHud.offset.y = (-Constant.height/2)*($playHud.scale.y-1)
+	
+	accuracy = (hitNoteDiffs / everyNote)*100
 
 func beatHit():
 	super()
@@ -175,20 +187,46 @@ func beatHit():
 	$playHud.beatHit(curBeat)
 
 func goodNoteHit(note, isSustain):
-	if !isSustain:
-		score += 350
-		health += 0.03
-	else:
-		score += 0.1
+	$playerVoices.volume_db = 0
 	doSingAnimation(player, note.noteData)
+	
+	if !isSustain:
+		everyNote += 1
+		var data = RatingData.judgements[RatingData.getRatingName(note.hitDiff)]
+		
+		score += 350*data.scoreMult
+		health += 0.03
+		hitNoteDiffs += data.accuaracyMult
+		
+		spawnJudgementSprite(RatingData.getRatingName(note.hitDiff))
+	else:
+		health += 0.001
+		score += 0.1
+
+func noteMissCallback(note, isSustain):
+	$playerVoices.volume_db = -80
+	if isSustain:
+		noteMiss(note.noteData, 0.04, player)
+	else:
+		everyNote += 1
+		noteMiss(note.noteData, 0.08, player)
+
+func noteMiss(id:int = 0, healthLoss:float = 1, character = null):
+	misses += 1
+	health -= healthLoss
+	
+	var rng = RandomNumberGenerator.new()
+	GlobalSound.playSound("missnote" + str(rng.randi_range(1, 3)))
+	if character != null:
+		doSingAnimation(character, id, "miss")
 
 func opponentNoteHit(note, isSustain):
 	doSingAnimation(opponent, note.noteData)
 
 var animArray = ["singLEFT", "singDOWN", "singUP", "singRIGHT"]
-func doSingAnimation(char:FNFCharacter2D, data:int):
+func doSingAnimation(char:FNFCharacter2D, data:int, postfix:String = ""):
 	if char.interruptible:
-		char.playAnim(animArray[data], true)
+		char.playAnim(animArray[data] + postfix, true)
 	
 	if (song.notes[curSection].mustHitSection && char == player || !song.notes[curSection].mustHitSection && char == opponent):
 		var exCampos = Vector2(0, 0)
@@ -225,3 +263,20 @@ func moveCameraExtend(position:Vector2, speed:float = 1.4, trans:Tween.Transitio
 	var camFollowExtTween = get_tree().create_tween()
 	camFollowExtTween.set_trans(trans).set_ease(ease)
 	camFollowExtTween.tween_property(camFollowExt, "position", position, speed)
+
+
+func spawnJudgementSprite(judge:String):
+	var judgeSpawner = $playHud/judgeSpawner
+	#if (worldJudgeDisplay):
+	#	judgeSpawner = $worldJudgeSpawner
+	var judgeSprite = Sprite2D.new()
+	judgeSprite.scale = Vector2(0.8, 0.8)
+	judgeSprite.texture = load("res://assets/images/ui/judgements/" + judge + ".png")
+	judgeSpawner.add_child(judgeSprite)
+	
+	
+	var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	sprTween.finished.connect(func(): judgeSprite.queue_free())
+	sprTween.tween_property(judgeSprite, "scale", Vector2(0.7, 0.7), (Conductor.crotchet / 1000))
+	sprTween.tween_property(judgeSprite, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*2)
+	sprTween.tween_property(judgeSprite, "position:y", judgeSprite.position.y + 140, (Conductor.crotchet / 1000)*2.3)

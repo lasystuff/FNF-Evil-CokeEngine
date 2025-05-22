@@ -27,4 +27,4 @@ func _process(delta: float) -> void:
 	$iconP2.scale.x = lerpf($iconP2.scale.x, 1, 0.1)
 	$iconP2.scale.y = $iconP2.scale.x
 	
-	$scoreText.text = 'Score: ' + str(int(game.score)) + ' // Misses: ' + str(int(game.misses)) + ' // Accuracy: 100% - [color=cyan]FC[/color]'
+	$scoreText.text = 'Score: ' + str(int(game.score)) + ' // Misses: ' + str(int(game.misses)) + ' // Accuracy: ' + str(int(game.accuracy)) + '% - [color=cyan]FC[/color]'

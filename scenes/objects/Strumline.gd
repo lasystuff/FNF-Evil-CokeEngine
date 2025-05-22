@@ -5,10 +5,17 @@ var spawnDistance:float = 3000
 var queuedNotes:Array = []
 
 var scrollSpeed:float = 1
-var botplay:bool = true
+var botplay:bool = false
+
+var notePressTimer = [0, 0, 0, 0]
+var controlArray = ["ui_left", "ui_down", "ui_up", "ui_right"]
+
+var defaultAnims = ["arrowLEFT", "arrowDOWN", "arrowUP", "arrowRIGHT"]
+var pressAnims = ["left press", "down press", "up press", "right press"]
+var confirmAnims = ["left confirm", "down confirm", "up confirm", "right confirm"]
 
 signal noteHit(note:Note, sustain:bool)
-signal noteMiss(note:Note)
+signal noteMiss(note:Note, sustain:bool)
 
 func addNoteData(raw:Dictionary) -> void:
 	queuedNotes.push_back(raw)
@@ -41,12 +48,13 @@ func _process(delta: float) -> void:
 		updateNoteStatus(note)
 		
 		if botplay && Conductor.songPosition >= note.strumTime && note.status == Note.HITTABLE:
+			note.hitDiff = 0 # relly awrsome
 			noteHit.emit(note, false)
-
-	var animArray = ["arrowLEFT", "arrowDOWN", "arrowUP", "arrowRIGHT"]
-	for strum in strums:
-		if !strum.is_playing():
-			strum.play(animArray[strums.find(strum)])
+			
+	if !botplay:
+		inputProcess(delta)
+	for strum in strums.size():
+		strumPlay(strum, "default")
 
 # yoo guys guyz
 func updateNoteStatus(note:Note):
@@ -56,15 +64,17 @@ func updateNoteStatus(note:Note):
 	if note.strumTime > Conductor.songPosition - Constant.noteSafeZone && note.strumTime < Conductor.songPosition + Constant.noteSafeZone:
 		note.status = Note.HITTABLE
 	elif (note.strumTime < Conductor.songPosition - Constant.noteSafeZone):
-		_noteMiss(note)
+		noteMiss.emit(note, false)
 	else:
 		note.status = Note.NEUTRAL
 
 func _noteHit(note, isSustain):
+	note.status = Note.HIT
+
 	if (!isSustain):
-		note.status = Note.HIT
 		if note.sustainLength >= 0:
 			note.autoFollow = false
+			note.global_position.y = strums[note.noteData].global_position.y
 			# oh! worst take for sustain note! nice!
 			note.self_modulate = Color.TRANSPARENT
 		else:
@@ -72,9 +82,42 @@ func _noteHit(note, isSustain):
 	else:
 		if note.sustain.length <= 0:
 			note.queue_free()
-	
-	var anims = ["left confirm", "down confirm", "up confirm", "right confirm"]
-	strums[note.noteData].play(anims[note.noteData])
+			return
+		if !botplay && !Input.is_action_pressed(controlArray[note.noteData]):
+			noteMiss.emit(note, true)
 
-func _noteMiss(note):
+	strumPlay(note.noteData, "confirm")
+
+func _noteMiss(note, isSustain):
 	note.status = Note.MISSED
+	note.queue_free()
+
+func inputProcess(delta:float):
+	for i in controlArray.size():
+		if Input.is_action_just_pressed(controlArray[i]):
+			strumPlay(i, "press")
+			notePressTimer[i] = 1
+	
+	for i in notePressTimer.size():
+		notePressTimer[i] -= delta*10
+		if notePressTimer[i] < 0:
+			notePressTimer[i] = 0
+			
+	for note in $noteSpawner.get_children():
+		if note.status == Note.HITTABLE && notePressTimer[note.noteData] > 0:
+			note.hitDiff = Conductor.songPosition - note.strumTime
+			noteHit.emit(note, false)
+
+
+func strumPlay(id:int, animType:String = "default"):
+	var targetStrum = strums[id]
+	match animType:
+		"default":
+			if (botplay && !targetStrum.is_playing()) || (!botplay && !Input.is_action_pressed(controlArray[id])):
+				strums[id].play(defaultAnims[id])
+		"press":
+			if targetStrum.animation == defaultAnims[id]:
+				strums[id].play(pressAnims[id])
+		"confirm":
+			strums[id].stop()
+			strums[id].play(confirmAnims[id])

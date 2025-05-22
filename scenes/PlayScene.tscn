@@ -26,3 +26,6 @@ position = Vector2(312, 96)
 
 [node name="countdownSpawner" type="Node2D" parent="playHud"]
 position = Vector2(640, 360)
+
+[node name="judgeSpawner" type="Node2D" parent="playHud"]
+position = Vector2(733, 423)
