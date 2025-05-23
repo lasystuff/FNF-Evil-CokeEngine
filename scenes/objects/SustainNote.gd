@@ -9,8 +9,10 @@ var lastLengthOld = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if parentNote != null:
+		var speedAdjust = (parentNote.strumline.scrollSpeed*0.45) # Scroll Speed shit...
 		# destroying sustain lol shitty implement
 		if !parentNote.autoFollow:
+			speedAdjust = 1
 			var lastLength = ((parentNote.strumTime + parentNote.sustainLength) - Conductor.songPosition) * (parentNote.strumline.scrollSpeed*0.45)
 			var susLengthAdjust = (lastLength / Conductor.stepCrotchet)
 			self.length = susLengthAdjust
@@ -23,7 +25,7 @@ func _process(delta: float) -> void:
 
 
 		self.global_position = parentNote.global_position
-		$sustain.scale.y = length
+		$sustain.scale.y = length * speedAdjust
 	$tail.position.y = (sustainHeight * $sustain.scale.y)
 
 func updateAnim():

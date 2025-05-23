@@ -1,6 +1,8 @@
 extends FNFScene2D
 class_name PlayScene
 
+static var instance
+
 static var playlist:Array = []
 static var song:
 	get():
@@ -37,6 +39,8 @@ var hitNoteDiffs:float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	instance = self
+	
 	if song == null:
 		playlist.push_back(SongData.getSong("lit-up-bf", "hard"))
 		
@@ -51,7 +55,7 @@ func _ready() -> void:
 	Conductor.bpm = song.bpm
 	Conductor.mapBPMChanges(song)
 	
-	$playHud.game = self
+	$playHud.game = instance
 	$playHud/opponentStrums.scrollSpeed = song.speed
 	$playHud/playerStrums.scrollSpeed = song.speed
 	
@@ -156,6 +160,7 @@ func startSong():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
+	
 	if !songStarted:
 		Conductor.songPosition += delta * 1000
 	else:
@@ -193,7 +198,7 @@ func goodNoteHit(note, isSustain):
 	if !isSustain:
 		everyNote += 1
 		var data = RatingData.judgements[RatingData.getRatingName(note.hitDiff)]
-		
+
 		score += 350*data.scoreMult
 		health += 0.03
 		hitNoteDiffs += data.accuaracyMult
@@ -227,19 +232,6 @@ var animArray = ["singLEFT", "singDOWN", "singUP", "singRIGHT"]
 func doSingAnimation(char:FNFCharacter2D, data:int, postfix:String = ""):
 	if char.interruptible:
 		char.playAnim(animArray[data] + postfix, true)
-	
-	if (song.notes[curSection].mustHitSection && char == player || !song.notes[curSection].mustHitSection && char == opponent):
-		var exCampos = Vector2(0, 0)
-		match data:
-			0:
-				exCampos = Vector2(-10, 0)
-			1:
-				exCampos = Vector2(0, 10)
-			2:
-				exCampos = Vector2(0, -10)
-			3:
-				exCampos = Vector2(10, 0)
-		moveCameraExtend(exCampos)
 
 func sectionHit():
 	super()
@@ -267,16 +259,17 @@ func moveCameraExtend(position:Vector2, speed:float = 1.4, trans:Tween.Transitio
 
 func spawnJudgementSprite(judge:String):
 	var judgeSpawner = $playHud/judgeSpawner
-	#if (worldJudgeDisplay):
-	#	judgeSpawner = $worldJudgeSpawner
+	var judgeWorld = stage.get_node_or_null("judgeSpawner")
+	if (judgeWorld != null): #&& worldJudgeDisplay
+		judgeSpawner = judgeWorld
 	var judgeSprite = Sprite2D.new()
-	judgeSprite.scale = Vector2(0.8, 0.8)
+	judgeSprite.scale = Vector2(1.1, 1.1)
 	judgeSprite.texture = load("res://assets/images/ui/judgements/" + judge + ".png")
 	judgeSpawner.add_child(judgeSprite)
 	
 	
 	var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	sprTween.finished.connect(func(): judgeSprite.queue_free())
-	sprTween.tween_property(judgeSprite, "scale", Vector2(0.7, 0.7), (Conductor.crotchet / 1000))
+	sprTween.tween_property(judgeSprite, "scale", Vector2(1, 1), (Conductor.crotchet / 1000))
 	sprTween.tween_property(judgeSprite, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*2)
 	sprTween.tween_property(judgeSprite, "position:y", judgeSprite.position.y + 140, (Conductor.crotchet / 1000)*2.3)

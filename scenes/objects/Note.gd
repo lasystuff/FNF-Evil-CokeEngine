@@ -11,7 +11,7 @@ enum
 
 var strumTime:float = 0
 var noteData:int = 0
-var sustainLength:int = 0
+var sustainLength:float = 0
 
 var strumline;
 var sustain;
@@ -45,7 +45,6 @@ func _ready() -> void:
 		3:
 			play("red")
 	self.position.y += 3000
-	
 	var susLengthAdjust = sustainLength / Conductor.stepCrotchet
 	if(roundf(susLengthAdjust) > 0):
 		var sustainNote = preload("res://scenes/objects/SustainNote.tscn").instantiate()
@@ -56,7 +55,3 @@ func _ready() -> void:
 		self.sustain = sustainNote
 	else:
 		sustainLength = 0
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
