@@ -21,17 +21,15 @@ func load(character:String) -> void:
 
 func _process(delta: float) -> void:
 	flip_h = player
-	if health < 0.2:
-		if (player): frame = 1
-		else: frame = 0
-	elif health > 1.8:
-		if (player): frame = 2
-		else: frame = 1
+	if health < 0.2 && player:
+		frame = 0
+	elif health > 1.8 && !player:
+		frame = 1
 	else:
 		frame = 0
 "
 
 [node name="HealthIcon" type="Sprite2D"]
 texture = ExtResource("1_3r0p2")
-hframes = 3
+hframes = 2
 script = SubResource("GDScript_3r0p2")
