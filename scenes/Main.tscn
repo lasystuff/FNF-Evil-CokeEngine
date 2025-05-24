@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dk6b45hm4esc1"]
+[gd_scene load_steps=12 format=3 uid="uid://dk6b45hm4esc1"]
 
 [ext_resource type="Script" uid="uid://incgdd7rvjkj" path="res://scenes/Main.gd" id="1_r150o"]
+[ext_resource type="PackedScene" uid="uid://darm5wnqwe2uu" path="res://scenes/objects/Soundtray.tscn" id="2_0bbpv"]
 [ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="2_rvslj"]
 
 [sub_resource type="Gradient" id="Gradient_rvslj"]
@@ -93,10 +94,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_vcsgt")
 }
 
-[node name="DebugDisplay" type="CanvasLayer" parent="."]
+[node name="overlay" type="CanvasLayer" parent="."]
 layer = 128
 
-[node name="label" type="RichTextLabel" parent="DebugDisplay"]
+[node name="Soundtray" parent="overlay" instance=ExtResource("2_0bbpv")]
+position = Vector2(640, -56)
+
+[node name="debugText" type="RichTextLabel" parent="overlay"]
 offset_left = 8.0
 offset_top = 4.0
 offset_right = 256.0
@@ -109,7 +113,7 @@ Memory: 0 MB [color=\"gray\"]/ 500 MB[/color]
 [color=\"red\"]Evil[/color] Coke Engine Indev"
 scroll_active = false
 
-[node name="labelExtra" type="RichTextLabel" parent="DebugDisplay"]
+[node name="debugTextExtra" type="RichTextLabel" parent="overlay"]
 offset_left = 8.0
 offset_top = 64.0
 offset_right = 384.0

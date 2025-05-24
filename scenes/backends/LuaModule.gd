@@ -23,11 +23,16 @@ func _initLua():
 			
 	lua.globals["PlayScene"] = PlayScene
 
+var runtimeDictionary:Dictionary
 func do():
 	var result = lua.do_file(scriptPath)
 	if result is LuaError:
 		printerr("Error in Lua code: ", result)
+	runtimeDictionary = lua.globals.to_dictionary()
 
+var runtimeCallables:Dictionary = {}
 func callLua(function:String, args:Array = []):
-	if (lua != null && lua.globals.to_dictionary().has(function)):
-		lua.globals[function].to_callable().callv(args)
+	if runtimeDictionary != null:
+		if runtimeCallables.has(function):
+			return runtimeCallables[function].callv(args)
+		runtimeCallables[function] = runtimeDictionary[function].to_callable()

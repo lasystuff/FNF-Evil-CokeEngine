@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://4epjldsrdmuh"]
+
+[ext_resource type="SpriteFrames" uid="uid://cmn8kdyx3ey4q" path="res://assets/images/ui/noteSplashes.xml" id="1_0kqw7"]
+[ext_resource type="Script" uid="uid://d0q0hauknjcfs" path="res://scenes/objects/NoteSplash.gd" id="2_b1hgi"]
+
+[node name="NoteSplash" type="AnimatedSprite2D"]
+modulate = Color(1, 1, 1, 0.8)
+sprite_frames = ExtResource("1_0kqw7")
+animation = &"note impact 2 purple"
+speed_scale = 0.7
+script = ExtResource("2_b1hgi")

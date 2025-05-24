@@ -19,6 +19,8 @@ var sustain;
 var status = NEUTRAL
 var autoFollow:bool = true # for sustain notes
 
+var splash:String = "noteSplashes"
+
 var hitDiff:float = 0:
 	set(value):
 		if value < 0:

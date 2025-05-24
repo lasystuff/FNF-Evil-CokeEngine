@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://darm5wnqwe2uu"]
+
+[ext_resource type="Script" uid="uid://p0uhx6hjd22b" path="res://scenes/objects/Soundtray.gd" id="1_fgw02"]
+[ext_resource type="Texture2D" uid="uid://of75h3mnqvlf" path="res://assets/images/ui/soundtray/volumebox.png" id="1_mfiyv"]
+[ext_resource type="Texture2D" uid="uid://bfr1661tmnesf" path="res://assets/images/ui/soundtray/bars_10.png" id="2_eqjb5"]
+
+[node name="Soundtray" type="Sprite2D"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_mfiyv")
+script = ExtResource("1_fgw02")
+
+[node name="hideTimer" type="Timer" parent="."]
+wait_time = 1.3
+one_shot = true
+
+[node name="bars" type="Sprite2D" parent="."]
+position = Vector2(0, -28.5714)
+scale = Vector2(1, 1)
+texture = ExtResource("2_eqjb5")
+
+[connection signal="timeout" from="hideTimer" to="." method="_on_hide_timer_timeout"]

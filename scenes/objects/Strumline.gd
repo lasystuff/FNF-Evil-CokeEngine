@@ -6,6 +6,7 @@ var queuedNotes:Array = []
 
 var scrollSpeed:float = 1
 var botplay:bool = false
+var playNoteSplash:bool = false
 
 var notePressTimer = [0, 0, 0, 0]
 var controlArray = ["ui_left", "ui_down", "ui_up", "ui_right"]
@@ -72,6 +73,10 @@ func _noteHit(note, isSustain):
 	note.status = Note.HIT
 
 	if (!isSustain):
+		if playNoteSplash:
+			var splash = preload("res://scenes/objects/NoteSplash.tscn").instantiate()
+			strums[note.noteData].add_child(splash)
+			splash.start(note)
 		if note.sustainLength >= 0:
 			note.autoFollow = false
 			note.global_position.y = strums[note.noteData].global_position.y

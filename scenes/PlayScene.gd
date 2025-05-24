@@ -61,6 +61,7 @@ func _ready() -> void:
 	
 	$playHud/opponentStrums.botplay = true
 	$playHud/playerStrums.botplay = true
+	$playHud/playerStrums.playNoteSplash = true
 	
 	$playHud/playerStrums.noteHit.connect(goodNoteHit)
 	$playHud/playerStrums.noteMiss.connect(noteMissCallback)
