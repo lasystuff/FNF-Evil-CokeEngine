@@ -5,6 +5,17 @@ var spawnDistance:float = 3000
 var queuedNotes:Array = []
 
 var scrollSpeed:float = 1
+# very funny implemetion but works so good im genious
+var downscroll:bool = false:
+	set(value):
+		downscroll = value
+		var thing = 1
+		if downscroll:
+			thing = -1
+		self.scale.y = thing
+		for strum in strums:
+			strum.scale.y *= thing
+	
 var botplay:bool = false
 var playNoteSplash:bool = false
 
@@ -45,7 +56,11 @@ func _process(delta: float) -> void:
 		var targetX = strums[note.noteData].global_position.x
 		var targetY = strums[note.noteData].global_position.y
 		note.global_position.x = targetX
-		note.global_position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
+		#strum rotation do cool stuffs so i dont need to edit sustain shit yay!!
+		if downscroll:
+			note.global_position.y = targetY + (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
+		else:
+			note.global_position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
 		updateNoteStatus(note)
 		
 		if botplay && Conductor.songPosition >= note.strumTime && note.status == Note.HITTABLE:

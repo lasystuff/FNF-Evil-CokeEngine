@@ -27,6 +27,15 @@ func _process(delta: float) -> void:
 		self.global_position = parentNote.global_position
 		$sustain.scale.y = length * speedAdjust
 	$tail.position.y = (sustainHeight * $sustain.scale.y)
+	
+	if parentNote.scale.y < 0:
+		$sustain.flip_h = true
+		$tail.flip_h = true
+		scale.y = -1
+	else:
+		$sustain.flip_h = false
+		$tail.flip_h = false
+		scale.y = 1
 
 func updateAnim():
 	match parentNote.noteData:

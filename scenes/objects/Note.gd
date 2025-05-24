@@ -57,3 +57,11 @@ func _ready() -> void:
 		self.sustain = sustainNote
 	else:
 		sustainLength = 0
+
+
+func _process(delta: float) -> void:
+	if strumline != null:
+		if strumline.downscroll:
+			self.scale.y = 0.7*-1
+		else:
+			self.scale.y = 0.7
