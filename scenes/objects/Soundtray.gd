@@ -23,8 +23,11 @@ func _process(delta: float) -> void:
 		elif curVolume < remappedVolume:
 			GlobalSound.playSound("soundtray/volUp")
 		curVolume = remappedVolume
-		if curVolume > 0:
+		if curVolume != 0:
+			$bars.visible = true
 			$bars.texture = load("res://assets/images/ui/soundtray/bars_" + str(curVolume) + ".png")
+		else:
+			$bars.visible = false
 		AudioServer.set_bus_volume_db(0, remap(curVolume, 0, 10, -80, 0))
 
 

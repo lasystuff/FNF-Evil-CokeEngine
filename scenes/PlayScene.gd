@@ -37,13 +37,21 @@ var accuracy:float = 1
 var everyNote:float = 0
 var hitNoteDiffs:float = 0
 
+var combo:int = -1:
+	set(value):
+		combo = value
+		if combo > maxCombo:
+			maxCombo = combo
+var maxCombo:int = 0
+var comboBreaks:int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instance = self
 	
 	if song == null:
-		playlist.push_back(SongData.getSong("lit-up-bf", "hard"))
-		
+		playlist.push_back(SongData.getSong("bopeebo-erect", "hard"))
+
 	var audio = SongData.getAudio(song)
 	
 	$inst.stream = load(audio.instrumental)
@@ -203,6 +211,7 @@ func goodNoteHit(note, isSustain):
 		score += 350*data.scoreMult
 		health += 0.03
 		hitNoteDiffs += data.accuaracyMult
+		combo += 1
 		
 		spawnJudgementSprite(RatingData.getRatingName(note.hitDiff))
 	else:
@@ -220,6 +229,10 @@ func noteMissCallback(note, isSustain):
 func noteMiss(id:int = 0, healthLoss:float = 1, character = null):
 	misses += 1
 	health -= healthLoss
+
+	if combo > -1:
+		combo = -1
+		comboBreaks += 1
 	
 	var rng = RandomNumberGenerator.new()
 	GlobalSound.playSound("missnote" + str(rng.randi_range(1, 3)))
@@ -263,14 +276,26 @@ func spawnJudgementSprite(judge:String):
 	var judgeWorld = stage.get_node_or_null("judgeSpawner")
 	if (judgeWorld != null): #&& worldJudgeDisplay
 		judgeSpawner = judgeWorld
+
 	var judgeSprite = Sprite2D.new()
 	judgeSprite.scale = Vector2(1.1, 1.1)
 	judgeSprite.texture = load("res://assets/images/ui/judgements/" + judge + ".png")
 	judgeSpawner.add_child(judgeSprite)
-	
-	
+
 	var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	sprTween.finished.connect(func(): judgeSprite.queue_free())
 	sprTween.tween_property(judgeSprite, "scale", Vector2(1, 1), (Conductor.crotchet / 1000))
 	sprTween.tween_property(judgeSprite, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*2)
 	sprTween.tween_property(judgeSprite, "position:y", judgeSprite.position.y + 140, (Conductor.crotchet / 1000)*2.3)
+
+	if combo > 0:
+		var comboDisplay = preload("res://scenes/objects/ComboDisplay.tscn").instantiate()
+		comboDisplay.scale = Vector2(0.8, 0.8)
+		comboDisplay.number = self.combo
+		comboDisplay.global_position = Vector2(judgeSprite.global_position.x, judgeSprite.global_position.y + 200)
+		judgeSpawner.add_child(comboDisplay)
+		
+		sprTween.finished.connect(func(): comboDisplay.queue_free())
+		sprTween.tween_property(comboDisplay, "scale", Vector2(0.75, 0.75), (Conductor.crotchet / 1000))
+		sprTween.tween_property(comboDisplay, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*3)
+		sprTween.tween_property(comboDisplay, "position:y", comboDisplay.position.y + 50, (Conductor.crotchet / 1000)*3)

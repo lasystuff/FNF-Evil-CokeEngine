@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gm4lsnw8cx5s"]
+
+[ext_resource type="Script" uid="uid://jb43lmh77c7t" path="res://scenes/objects/ComboDisplay.gd" id="1_bjnh8"]
+
+[node name="ComboDisplay" type="Node2D"]
+script = ExtResource("1_bjnh8")
