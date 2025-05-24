@@ -9,12 +9,10 @@ var scrollSpeed:float = 1
 var downscroll:bool = false:
 	set(value):
 		downscroll = value
-		var thing = 1
 		if downscroll:
-			thing = -1
-		self.scale.y = thing
-		for strum in strums:
-			strum.scale.y *= thing
+			$noteSpawner.scale.y = -1 # sustain auto fix lol
+		else:
+			$noteSpawner.scale.y = 1
 	
 var botplay:bool = false
 var playNoteSplash:bool = false
