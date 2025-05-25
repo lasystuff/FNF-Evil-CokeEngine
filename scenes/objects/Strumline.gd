@@ -98,7 +98,7 @@ func _noteHit(note, isSustain):
 		else:
 			note.queue_free()
 	else:
-		if note.sustain.length <= 0:
+		if note.sustain.length <= 0.2:
 			note.queue_free()
 			return
 		if !botplay && !Input.is_action_pressed(controlArray[note.noteData]):
