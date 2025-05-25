@@ -106,8 +106,8 @@ func _ready() -> void:
 	opponent = FNFCharacter2D.new("dad")
 	add_child(opponent)
 	
-	player.playAnim("idle")
-	opponent.playAnim("idle")
+	player.idle()
+	opponent.idle()
 	
 	# stage var shit
 	camZoom = stage.zoom
@@ -169,7 +169,6 @@ func startSong():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
-	
 	if !songStarted:
 		Conductor.songPosition += delta * 1000
 	else:
@@ -188,14 +187,22 @@ func _process(delta: float) -> void:
 	$playHud.offset.y = (-Constant.height/2)*($playHud.scale.y-1)
 	
 	accuracy = (hitNoteDiffs / everyNote)*100
+	
+	if Input.is_action_just_pressed("ui_debug2"):
+		Main.nextTransIn = "quickIn"
+		if Input.is_key_pressed(KEY_SHIFT):
+			CharacterDebug.characterName = player.characterName
+			CharacterDebug.player = true
+		else:
+			CharacterDebug.characterName = opponent.characterName
+			CharacterDebug.player = false
+		Main.switchScene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
 
 func beatHit():
 	super()
 	if curBeat % 2 == 0:
-		if !player.singing:
-			player.playAnim("idle")
-		if !opponent.singing:
-			opponent.playAnim("idle")
+		player.idle()
+		opponent.idle()
 	if curBeat % 4 == 0:
 		camZoomAdd = 0.02
 	$playHud.beatHit(curBeat)

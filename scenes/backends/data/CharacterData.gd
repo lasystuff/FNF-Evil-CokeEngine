@@ -8,6 +8,7 @@ const defaultData = {
 	"position": Vector2(),
 	"cameraPosition": Vector2(),
 	"animations": [],
+	"idleAnimations": ["idle"],
 	"scale": 1,
 	"antialiasing": true,
 	"flipHorizon": true,
@@ -37,7 +38,7 @@ static func getCharacter(char:String):
 			data["animations"] = []
 			for entry in luaScript.lua.globals["animations"].to_array():
 				var thing = entry.to_dictionary()
-				thing.indices = thing.indices.to_dictionary()
+				thing.indices = thing.indices.to_array()
 				data["animations"].push_back(thing)
 		elif key != "id":
 			data[key] = luaScript.lua.globals[key]

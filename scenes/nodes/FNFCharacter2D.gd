@@ -10,6 +10,7 @@ var healthColor = Color(255, 0, 0)
 
 var singDuration:float = 4
 
+var curAnim:String = ""
 var holdTimer:float = 0
 var singing:bool = false
 var interruptible:bool = true
@@ -29,6 +30,8 @@ func _ready() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	flip_h = data.flipHorizon
 	singDuration = data.singDuration
+	
+	self.frame_changed.connect(onFrameChange)
 
 func playAnim(name:String, force:bool = false):
 	var anim = getAnimData(name)
@@ -39,6 +42,8 @@ func playAnim(name:String, force:bool = false):
 	if force:
 		stop()
 
+	curAnim = name
+	curFrameIndex = 0
 	play(anim.prefix, anim.fps/24)
 	self.offset = Vector2(anim.offset.x, anim.offset.y)
 
@@ -60,3 +65,20 @@ func getAnimData(name:String):
 		if entry.name == name:
 			return entry
 	return null
+
+var curIdle:int = 0
+func idle():
+	if !singing:
+		if curIdle > data.idleAnimations.size() - 1:
+			curIdle = 0
+		playAnim(data.idleAnimations[curIdle])
+		curIdle += 1
+
+var curFrameIndex = 0
+func onFrameChange():
+	curFrameIndex += 1
+	var data = getAnimData(curAnim)
+	if data.indices.size() > 0:
+		print(curFrameIndex)
+		if curFrameIndex <= data.indices.size() - 1:
+			frame = data.indices[curFrameIndex]

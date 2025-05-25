@@ -1,6 +1,6 @@
 texture = "characters/BOYFRIEND"
 position = Vector2(0, 0)
-cameraPosition = Vector2(0, 0)
+cameraPosition = Vector2(0, -50)
 
 animations = {
 	{
@@ -14,7 +14,7 @@ animations = {
 	{
 		name = "singLEFT",
 		prefix = "BF NOTE LEFT",
-		offset = Vector2(-12, 6),
+		offset = Vector2(-20, -2),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -22,7 +22,7 @@ animations = {
 	{
 		name = "singDOWN",
 		prefix = "BF NOTE DOWN",
-		offset = Vector2(10, 30),
+		offset = Vector2(0, 20),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -30,7 +30,7 @@ animations = {
 	{
 		name = "singUP",
 		prefix = "BF NOTE UP",
-		offset = Vector2(29, -27),
+		offset = Vector2(25, -20),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -38,7 +38,7 @@ animations = {
 	{
 		name = "singRIGHT",
 		prefix = "BF NOTE RIGHT",
-		offset = Vector2(38, 7),
+		offset = Vector2(45, 0),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -47,7 +47,7 @@ animations = {
 	{
 		name = "singLEFTmiss",
 		prefix = "BF NOTE LEFT MISS",
-		offset = Vector2(-12, -24),
+		offset = Vector2(-20, -15),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -55,7 +55,7 @@ animations = {
 	{
 		name = "singDOWNmiss",
 		prefix = "BF NOTE DOWN MISS",
-		offset = Vector2(11, 19),
+		offset = Vector2(0, 1),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -63,7 +63,7 @@ animations = {
 	{
 		name = "singUPmiss",
 		prefix = "BF NOTE UP MISS",
-		offset = Vector2(29, -27),
+		offset = Vector2(20, -15),
 		indices = {},
 		loop = false,
 		fps = 24
@@ -71,7 +71,7 @@ animations = {
 	{
 		name = "singRIGHTmiss",
 		prefix = "BF NOTE RIGHT MISS",
-		offset = Vector2(30, -21),
+		offset = Vector2(40, -10),
 		indices = {},
 		loop = false,
 		fps = 24

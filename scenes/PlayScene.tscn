@@ -17,6 +17,7 @@ script = ExtResource("1_ot0y2")
 position = Vector2(58, 76)
 
 [node name="playHud" parent="." instance=ExtResource("5_21h8x")]
+layer = 100
 
 [node name="playerStrums" parent="playHud" instance=ExtResource("3_ityjc")]
 position = Vector2(960, 96)

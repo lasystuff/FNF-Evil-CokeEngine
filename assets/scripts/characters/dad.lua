@@ -1,6 +1,6 @@
 texture = "characters/daddyDearest"
 position = Vector2(0, 0)
-cameraPosition = Vector2(0, 0)
+cameraPosition = Vector2(100, -100)
 
 animations = {
     {
@@ -14,7 +14,7 @@ animations = {
     {
         name = "singLEFT",
         prefix = "singLEFT",
-        offset = Vector2(10, -10),
+        offset = Vector2(-20, -5),
         indices = {},
         loop = false,
         fps = 24
@@ -22,7 +22,7 @@ animations = {
     {
         name = "singDOWN",
         prefix = "singDOWN",
-        offset = Vector2(0, 30),
+        offset = Vector2(20, 15),
         indices = {},
         loop = false,
         fps = 24
@@ -30,7 +30,7 @@ animations = {
     {
         name = "singUP",
         prefix = "singUP",
-        offset = Vector2(6, -50),
+        offset = Vector2(-3, -25),
         indices = {},
         loop = false,
         fps = 24
@@ -38,7 +38,7 @@ animations = {
     {
         name = "singRIGHT",
         prefix = "singRIGHT",
-        offset = Vector2(0, -27),
+        offset = Vector2(20, -15),
         indices = {},
         loop = false,
         fps = 24
