@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Friday Night Funkin': \"EVIL\" Coke Engine"
+config/name="Friday Night Funkin' EVIL Coke Engine"
 run/main_scene="uid://dk6b45hm4esc1"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="uid://cv3d8x1kitcia"

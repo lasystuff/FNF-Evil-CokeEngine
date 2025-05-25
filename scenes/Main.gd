@@ -17,7 +17,12 @@ static func switchScene(scene):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instance = self
+	SaveData.load()
 	_switchScene(load("res://scenes/PlayScene.tscn"))
+	
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		SaveData.save()
 
 var oldMem = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -73,12 +73,20 @@ func idle():
 			curIdle = 0
 		playAnim(data.idleAnimations[curIdle])
 		curIdle += 1
+		
+		
 
 var curFrameIndex = 0
+var autoChanged:bool = false
 func onFrameChange():
-	curFrameIndex += 1
+	if autoChanged:
+		return
 	var data = getAnimData(curAnim)
 	if data.indices.size() > 0:
-		print(curFrameIndex)
-		if curFrameIndex <= data.indices.size() - 1:
-			frame = data.indices[curFrameIndex]
+		curFrameIndex += 1
+		if curFrameIndex >= data.indices.size() - 1:
+			curFrameIndex = data.indices.size() - 1
+
+		autoChanged = true
+		frame =  data.indices[curFrameIndex]
+		autoChanged = false

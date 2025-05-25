@@ -13,6 +13,7 @@ static var song:
 
 var stage = null
 
+var dj = null
 var player = null
 var opponent = null
 
@@ -100,18 +101,22 @@ func _ready() -> void:
 	stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
 	
+	dj = FNFCharacter2D.new("gf")
+	add_child(dj)
 	player = FNFCharacter2D.new("bf")
 	add_child(player)
 	player.flip_h = !player.flip_h
 	opponent = FNFCharacter2D.new("dad")
 	add_child(opponent)
 	
+	dj.idle()
 	player.idle()
 	opponent.idle()
 	
 	# stage var shit
 	camZoom = stage.zoom
 	
+	dj.position += stage.get_node("djPos").global_position
 	player.position += stage.get_node("playerPos").global_position
 	opponent.position += stage.get_node("opponentPos").global_position
 	
@@ -140,12 +145,18 @@ func startCountdown():
 			0:
 				GlobalSound.playSound("countdown/onyourmark")
 				countSprite.texture = load("res://assets/images/ui/countdown/onyourmark.png")
+				
+				player.idle()
+				opponent.idle()
 			1:
 				GlobalSound.playSound("countdown/ready")
 				countSprite.texture = load("res://assets/images/ui/countdown/ready.png")
 			2:
 				GlobalSound.playSound("countdown/set")
 				countSprite.texture = load("res://assets/images/ui/countdown/set.png")
+				
+				player.idle()
+				opponent.idle()
 			3:
 				GlobalSound.playSound("countdown/go")
 				countSprite.texture = load("res://assets/images/ui/countdown/go.png")
@@ -154,6 +165,8 @@ func startCountdown():
 				$playHud/countdownSpawner.queue_free()
 				onCountdown = false
 				startSong()
+				
+		dj.idle()
 
 		curCountdown += 1
 	)
@@ -200,6 +213,7 @@ func _process(delta: float) -> void:
 
 func beatHit():
 	super()
+	dj.idle()
 	if curBeat % 2 == 0:
 		player.idle()
 		opponent.idle()
@@ -285,7 +299,7 @@ func spawnJudgementSprite(judge:String):
 		judgeSpawner = judgeWorld
 
 	var judgeSprite = Sprite2D.new()
-	judgeSprite.scale = Vector2(1.1, 1.1)
+	judgeSprite.scale = Vector2(1.15, 1.15)
 	judgeSprite.texture = load("res://assets/images/ui/judgements/" + judge + ".png")
 	judgeSpawner.add_child(judgeSprite)
 

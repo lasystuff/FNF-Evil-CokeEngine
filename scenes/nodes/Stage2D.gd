@@ -9,5 +9,6 @@ class_name FNFStage2D
 @export var opponentCameraOffset:Vector2 = Vector2()
 
 func _ready() -> void:
+	$djPos.visible = false
 	$playerPos.visible = false
 	$opponentPos.visible = false

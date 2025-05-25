@@ -35,11 +35,13 @@ static func getCharacter(char:String):
 	for key in data.keys():
 		# okay... who made playtime cry...?????
 		if key == "animations":
-			data["animations"] = []
 			for entry in luaScript.lua.globals["animations"].to_array():
 				var thing = entry.to_dictionary()
 				thing.indices = thing.indices.to_array()
 				data["animations"].push_back(thing)
+		elif key == "idleAnimations":
+			if typeof(luaScript.lua.globals["idleAnimations"]) != TYPE_ARRAY:
+				data["idleAnimations"] = luaScript.lua.globals["idleAnimations"].to_array()
 		elif key != "id":
 			data[key] = luaScript.lua.globals[key]
 	
