@@ -76,6 +76,14 @@ func _ready() -> void:
 	$playHud/playerStrums.noteMiss.connect(noteMissCallback)
 	$playHud/opponentStrums.noteHit.connect(opponentNoteHit)
 	
+	if SaveData.data.downscroll:
+		for lane in [$playHud/opponentStrums, $playHud/playerStrums]:
+			lane.downscroll = true
+			lane.position.y += 530
+	if SaveData.data.middlescroll:
+		$playHud/opponentStrums.visible = false
+		$playHud/playerStrums.position.x = Constant.width/2
+	
 	# pushing notes
 	for section in song.notes:
 		for note in section.sectionNotes:

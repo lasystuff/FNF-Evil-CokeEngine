@@ -82,7 +82,7 @@ script = ExtResource("1_r150o")
 [node name="SceneLoader" type="Node2D" parent="."]
 
 [node name="Transition" type="CanvasLayer" parent="."]
-layer = 100
+layer = 127
 
 [node name="grad" type="Sprite2D" parent="Transition"]
 position = Vector2(640, -720)

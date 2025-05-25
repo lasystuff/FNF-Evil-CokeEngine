@@ -5,6 +5,9 @@ var game
 func initHud():
 	$iconP1.load(game.player.icon)
 	$iconP2.load(game.opponent.icon)
+	if SaveData.data.downscroll:
+		for obj in [$healthBar, $iconP1, $iconP2, $scoreText]:
+			obj.position.y -= 570
 
 var iconBopScale = 1.2
 func beatHit(beat:int):

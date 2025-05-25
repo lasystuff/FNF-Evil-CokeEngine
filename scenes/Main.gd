@@ -18,6 +18,15 @@ static func switchScene(scene):
 func _ready() -> void:
 	instance = self
 	SaveData.load()
+
+	match SaveData.data.vsync:
+		_:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		1:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		2:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+	
 	_switchScene(load("res://scenes/PlayScene.tscn"))
 	
 func _notification(what):
@@ -48,6 +57,17 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("hotreload"):
 		nextTransIn = "quickIn"
 		_switchScene(nextState)
+		
+	match SaveData.data.debugCounterType:
+		0:
+			$overlay/debugText.visible = false
+			$overlay/debugTextExtra.visible = false
+		1:
+			$overlay/debugText.visible = true
+			$overlay/debugTextExtra.visible = true
+		2:
+			$overlay/debugText.visible = true
+			$overlay/debugTextExtra.visible = false
 
 var nextState
 func _switchScene(scene):

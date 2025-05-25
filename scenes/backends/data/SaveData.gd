@@ -17,6 +17,7 @@ static func load():
 
 	if FileAccess.file_exists("user://config.save"):
 		var savedData = str_to_var(FileAccess.get_file_as_string("user://config.save"))
+		# savedata compatibility via version or something idk
 		for key in savedData.keys():
 			data[key] = savedData[key]
 
