@@ -29,6 +29,7 @@ func _process(delta: float) -> void:
 		else:
 			$bars.visible = false
 		AudioServer.set_bus_volume_db(0, remap(curVolume, 0, 10, -80, 0))
+		SaveData.data._volume = curVolume
 
 
 func displayTray():

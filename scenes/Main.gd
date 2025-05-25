@@ -19,6 +19,8 @@ func _ready() -> void:
 	instance = self
 	SaveData.load()
 
+	$overlay/Soundtray.curVolume = SaveData.data._volume
+	AudioServer.set_bus_volume_db(0, remap(SaveData.data._volume, 0, 10, -80, 0))
 	match SaveData.data.vsync:
 		_:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
