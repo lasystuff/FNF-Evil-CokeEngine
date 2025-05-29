@@ -244,7 +244,6 @@ func goodNoteHit(note, isSustain):
 		
 		spawnJudgementSprite(RatingData.getRatingName(note.hitDiff))
 	else:
-		health += 0.001
 		score += 0.1
 
 func noteMissCallback(note, isSustain):

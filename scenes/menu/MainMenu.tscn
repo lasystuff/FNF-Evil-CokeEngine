@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bi6bgehcfadei"]
+
+[ext_resource type="Script" uid="uid://bewh7c4x0foly" path="res://scenes/menu/MainMenu.gd" id="1_s3dsm"]
+[ext_resource type="Texture2D" uid="uid://bxsafdan5stau" path="res://assets/images/menu/menuBG.png" id="2_s3dsm"]
+[ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="3_uwj7d"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_s3dsm")
+metadata/_custom_type_script = "uid://r60w6aww8gaq"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+
+[node name="Camera2D2" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+
+[node name="bg" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+scroll_offset = Vector2(0, 8)
+
+[node name="texture" type="Sprite2D" parent="bg"]
+texture = ExtResource("2_s3dsm")
+
+[node name="items" type="Node2D" parent="."]
+
+[node name="overlay" type="CanvasLayer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="overlay"]
+offset_left = 8.0
+offset_top = 680.0
+offset_right = 432.0
+offset_bottom = 720.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("3_uwj7d")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[color=\"red\"]EVIL[/color] Coke Engine Indev
+Friday Night Funkin' Rewritten"
+scroll_active = false
