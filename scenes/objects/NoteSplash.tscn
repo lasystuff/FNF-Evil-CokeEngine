@@ -6,6 +6,6 @@
 [node name="NoteSplash" type="AnimatedSprite2D"]
 modulate = Color(1, 1, 1, 0.8)
 sprite_frames = ExtResource("1_0kqw7")
-animation = &"note impact 2 purple"
+animation = &"note splash blue 1"
 speed_scale = 0.7
 script = ExtResource("2_b1hgi")

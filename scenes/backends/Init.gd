@@ -4,7 +4,7 @@ extends Node
 func _ready() -> void:
 	# fix of fucking macOS DPI
 	if OS.get_name() == "macOS":
-		get_window().size = Vector2i(1280*2, 720*2)
+		get_window().size = Vector2i(Constant.width*2, Constant.height*2)
 	get_window().move_to_center()
 
 
