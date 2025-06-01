@@ -47,7 +47,6 @@ static func getCharacter(char:String):
 	
 	return data
 
-
 static func listCharacter() -> Array:
 	var finalArray = []
 	var files = DirAccess.get_files_at("res://assets/scripts/characters/")

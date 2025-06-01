@@ -46,6 +46,9 @@ var combo:int = -1:
 var maxCombo:int = 0
 var comboBreaks:int = 0
 
+var modchart:ModchartManager;
+var modules:Dictionary = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instance = self
@@ -101,6 +104,12 @@ func _ready() -> void:
 			else:
 				$playHud/opponentStrums.addNoteData(rawData)
 
+
+	modchart = ModchartManager.new()
+	add_child(modchart)
+	$playHud/playerStrums.postUpdateNote.connect(func(): updateModchart(0))
+	$playHud/opponentStrums.postUpdateNote.connect(func(): updateModchart(1))
+
 	# init stages
 	var targetStage = song.stage
 	if !ResourceLoader.exists("res://scenes/stages/" + targetStage + ".tscn"):
@@ -127,6 +136,13 @@ func _ready() -> void:
 	dj.position += stage.get_node("djPos").global_position
 	player.position += stage.get_node("playerPos").global_position
 	opponent.position += stage.get_node("opponentPos").global_position
+	
+	for file in listExternalScript():
+		var luaScript = LuaModule.new("external/" + file)
+		addLuaVariables(luaScript)
+		luaScript.do()
+		modules[file] = luaScript
+	for lua in modules.values(): lua.callLua("onReady")
 	
 	startCountdown()
 
@@ -179,6 +195,7 @@ func startCountdown():
 		curCountdown += 1
 	)
 	countdownTimer.start(Conductor.crotchet / 1000)
+	for lua in modules.values(): lua.callLua("onStartCountdown")
 	
 func startSong():
 	songStarted = true
@@ -187,6 +204,8 @@ func startSong():
 	$opponentVoices.play()
 	
 	Conductor.songPosition = 0
+	for lua in modules.values(): lua.callLua("onSongStart")
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
@@ -218,6 +237,8 @@ func _process(delta: float) -> void:
 			CharacterDebug.characterName = opponent.characterName
 			CharacterDebug.player = false
 		Main.switchScene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
+		
+	for lua in modules.values(): lua.callLua("onProcess", [delta])
 
 func beatHit():
 	super()
@@ -228,8 +249,11 @@ func beatHit():
 	if curBeat % 4 == 0:
 		camZoomAdd = 0.02
 	$playHud.beatHit(curBeat)
+	for lua in modules.values(): lua.callLua("onBeatHit", [curBeat])
 
 func goodNoteHit(note, isSustain):
+	for lua in modules.values(): lua.callLua("onGoodNoteHit", [note, isSustain])
+	
 	$playerVoices.volume_db = 0
 	doSingAnimation(player, note.noteData)
 	
@@ -268,6 +292,7 @@ func noteMiss(id:int = 0, healthLoss:float = 1, character = null):
 		doSingAnimation(character, id, "miss")
 
 func opponentNoteHit(note, isSustain):
+	for lua in modules.values(): lua.callLua("onOpponentNoteHit", [note, isSustain])
 	doSingAnimation(opponent, note.noteData)
 
 var animArray = ["singLEFT", "singDOWN", "singUP", "singRIGHT"]
@@ -278,6 +303,7 @@ func doSingAnimation(char:FNFCharacter2D, data:int, postfix:String = ""):
 func sectionHit():
 	super()
 	moveCamBySection()
+	for lua in modules.values(): lua.callLua("onSectionHit", [curSection])
 
 func moveCamBySection():
 	if song.notes[curSection].mustHitSection:
@@ -327,3 +353,25 @@ func spawnJudgementSprite(judge:String):
 		sprTween.tween_property(comboDisplay, "scale", Vector2(0.75, 0.75), (Conductor.crotchet / 1000))
 		sprTween.tween_property(comboDisplay, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*3)
 		sprTween.tween_property(comboDisplay, "position:y", comboDisplay.position.y + 50, (Conductor.crotchet / 1000)*3)
+
+func listExternalScript() -> Array:
+	var finalArray = []
+	var files = DirAccess.get_files_at("res://assets/scripts/external/")
+	for file in files:
+		if file.ends_with(".lua"):
+			finalArray.push_back(file.split(".lua")[0])
+	return finalArray
+
+func addLuaVariables(module:LuaModule):
+	module.lua.globals["game"] = PlayScene.instance
+	module.lua.globals["modchart"] = PlayScene.instance.modchart
+
+func updateModchart(player:int):
+	var target = $playHud/opponentStrums
+	if player == 0:
+		target = $playHud/playerStrums
+		
+	for i in target.strums.size():
+		modchart.updateStrum(target, i, player)
+	for note in target.get_node("noteSpawner").get_children():
+		modchart.updateNote(note, player)

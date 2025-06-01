@@ -3,7 +3,6 @@ extends CanvasLayer
 var game
 # Called when the node enters the scene tree for the first time.
 func initHud():
-	$metaText.text = "-" + PlayScene.song.song + "[" + PlayScene.song.difficulty + "] -"
 	$iconP1.load(game.player.icon)
 	$iconP2.load(game.opponent.icon)
 	if SaveData.data.downscroll:

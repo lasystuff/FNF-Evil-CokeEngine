@@ -32,7 +32,7 @@ func do():
 
 var runtimeCallables:Dictionary = {}
 func callLua(function:String, args:Array = []):
-	if runtimeDictionary != null:
-		if runtimeCallables.has(function):
-			return runtimeCallables[function].callv(args)
-		runtimeCallables[function] = runtimeDictionary[function].to_callable()
+	if runtimeDictionary != null && runtimeDictionary.has(function):
+		if !runtimeCallables.has(function):
+			runtimeCallables[function] = runtimeDictionary[function].to_callable()
+		return runtimeCallables[function].callv(args)

@@ -56,17 +56,3 @@ text = "Score: 0 // Misses: 0 // Accuracy: 100%"
 scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 1
-
-[node name="metaText" type="RichTextLabel" parent="."]
-offset_top = 16.0
-offset_right = 1280.0
-offset_bottom = 40.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/normal_font = ExtResource("2_oy87d")
-theme_override_font_sizes/normal_font_size = 24
-bbcode_enabled = true
-text = "- Fresh Erect -"
-scroll_active = false
-autowrap_mode = 0
-horizontal_alignment = 1

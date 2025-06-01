@@ -23,10 +23,9 @@ func _process(delta: float) -> void:
 			if susLengthAdjust <= 0:
 				self.queue_free()
 
-
 		self.global_position = parentNote.global_position
 		$sustain.scale.y = length * speedAdjust
-	$tail.position.y = (sustainHeight * $sustain.scale.y)
+	$tail.position.y = sustainHeight * $sustain.scale.y
 	
 	if parentNote.scale.y < 0:
 		$sustain.flip_h = true

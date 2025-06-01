@@ -9,16 +9,14 @@ static func getSong(song:String, difficulty:String = "normal", variation:String 
 	var chartPath = songPath + "/" + song + difficulty + ".json"
 	if FileAccess.file_exists(chartPath):
 		var json = JSON.parse_string(FileAccess.get_file_as_string(chartPath))
-		addExData(json.song, difficulty, variation)
+		addExData(json.song, variation)
 		return json.song
 	else:
 		print("FUCK GUH UHHH NO CHART FUCKING FOUND!!!!!!! (" + chartPath + ") returning Test song instead! sorry bro")
 		return getSong("test", "hard")
 
 # add shitty stuffs to json
-static func addExData(data, difficulty, variation):
-	if !data.has("difficulty"):
-		data.difficulty = difficulty
+static func addExData(data, variation):
 	if !data.has("variation"):
 		data.variation = variation
 	if !data.has("stage"):

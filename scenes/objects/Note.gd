@@ -19,6 +19,9 @@ var sustain;
 var status = NEUTRAL
 var autoFollow:bool = true # for sustain notes
 
+var defaultScale:float = 0.7
+var z:float = 0
+
 var splash:String = "noteSplashes"
 
 var hitDiff:float = 0:
@@ -35,7 +38,7 @@ func _init(time:float, id:int, susLength:float) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	sprite_frames = preload("res://assets/images/ui/NOTE_assets.xml")
-	scale = Vector2(0.7, 0.7)
+	scale = Vector2(defaultScale, defaultScale)
 	
 	match noteData:
 		0:
@@ -62,6 +65,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if strumline != null:
 		if strumline.downscroll:
-			self.scale.y = 0.7*-1
+			self.scale.y = defaultScale*-1
 		else:
-			self.scale.y = 0.7
+			self.scale.y = defaultScale
