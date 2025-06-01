@@ -21,8 +21,8 @@ const defaultData = {
 
 static func getCharacter(char:String):
 	var data = defaultData.duplicate(true)
-	var characterPath = "res://assets/scripts/characters/" + char + ".lua"
-	if !FileAccess.file_exists(characterPath):
+	var characterPath = Paths.lua("characters/" + char)
+	if !ResourceLoader.exists(characterPath):
 		char = "bf"
 	
 	data.id = char
@@ -49,7 +49,7 @@ static func getCharacter(char:String):
 
 static func listCharacter() -> Array:
 	var finalArray = []
-	var files = DirAccess.get_files_at("res://assets/scripts/characters/")
+	var files = Paths.list("scripts/characters/")
 	for file in files:
 		if file.ends_with(".lua"):
 			finalArray.push_back(file.split(".lua")[0])

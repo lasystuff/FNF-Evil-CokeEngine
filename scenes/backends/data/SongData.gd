@@ -5,9 +5,8 @@ static func getSong(song:String, difficulty:String = "normal", variation:String 
 	if variation == "default":
 		variation = ""
 
-	var songPath = "res://assets/data/songs/" + song
-	var chartPath = songPath + "/" + song + difficulty + ".json"
-	if FileAccess.file_exists(chartPath):
+	var chartPath = Paths.json("songs/" + song + "/" + song + difficulty)
+	if ResourceLoader.exists(chartPath):
 		var json = JSON.parse_string(FileAccess.get_file_as_string(chartPath))
 		addExData(json.song, variation)
 		return json.song
@@ -28,23 +27,24 @@ static func normalizeDiff(diff:String):
 	else: return "-" + diff
 		
 static func getAudio(songData):
-	var songPath = "res://assets/songs/" + songData.song + "/"
-	
 	var list = {
-		"instrumental": songPath + "Inst.ogg", # Instrumental is required anyway
+		"instrumental": Paths.audio(songData.song + "/Inst", "songs/"), # Instrumental is required anyway
 		"player": null,
 		"opponent": null
 	}
 	
-	if ResourceLoader.exists(songPath + "Inst-" + songData.variation + ".ogg"):
-		list["instrumental"] = songPath + "Inst-" + songData.variation + ".ogg"
+	var inst = Paths.audio(songData.song + "/Inst-" + songData.variation, "songs/")
+	if ResourceLoader.exists(inst):
+		list["instrumental"] = inst
 
-	if ResourceLoader.exists(songPath + "Voices-" + songData.player1 + ".ogg"):
-		list["player"] = songPath + "Voices-" + songData.player1 + ".ogg"
-	elif ResourceLoader.exists(songPath + "Voices.ogg"): # Classic Vocals
-		list["player"] = songPath + "Voices.ogg"
+	var plrVox = Paths.audio(songData.song + "/Voices-" + songData.player1, "songs/")
+	if ResourceLoader.exists(plrVox):
+		list["player"] = plrVox
+	elif ResourceLoader.exists(Paths.audio(songData.song + "/Voices", "songs/")): # Classic Vocals
+		list["player"] = Paths.audio(songData.song + "/Voices", "song/s")
 
-	if ResourceLoader.exists(songPath + "Voices-" + songData.player2 + ".ogg"):
-		list["opponent"] = songPath + "Voices-" + songData.player2 + ".ogg"
+	var oppVox = Paths.audio(songData.song + "/Voices-" + songData.player2, "songs/")
+	if ResourceLoader.exists(oppVox):
+		list["opponent"] = oppVox
 	
 	return list

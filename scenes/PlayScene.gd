@@ -168,22 +168,22 @@ func startCountdown():
 		match curCountdown:
 			0:
 				GlobalSound.playSound("countdown/onyourmark")
-				countSprite.texture = load("res://assets/images/ui/countdown/onyourmark.png")
+				countSprite.texture = load(Paths.image("ui/countdown/onyourmark"))
 				
 				player.idle()
 				opponent.idle()
 			1:
 				GlobalSound.playSound("countdown/ready")
-				countSprite.texture = load("res://assets/images/ui/countdown/ready.png")
+				countSprite.texture = load(Paths.image("ui/countdown/ready"))
 			2:
 				GlobalSound.playSound("countdown/set")
-				countSprite.texture = load("res://assets/images/ui/countdown/set.png")
+				countSprite.texture = load(Paths.image("ui/countdown/set"))
 				
 				player.idle()
 				opponent.idle()
 			3:
 				GlobalSound.playSound("countdown/go")
-				countSprite.texture = load("res://assets/images/ui/countdown/go.png")
+				countSprite.texture = load(Paths.image("ui/countdown/go"))
 			4:
 				countdownTimer.stop()
 				$playHud/countdownSpawner.queue_free()
@@ -333,7 +333,7 @@ func spawnJudgementSprite(judge:String):
 
 	var judgeSprite = Sprite2D.new()
 	judgeSprite.scale = Vector2(1.15, 1.15)
-	judgeSprite.texture = load("res://assets/images/ui/judgements/" + judge + ".png")
+	judgeSprite.texture = load(Paths.image("ui/judgements/" + judge))
 	judgeSpawner.add_child(judgeSprite)
 
 	var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
@@ -356,7 +356,7 @@ func spawnJudgementSprite(judge:String):
 
 func listExternalScript() -> Array:
 	var finalArray = []
-	var files = DirAccess.get_files_at("res://assets/scripts/external/")
+	var files = Paths.list("scripts/external/")
 	for file in files:
 		if file.ends_with(".lua"):
 			finalArray.push_back(file.split(".lua")[0])

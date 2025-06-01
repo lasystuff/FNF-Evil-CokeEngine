@@ -20,12 +20,12 @@ func _ready() -> void:
 
 func playSound(path):
 	stopSound()
-	soundPlayer.stream = load("res://assets/sounds/" + path + ".ogg")
+	soundPlayer.stream = load(Paths.audio(path, "sounds/"))
 	soundPlayer.play()
 
 func playMusic(path):
 	stopMusic()
-	musicPlayer.stream = load("res://assets/music/" + path + ".ogg")
+	musicPlayer.stream = load(Paths.audio(path, "sounds/"))
 	musicPlayer.play()
 	
 func stopSound():

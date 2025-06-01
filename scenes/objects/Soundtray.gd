@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 		curVolume = remappedVolume
 		if curVolume != 0:
 			$bars.visible = true
-			$bars.texture = load("res://assets/images/ui/soundtray/bars_" + str(curVolume) + ".png")
+			$bars.texture = load(Paths.image("ui/soundtray/bars_" + str(curVolume)))
 		else:
 			$bars.visible = false
 		AudioServer.set_bus_volume_db(0, remap(curVolume, 0, 10, -80, 0))

@@ -5,7 +5,7 @@ var lua:LuaState = null
 var scriptPath = ""
 
 func _init(path:String) -> void:
-	scriptPath = "res://assets/scripts/" + path + ".lua"
+	scriptPath = Paths.lua(path)
 	if FileAccess.file_exists(scriptPath):
 		_initLua()
 	else:

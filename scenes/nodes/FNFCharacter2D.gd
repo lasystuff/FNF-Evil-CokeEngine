@@ -21,7 +21,7 @@ func _init(character:String):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	sprite_frames = load("res://assets/images/" + data.texture + ".xml")
+	sprite_frames = load(Paths.xml(data.texture))
 	position = data.position
 	cameraPosition = data.cameraPosition
 	scale = Vector2(data.scale, data.scale)

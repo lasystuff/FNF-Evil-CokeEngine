@@ -1,8 +1,7 @@
 extends AnimatedSprite2D
 
 func start(note:Note):
-	if note.splash != "noteSplashes":
-		self.sprite_frames = load("res://assets/images/ui/" + note.splash + ".png")
+	self.sprite_frames = load(Paths.xml("ui/" + note.splash))
 	offset = Vector2(-38, -47)
 
 	var random = RandomNumberGenerator.new().randi_range(1, 2)
