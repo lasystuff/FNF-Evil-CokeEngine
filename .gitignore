@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # MacOS-specific ignores
 .DS_Store
+
+# EVIL coke engine-spefic ignores
+/assets/_sandbox

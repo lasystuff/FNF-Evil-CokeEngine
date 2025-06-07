@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp1bgn0xu7kxy"]
+
+[ext_resource type="Script" uid="uid://r60w6aww8gaq" path="res://scenes/nodes/FNFScene2D.gd" id="1_niiqv"]
+[ext_resource type="Script" uid="uid://bsd8wfj55x5v4" path="res://scenes/nodes/SparrowLabel.gd" id="2_3qrqt"]
+[ext_resource type="SpriteFrames" uid="uid://dxiaxy7ied3ah" path="res://assets/images/ui/fonts/bold.xml" id="3_cwntj"]
+
+[node name="Freeplay" type="Node2D"]
+script = ExtResource("1_niiqv")
+metadata/_custom_type_script = "uid://r60w6aww8gaq"
+
+[node name="SparrowLabel" type="Node2D" parent="."]
+position = Vector2(176, 280)
+script = ExtResource("2_3qrqt")
+text = "BOPEEBO ERECT"
+frames = ExtResource("3_cwntj")
+metadata/_custom_type_script = "uid://bsd8wfj55x5v4"

@@ -20,8 +20,9 @@ func _initLua():
 	lua.globals["makeCallable"] = func(f):
 		if (lua.globals.to_dictionary().has(f)):
 			return lua.globals[f].to_callable()
-			
+
 	lua.globals["PlayScene"] = PlayScene
+	lua.globals["FNFSprite2D"] = FNFSprite2D
 
 var runtimeDictionary:Dictionary
 func do():

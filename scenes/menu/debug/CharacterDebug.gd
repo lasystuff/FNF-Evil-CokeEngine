@@ -4,6 +4,8 @@ class_name CharacterDebug
 static var characterName = "dad"
 static var player = false
 
+var zoomLerp = 1
+
 var curAnimIndex:int = 0:
 	set(value):
 		curAnimIndex = value
@@ -30,6 +32,9 @@ func _ready() -> void:
 		character.flip_h = !character.flip_h
 	
 func _process(delta: float) -> void:
+	$Camera2D.zoom.x = lerpf($Camera2D.zoom.x, zoomLerp, 0.02)
+	$Camera2D.zoom.y = $Camera2D.zoom.x
+	
 	$Camera2D.global_position = character.global_position
 	var value = 1
 	if Input.is_key_pressed(KEY_SHIFT):
@@ -73,8 +78,6 @@ func _input(event):
 		character.playAnim(character.data.animations[curAnimIndex].name)
 	
 	if Input.is_key_pressed(KEY_E) and just_pressed:
-		$Camera2D.zoom.x += 0.05
-		$Camera2D.zoom.y = $Camera2D.zoom.x
+		zoomLerp += 0.1
 	if Input.is_key_pressed(KEY_Q) and just_pressed:
-		$Camera2D.zoom.x -= 0.05
-		$Camera2D.zoom.y = $Camera2D.zoom.x
+		zoomLerp -= 0.1

@@ -112,10 +112,25 @@ func _ready() -> void:
 
 	# init stages
 	var targetStage = song.stage
-	if !ResourceLoader.exists("res://scenes/stages/" + targetStage + ".tscn"):
-		targetStage = "Stage"
+	if !ResourceLoader.exists("res://scenes/stages/" + targetStage + ".tscn") && !listStageScript().has(targetStage):
+			targetStage = "Stage"
 
-	stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
+	if listStageScript().has(targetStage):
+		stage = preload("res://scenes/backends/helper/LuaScriptStage.tscn").instantiate()
+		
+		var luaScript = LuaModule.new("stages/" + targetStage)
+		addLuaVariables(luaScript)
+		
+		luaScript.lua.globals["stage"] = stage
+		luaScript.lua.globals["playerPos"] = stage.get_node("playerPos")
+		luaScript.lua.globals["opponentPos"] = stage.get_node("opponentPos")
+		luaScript.lua.globals["djPos"] = stage.get_node("djPos")
+		
+		luaScript.do()
+		modules["_stage_"] = luaScript
+		luaScript.callLua("onReady")
+	else:
+		stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
 	
 	dj = FNFCharacter2D.new("gf")
@@ -142,7 +157,7 @@ func _ready() -> void:
 		addLuaVariables(luaScript)
 		luaScript.do()
 		modules[file] = luaScript
-	for lua in modules.values(): lua.callLua("onReady")
+		luaScript.callLua("onReady")
 	
 	startCountdown()
 
@@ -227,6 +242,10 @@ func _process(delta: float) -> void:
 	$playHud.offset.y = (-Constant.height/2)*($playHud.scale.y-1)
 	
 	accuracy = (hitNoteDiffs / everyNote)*100
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
+		self.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	if Input.is_action_just_pressed("ui_debug2"):
 		Main.nextTransIn = "quickIn"
@@ -327,7 +346,7 @@ func moveCameraExtend(position:Vector2, speed:float = 1.4, trans:Tween.Transitio
 
 func spawnJudgementSprite(judge:String):
 	var judgeSpawner = $playHud/judgeSpawner
-	var judgeWorld = stage.get_node_or_null("judgeSpawner")
+	var judgeWorld = stage.judgeSpawner
 	if (judgeWorld != null): #&& worldJudgeDisplay
 		judgeSpawner = judgeWorld
 
@@ -361,16 +380,27 @@ func listExternalScript() -> Array:
 		if file.ends_with(".lua"):
 			finalArray.push_back(file.split(".lua")[0])
 	return finalArray
+	
+func listStageScript() -> Array:
+	var finalArray = []
+	var files = Paths.list("scripts/stages/")
+	for file in files:
+		if file.ends_with(".lua"):
+			finalArray.push_back(file.split(".lua")[0])
+	return finalArray
 
-func addLuaVariables(module:LuaModule):
+static func addLuaVariables(module:LuaModule):
 	module.lua.globals["game"] = PlayScene.instance
 	module.lua.globals["modchart"] = PlayScene.instance.modchart
+	
+	module.lua.globals["add_stage_sprite"] = func(obj): PlayScene.instance.stage.add_child(obj)
+	module.lua.globals["add_hud_sprite"] = func(obj): PlayScene.instance.get_node("playHud").add_child(obj)
 
 func updateModchart(player:int):
 	var target = $playHud/opponentStrums
 	if player == 0:
 		target = $playHud/playerStrums
-		
+
 	for i in target.strums.size():
 		modchart.updateStrum(target, i, player)
 	for note in target.get_node("noteSpawner").get_children():

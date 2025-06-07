@@ -25,7 +25,7 @@ func playSound(path):
 
 func playMusic(path):
 	stopMusic()
-	musicPlayer.stream = load(Paths.audio(path, "sounds/"))
+	musicPlayer.stream = load(Paths.audio(path, "music/"))
 	musicPlayer.play()
 	
 func stopSound():

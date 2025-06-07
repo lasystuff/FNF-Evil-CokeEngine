@@ -1,6 +1,8 @@
 extends Node2D
 class_name Main
 
+const initalScene = preload("res://scenes/PlayScene.tscn")
+
 static var defaultTransIn = "gradIn"
 static var defaultTransOut = "gradOut"
 
@@ -29,7 +31,7 @@ func _ready() -> void:
 		2:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
 	
-	_switchScene(load("res://scenes/PlayScene.tscn"))
+	_switchScene(initalScene)
 	
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -81,6 +83,8 @@ func _on_transition_animation_finished(anim_name: StringName) -> void:
 	if anim_name == nextTransIn:
 		if $SceneLoader.get_children().size() > 0:
 			$SceneLoader.get_child(0).queue_free()
+		if $SubSceneLoader.get_children().size() > 0:
+			$SubSceneLoader.get_child(0).queue_free()
 		$SceneLoader.add_child(nextState.instantiate())
 		$Transition/animation.play(nextTransOut)
 		

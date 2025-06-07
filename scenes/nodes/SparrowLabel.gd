@@ -1,12 +1,26 @@
 extends Node2D
 class_name SparrowLabel
 
-var font_size:int = 1
+@export var text:String = "":
+	set(value):
+		text = value
+		for i in text.length():
+			var curStr = text.substr(i, 1)
+			if curStr == " ":
+				continue
+		
+			var spr = AnimatedSprite2D.new()
+			spr.sprite_frames = frames
+			spr.play(curStr)
+			spr.speed_scale = 0.5
+			spr.scale = Vector2(font_size, font_size)
+			spr.animation_finished.connect(func(): spr.play(curStr))
+			self.add_child(spr)
+			spr.position.x = texture_width*(i*(font_size/1))
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
+@export var frames:SpriteFrames
+@export var texture_width:int = 50
+@export var font_size:float = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -17,7 +17,6 @@ script = ExtResource("1_ot0y2")
 position = Vector2(58, 76)
 
 [node name="playHud" parent="." instance=ExtResource("5_21h8x")]
-layer = 100
 
 [node name="playerStrums" parent="playHud" instance=ExtResource("3_ityjc")]
 position = Vector2(960, 96)
@@ -29,4 +28,5 @@ position = Vector2(312, 96)
 position = Vector2(640, 360)
 
 [node name="judgeSpawner" type="Node2D" parent="playHud"]
-position = Vector2(733, 423)
+position = Vector2(768, 488)
+scale = Vector2(0.8, 0.8)

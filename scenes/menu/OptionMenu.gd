@@ -1,5 +1,7 @@
 extends FNFScene2D
+class_name OptionMenu
 
+static var backToGame:bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

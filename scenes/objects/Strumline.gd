@@ -17,7 +17,7 @@ var downscroll:bool = false:
 			$noteSpawner.scale.y = 1
 		strumPositions.clear()
 		for i in strums.size():
-			strumPositions.push_back(strums[i].global_position)
+			strumPositions.push_back(strums[i].position)
 	
 var botplay:bool = false
 var playNoteSplash:bool = false
@@ -57,17 +57,14 @@ func _process(delta: float) -> void:
 			
 	# updating note pos & hit if this strumline on botplay
 	for i in strumPositions.size():
-		strums[i].global_position = strumPositions[i]
+		strums[i].position = strumPositions[i]
 	for note in $noteSpawner.get_children():
 		if note.autoFollow:
 			var targetX = strumPositions[note.noteData].x
 			var targetY = strumPositions[note.noteData].y
-			note.global_position.x = targetX
+			note.position.x = targetX
 			#strum rotation do cool stuffs so i dont need to edit sustain shit yay!!
-			if downscroll:
-				note.global_position.y = targetY + (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
-			else:
-				note.global_position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
+			note.position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
 			updateNoteStatus(note)
 		
 		if botplay && Conductor.songPosition >= note.strumTime && note.status == Note.HITTABLE:
@@ -103,7 +100,7 @@ func _noteHit(note, isSustain):
 			splash.start(note)
 		if note.sustainLength >= 0:
 			note.autoFollow = false
-			note.global_position.y = strumPositions[note.noteData].y
+			note.position.y = strumPositions[note.noteData].y
 			# oh! worst take for sustain note! nice!
 			note.self_modulate = Color.TRANSPARENT
 		else:
@@ -113,7 +110,7 @@ func _noteHit(note, isSustain):
 			note.queue_free()
 			return
 		
-		note.global_position.x = strums[note.noteData].global_position.x
+		note.position.x = strums[note.noteData].position.x
 		if !botplay && !Input.is_action_pressed(controlArray[note.noteData]):
 			noteMiss.emit(note, true)
 

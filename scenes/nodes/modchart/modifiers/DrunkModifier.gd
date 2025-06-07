@@ -18,6 +18,7 @@ func strum_process(strumline, strumId:float, player:int):
 	if(drunkPerc != 0):
 		strumline.strums[strumId].position.x += drunkPerc * (cos((time + strumId*0.2)*drunkSpeed) * 112*0.5)
 
+
 func note_process(note:Note, player:int):
 	if !note.autoFollow:
 		return
