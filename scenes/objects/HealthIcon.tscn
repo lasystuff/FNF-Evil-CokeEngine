@@ -11,8 +11,8 @@ var health:float = 1
 
 # Called when the node enters the scene tree for the first time.
 func load(character:String) -> void:
-	var iconPath = \"res://assets/images/ui/icons/\" + character + \".png\"
-	if FileAccess.file_exists(iconPath):
+	var iconPath = Paths.image(\"ui/icons/\" + character)
+	if ResourceLoader.exists(iconPath):
 		self.texture = load(iconPath)
 	else:
 		self.texture = preload(\"res://assets/images/ui/icons/face.png\")
