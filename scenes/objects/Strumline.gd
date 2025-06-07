@@ -106,7 +106,7 @@ func _noteHit(note, isSustain):
 		else:
 			note.queue_free()
 	else:
-		if note.sustain.length <= 0.2:
+		if note.sustain.length <= 0.5:
 			note.queue_free()
 			return
 		
@@ -127,12 +127,15 @@ func inputProcess(delta:float):
 			notePressTimer[i] = 1
 	
 	for i in notePressTimer.size():
-		notePressTimer[i] -= delta*10
+		notePressTimer[i] -= delta*9
 		if notePressTimer[i] < 0:
 			notePressTimer[i] = 0
-			
+
+	var frameDirections = []
 	for note in $noteSpawner.get_children():
-		if note.status == Note.HITTABLE && notePressTimer[note.noteData] > 0:
+		if note.status == Note.HITTABLE && notePressTimer[note.noteData] > 0 && !frameDirections.has(note.noteData):
+			notePressTimer[note.noteData] = 0
+			frameDirections.push_back(note.noteData)
 			note.hitDiff = Conductor.songPosition - note.strumTime
 			noteHit.emit(note, false)
 
