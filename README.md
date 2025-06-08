@@ -31,7 +31,7 @@ Most of the characters, some stages, events etc are loaded using lua.
 
 ### Others
 - Full-fledged modchart functions
-    - Based on **FNF In The Galaxy** (Schmoovin) and **Andromeda Engine**
+    - Based on **FNF In The Galaxy** and **Andromeda Engine** (+ Schmoovin)
     ```lua
     modchart:set_percent("drunk", 100 , -1) -- you can do this thing and something lol check scenes/nodes/modchart folder on source
     ```
