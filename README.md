@@ -1,6 +1,8 @@
 # EvilCokeEngine
 That one my cancelled engine "COKE Engine" but fucking fucking EVIL!!!!!!
 
+**THIS ENGINE IN HEAVLY WORK IN PROGRESS!! Most of the gameplay is complete, but the UI is still largely unfinished.**
+
 ## Features
 ### Cool FPS Counter (Absolutely not based on the Codename Engine trust me pls)
 <img src="_extra/docs/debugFull.png" width="250"/>
@@ -27,14 +29,15 @@ Most of the characters, some stages, events etc are loaded using lua.
 ### A fully layered sandbox system to aid in mod development
 <img src="_extra/docs/sandbox.png" width="150"/>
 
-### Others..
+### Others
 - Full-fledged modchart functions
     - Based on **FNF In The Galaxy** (Schmoovin) and **Andromeda Engine**
     ```lua
     modchart:set_percent("drunk", 100 , -1) -- you can do this thing and something lol check scenes/nodes/modchart folder on source
     ```
-    - Highly optimized note rendering with implemented cue system and tiled sustained notes
-    - A pretty decent input system based from original research from Vanilla, FPS Plus, Psych, and Osu!Mania.
+- Highly optimized note rendering with implemented cue system and tiled sustained notes
+- A pretty decent input system based from original research from Vanilla, FPS Plus, Psych, and Osu!Mania
+- An optional ~~overly~~ organized character debugger etc...
 
 ## Special Thanks
 - Forever Engine
