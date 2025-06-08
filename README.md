@@ -12,7 +12,8 @@ That one my cancelled engine "COKE Engine" but fucking fucking EVIL!!!!!!
 <img src="_extra/docs/fancyPause.png" width="500"/>
 
 ### Almost all the gameplay customization you need is included!
-downscroll, middlescroll, scroll speed multiplier
+downscroll, middlescroll, scroll speed multiplier....
+
 <img src="_extra/docs/customizability.png" width="380"/>
 
 ### Object-oriented Lua Scripting ~~(so its better than Psych Engine)~~
@@ -32,6 +33,8 @@ Most of the characters, some stages, events etc are loaded using lua.
     ```lua
     modchart:set_percent("drunk", 100 , -1) -- you can do this thing and something lol check scenes/nodes/modchart folder on source
     ```
+    - Highly optimized note rendering with implemented cue system and tiled sustained notes
+    - A pretty decent input system based from original research from Vanilla, FPS Plus, Psych, and Osu!Mania.
 
 ## Special Thanks
 - Forever Engine
