@@ -63,7 +63,7 @@ func updateBeat():
 	
 func getBeatsOnSection():
 	var val = 4
-	if (PlayScene.chart != null && PlayScene.chart.notes[curSection] != null && PlayScene.chart.notes[curSection].has("sectionBeats")):
+	if (PlayScene.chart != null && PlayScene.chart.notes.size() > curSection && PlayScene.chart.notes[curSection].has("sectionBeats")):
 		val = PlayScene.chart.notes[curSection].sectionBeats
 	return val
 
@@ -75,6 +75,6 @@ func beatHit():
 	pass
 
 func sectionHit():
-	if (PlayScene.chart.notes[curSection] != null):
+	if (PlayScene.chart.notes.size() > curSection):
 		if (PlayScene.chart.notes[curSection].has("changeBPM") && PlayScene.chart.notes[curSection].changeBPM):
 			Conductor.bpm = PlayScene.chart.notes[curSection].bpm

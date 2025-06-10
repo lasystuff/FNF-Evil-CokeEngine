@@ -1,6 +1,13 @@
 extends FNFScene2D
 class_name PlayScene
 
+enum PlayMode
+{
+	STORY,
+	FREEPLAY,
+	CHARTER
+}
+
 static var instance
 
 static var playlist:Array = []
@@ -19,6 +26,7 @@ static var chart:
 			return null
 
 static var difficulty:String = "hard"
+static var play_mode:PlayMode = PlayMode.FREEPLAY
 
 var stage = null
 
@@ -63,7 +71,7 @@ func _ready() -> void:
 	instance = self
 	
 	if song == null:
-		playlist.push_back(preload("res://assets/songs/lit-up-bf/data.tres"))
+		playlist = [preload("res://assets/songs/bopeebo-erect/data.tres"), preload("res://assets/songs/lit-up-bf/data.tres")]
 	
 	$inst.stream = song.instrumental
 	$playerVoices.stream = song.player_vocals
@@ -252,6 +260,15 @@ func _process(delta: float) -> void:
 		Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
 		self.process_mode = Node.PROCESS_MODE_DISABLED
 	
+	if Input.is_action_just_pressed("ui_debug1"):
+		var p = $inst.get_playback_position()
+		$inst.stop()
+		$playerVoices.stop()
+		$opponentVoices.stop()
+		
+		$inst.play(p + 10)
+		$playerVoices.play(p + 10)
+		$opponentVoices.play(p + 10)
 	if Input.is_action_just_pressed("ui_debug2"):
 		Main.nextTransIn = "quickIn"
 		if Input.is_key_pressed(KEY_SHIFT):
@@ -330,7 +347,7 @@ func sectionHit():
 	for lua in modules.values(): lua.callLua("onSectionHit", [curSection])
 
 func moveCamBySection():
-	if chart.notes[curSection].mustHitSection:
+	if chart.notes.size() > curSection && chart.notes[curSection].mustHitSection:
 		moveCamera(player.position + player.cameraPosition + stage.playerCameraOffset)
 	else:
 		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
@@ -410,3 +427,18 @@ func updateModchart(player:int):
 		modchart.updateStrum(target, i, player)
 	for note in target.get_node("noteSpawner").get_children():
 		modchart.updateNote(note, player)
+
+# ending song stuff
+func _on_inst_finished() -> void:
+	# continue to next song
+	if playlist.size() > 1:
+		playlist.pop_front()
+		Main.switchScene(preload("res://scenes/PlayScene.tscn"))
+	else:
+		match PlayMode:
+			PlayMode.FREEPLAY:
+				Main.switchScene("MainMenuState")
+			PlayMode.STORY:
+				Main.switchScene("MainMenuState")
+			PlayMode.CHARTER:
+				Main.switchScene("MainMenuState")

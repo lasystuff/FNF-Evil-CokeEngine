@@ -30,3 +30,5 @@ position = Vector2(640, 360)
 [node name="judgeSpawner" type="Node2D" parent="playHud"]
 position = Vector2(768, 488)
 scale = Vector2(0.8, 0.8)
+
+[connection signal="finished" from="inst" to="." method="_on_inst_finished"]
