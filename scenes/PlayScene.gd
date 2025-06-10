@@ -66,10 +66,8 @@ func _ready() -> void:
 		playlist.push_back(preload("res://assets/songs/lit-up-bf/data.tres"))
 	
 	$inst.stream = song.instrumental
-	if song.player_vocals != null:
-		$playerVoices.stream = song.player_vocals
-	if song.opponent_vocals != null:
-		$opponentVoices.stream = song.opponent_vocals
+	$playerVoices.stream = song.player_vocals
+	$opponentVoices.stream = song.opponent_vocals
 		
 	Conductor.bpm = chart.bpm
 	Conductor.mapBPMChanges(chart)
