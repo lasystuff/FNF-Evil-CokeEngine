@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://pfnfmbcqljhl"]
+
+[ext_resource type="Script" uid="uid://r60w6aww8gaq" path="res://scenes/nodes/FNFScene2D.gd" id="1_yesv7"]
+
+[node name="SotryMenu" type="Node2D"]
+script = ExtResource("1_yesv7")
+metadata/_custom_type_script = "uid://r60w6aww8gaq"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 64.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 16.0
+offset_right = 1264.0
+offset_bottom = 48.0
+text = "LEVEL SCORE GOES HERE YOOOO"

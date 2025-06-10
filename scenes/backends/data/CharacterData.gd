@@ -14,8 +14,6 @@ const defaultData = {
 	"flipHorizon": true,
 	
 	"icon": "bf",
-	"healthColor": Color(0, 255, 0),
-	
 	"singDuration": 4
 }
 

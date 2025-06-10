@@ -6,7 +6,6 @@ var characterName:String = ""
 
 var cameraPosition = Vector2()
 var icon = "bf"
-var healthColor = Color(255, 0, 0)
 
 var singDuration:float = 4
 

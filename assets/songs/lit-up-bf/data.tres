@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FNFSong" load_steps=5 format=3 uid="uid://3uhv4ru0ohw0"]
+
+[ext_resource type="AudioStream" uid="uid://nyignpa3xtl4" path="res://assets/songs/lit-up-bf/Inst.ogg" id="1_bhd4c"]
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="1_okfrv"]
+[ext_resource type="AudioStream" uid="uid://dfmrb2knr07me" path="res://assets/songs/lit-up-bf/Voices-darnell.ogg" id="2_w2y2v"]
+[ext_resource type="AudioStream" uid="uid://ibf30y7coomw" path="res://assets/songs/lit-up-bf/Voices-bf.ogg" id="3_ehb4g"]
+
+[resource]
+script = ExtResource("1_okfrv")
+name = "lit-up-bf"
+display_name = "Lit Up (BF Mix)"
+artist = "Saruky"
+charter = "Fabs, Spazkid"
+difficulties = ["easy", "normal", "hard"]
+instrumental = ExtResource("1_bhd4c")
+player_vocals = ExtResource("3_ehb4g")
+opponent_vocals = ExtResource("2_w2y2v")
+extra_description = "Lit Up is the second track of WeekEnd 1 and the 24th track of Friday Night Funkin' overall. It was released on the 30th of April, 2024. It appears on Friday Night Funkin' OST Vol. 3."
+metadata/_custom_type_script = "uid://2aeub7duhd1j"

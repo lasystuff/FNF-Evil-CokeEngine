@@ -36,6 +36,10 @@ func _ready() -> void:
 		$items.add_child(lab)
 		lab.position.y = 130*i
 	itemsY = $items.global_position.y
+	
+	$song.text = PlayScene.song.display_name
+	$meta.text = "Composed by: " + PlayScene.song.artist + "\nCharted by: " + PlayScene.song.charter
+	$extra.text = "\n"+PlayScene.song.extra_description
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

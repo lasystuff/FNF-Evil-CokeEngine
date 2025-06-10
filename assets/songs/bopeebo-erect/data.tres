@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FNFSong" load_steps=5 format=3 uid="uid://dlkqdob5yfiyi"]
+
+[ext_resource type="AudioStream" uid="uid://c17apj2x5xm82" path="res://assets/songs/bopeebo-erect/Inst.ogg" id="1_6t35o"]
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="1_okfrv"]
+[ext_resource type="AudioStream" uid="uid://ce7e4xjdete7w" path="res://assets/songs/bopeebo-erect/Voices-dad.ogg" id="2_6t35o"]
+[ext_resource type="AudioStream" uid="uid://bbtn2cytpcfl7" path="res://assets/songs/bopeebo-erect/Voices-bf.ogg" id="3_e8w44"]
+
+[resource]
+script = ExtResource("1_okfrv")
+name = "bopeebo-erect"
+display_name = "Bopeebo Erect"
+artist = "Kawai Sprite (ft. Saruky)"
+charter = "Jenny Crowe, fabs"
+difficulties = ["easy", "normal", "hard"]
+instrumental = ExtResource("1_6t35o")
+player_vocals = ExtResource("3_e8w44")
+opponent_vocals = ExtResource("2_6t35o")
+extra_description = ""
+metadata/_custom_type_script = "uid://2aeub7duhd1j"

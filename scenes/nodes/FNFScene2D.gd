@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 	if (oldStep != curStep):
 		if (curStep > 0):
 			stepHit()
-		if (PlayScene.song != null):
+		if (PlayScene.chart != null):
 			if (oldStep < curStep):
 				updateSection()
 			else:
@@ -40,8 +40,8 @@ func rollbackSection():
 	var lastSection:int = curSection
 	curSection = 0
 	stepsToDo = 0
-	for i in range(PlayScene.song.notes.size()):
-		if (PlayScene.song.notes[i] != null):
+	for i in range(PlayScene.chart.notes.size()):
+		if (PlayScene.chart.notes[i] != null):
 			stepsToDo += round(getBeatsOnSection() * 4)
 			if (stepsToDo > curStep): break
 
@@ -63,8 +63,8 @@ func updateBeat():
 	
 func getBeatsOnSection():
 	var val = 4
-	if (PlayScene.song != null && PlayScene.song.notes[curSection] != null && PlayScene.song.notes[curSection].has("sectionBeats")):
-		val = PlayScene.song.notes[curSection].sectionBeats
+	if (PlayScene.chart != null && PlayScene.chart.notes[curSection] != null && PlayScene.chart.notes[curSection].has("sectionBeats")):
+		val = PlayScene.chart.notes[curSection].sectionBeats
 	return val
 
 func stepHit():
@@ -75,6 +75,6 @@ func beatHit():
 	pass
 
 func sectionHit():
-	if (PlayScene.song.notes[curSection] != null):
-		if (PlayScene.song.notes[curSection].has("changeBPM") && PlayScene.song.notes[curSection].changeBPM):
-			Conductor.bpm = PlayScene.song.notes[curSection].bpm
+	if (PlayScene.chart.notes[curSection] != null):
+		if (PlayScene.chart.notes[curSection].has("changeBPM") && PlayScene.chart.notes[curSection].changeBPM):
+			Conductor.bpm = PlayScene.chart.notes[curSection].bpm

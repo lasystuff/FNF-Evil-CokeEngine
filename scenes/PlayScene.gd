@@ -4,12 +4,21 @@ class_name PlayScene
 static var instance
 
 static var playlist:Array = []
-static var song:
+static var song:FNFSong:
 	get():
 		if playlist.size() > 0:
 			return playlist[0]
 		else:
 			return null
+
+static var chart:
+	get():
+		if song != null:
+			return song.charts[difficulty]
+		else:
+			return null
+
+static var difficulty:String = "hard"
 
 var stage = null
 
@@ -54,22 +63,20 @@ func _ready() -> void:
 	instance = self
 	
 	if song == null:
-		playlist.push_back(SongData.getSong("bopeebo-erect", "hard"))
-
-	var audio = SongData.getAudio(song)
+		playlist.push_back(preload("res://assets/songs/lit-up-bf/data.tres"))
 	
-	$inst.stream = load(audio.instrumental)
-	if audio.player != null:
-		$playerVoices.stream = load(audio.player)
-	if audio.opponent != null:
-		$opponentVoices.stream = load(audio.opponent)
+	$inst.stream = song.instrumental
+	if song.player_vocals != null:
+		$playerVoices.stream = song.player_vocals
+	if song.opponent_vocals != null:
+		$opponentVoices.stream = song.opponent_vocals
 		
-	Conductor.bpm = song.bpm
-	Conductor.mapBPMChanges(song)
+	Conductor.bpm = chart.bpm
+	Conductor.mapBPMChanges(chart)
 	
 	$playHud.game = instance
-	$playHud/opponentStrums.scrollSpeed = song.speed
-	$playHud/playerStrums.scrollSpeed = song.speed
+	$playHud/opponentStrums.scrollSpeed = chart.speed
+	$playHud/playerStrums.scrollSpeed = chart.speed
 	
 	$playHud/opponentStrums.botplay = true
 	$playHud/playerStrums.botplay = true
@@ -88,7 +95,7 @@ func _ready() -> void:
 		$playHud/playerStrums.position.x = Constant.width/2
 	
 	# pushing notes
-	for section in song.notes:
+	for section in chart.notes:
 		for note in section.sectionNotes:
 			var mustHit:bool = section.mustHitSection;
 			if (note[1] > 3):
@@ -111,7 +118,7 @@ func _ready() -> void:
 	$playHud/opponentStrums.postUpdateNote.connect(func(): updateModchart(1))
 
 	# init stages
-	var targetStage = song.stage
+	var targetStage = chart.stage
 	if !ResourceLoader.exists("res://scenes/stages/" + targetStage + ".tscn") && !listStageScript().has(targetStage):
 			targetStage = "Stage"
 
@@ -152,8 +159,8 @@ func _ready() -> void:
 	player.position += stage.get_node("playerPos").global_position
 	opponent.position += stage.get_node("opponentPos").global_position
 	
-	for file in listExternalScript():
-		var luaScript = LuaModule.new("external/" + file)
+	for file in listGlobalScript():
+		var luaScript = LuaModule.new("global/" + file)
 		addLuaVariables(luaScript)
 		luaScript.do()
 		modules[file] = luaScript
@@ -325,7 +332,7 @@ func sectionHit():
 	for lua in modules.values(): lua.callLua("onSectionHit", [curSection])
 
 func moveCamBySection():
-	if song.notes[curSection].mustHitSection:
+	if chart.notes[curSection].mustHitSection:
 		moveCamera(player.position + player.cameraPosition + stage.playerCameraOffset)
 	else:
 		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
@@ -373,9 +380,9 @@ func spawnJudgementSprite(judge:String):
 		sprTween.tween_property(comboDisplay, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*3)
 		sprTween.tween_property(comboDisplay, "position:y", comboDisplay.position.y + 50, (Conductor.crotchet / 1000)*3)
 
-func listExternalScript() -> Array:
+func listGlobalScript() -> Array:
 	var finalArray = []
-	var files = Paths.list("scripts/external/")
+	var files = Paths.list("scripts/global/")
 	for file in files:
 		if file.ends_with(".lua"):
 			finalArray.push_back(file.split(".lua")[0])
