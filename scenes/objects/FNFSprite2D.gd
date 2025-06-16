@@ -34,6 +34,8 @@ func _ready() -> void:
 			_sprite.texture = self.texture
 		if _parallax.scroll_scale == Vector2(1, 1):
 			_parallax.scroll_scale = self.scroll_scale
+		# make accurate to editor-side idk
+		
 
 func _draw():
 	if Engine.is_editor_hint():

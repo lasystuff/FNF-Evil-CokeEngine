@@ -81,7 +81,7 @@ func selectItem(item):
 			Main.switchScene(load("res://scenes/menu/OptionMenu.tscn"))
 
 		"Toggle Botplay":
-			PlayScene.instance.get_node("playHud/playerStrums").botplay = !PlayScene.instance.get_node("playHud/playerStrums").botplay
+			PlayScene.instance.get_node("hud/playerStrums").botplay = !PlayScene.instance.get_node("hud/playerStrums").botplay
 			resume()
 		"Back Charter":
 			Main.switchScene(load("res://scenes/menu/debug/ChartEditor.tscn"))

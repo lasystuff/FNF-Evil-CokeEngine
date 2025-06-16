@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://pwlh13n5jcbh" path="res://scenes/PlayScene.gd" id="1_ot0y2"]
 [ext_resource type="PackedScene" uid="uid://ihmvrl1nn75c" path="res://scenes/objects/Strumline.tscn" id="3_ityjc"]
-[ext_resource type="PackedScene" uid="uid://djc0xavgi00no" path="res://scenes/objects/PlayHud.tscn" id="5_21h8x"]
+[ext_resource type="PackedScene" uid="uid://djc0xavgi00no" path="res://scenes/objects/PlayUI.tscn" id="5_21h8x"]
 
 [node name="PlayScene" type="Node2D"]
 script = ExtResource("1_ot0y2")
@@ -16,19 +16,21 @@ script = ExtResource("1_ot0y2")
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2(58, 76)
 
-[node name="playHud" parent="." instance=ExtResource("5_21h8x")]
+[node name="hud" type="CanvasLayer" parent="."]
 
-[node name="playerStrums" parent="playHud" instance=ExtResource("3_ityjc")]
+[node name="playUI" parent="hud" instance=ExtResource("5_21h8x")]
+
+[node name="playerStrums" parent="hud" instance=ExtResource("3_ityjc")]
 position = Vector2(960, 96)
 
-[node name="opponentStrums" parent="playHud" instance=ExtResource("3_ityjc")]
+[node name="opponentStrums" parent="hud" instance=ExtResource("3_ityjc")]
 position = Vector2(312, 96)
 
-[node name="countdownSpawner" type="Node2D" parent="playHud"]
-position = Vector2(640, 360)
-
-[node name="judgeSpawner" type="Node2D" parent="playHud"]
+[node name="judgeSpawner" type="Node2D" parent="hud"]
 position = Vector2(768, 488)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.7, 0.7)
+
+[node name="countdownSpawner" type="Node2D" parent="hud"]
+position = Vector2(640, 360)
 
 [connection signal="finished" from="inst" to="." method="_on_inst_finished"]

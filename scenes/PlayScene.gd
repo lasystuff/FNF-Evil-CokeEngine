@@ -85,25 +85,25 @@ func _ready() -> void:
 	Conductor.bpm = chart.bpm
 	Conductor.mapBPMChanges(chart)
 	
-	$playHud.game = instance
-	$playHud/opponentStrums.scrollSpeed = chart.speed
-	$playHud/playerStrums.scrollSpeed = chart.speed
+	$hud/playUI.game = instance
+	$hud/opponentStrums.scrollSpeed = chart.speed
+	$hud/playerStrums.scrollSpeed = chart.speed
 	
-	$playHud/opponentStrums.botplay = true
-	$playHud/playerStrums.botplay = true
-	$playHud/playerStrums.playNoteSplash = true
+	$hud/opponentStrums.botplay = true
+	$hud/playerStrums.botplay = true
+	$hud/playerStrums.playNoteSplash = true
 	
-	$playHud/playerStrums.noteHit.connect(goodNoteHit)
-	$playHud/playerStrums.noteMiss.connect(noteMissCallback)
-	$playHud/opponentStrums.noteHit.connect(opponentNoteHit)
+	$hud/playerStrums.noteHit.connect(goodNoteHit)
+	$hud/playerStrums.noteMiss.connect(noteMissCallback)
+	$hud/opponentStrums.noteHit.connect(opponentNoteHit)
 	
 	if SaveData.data.downscroll:
-		for lane in [$playHud/opponentStrums, $playHud/playerStrums]:
+		for lane in [$hud/opponentStrums, $hud/playerStrums]:
 			lane.downscroll = true
 			lane.position.y += 530
 	if SaveData.data.middlescroll:
-		$playHud/opponentStrums.visible = false
-		$playHud/playerStrums.position.x = Constant.width/2
+		$hud/opponentStrums.visible = false
+		$hud/playerStrums.position.x = Constant.width/2
 	
 	# pushing notes
 	for section in chart.notes:
@@ -118,15 +118,15 @@ func _ready() -> void:
 				"sustainLength": note[2]
 			}
 			if mustHit:
-				$playHud/playerStrums.addNoteData(rawData)
+				$hud/playerStrums.addNoteData(rawData)
 			else:
-				$playHud/opponentStrums.addNoteData(rawData)
+				$hud/opponentStrums.addNoteData(rawData)
 
 
 	modchart = ModchartManager.new()
 	add_child(modchart)
-	$playHud/playerStrums.postUpdateNote.connect(func(): updateModchart(0))
-	$playHud/opponentStrums.postUpdateNote.connect(func(): updateModchart(1))
+	$hud/playerStrums.postUpdateNote.connect(func(): updateModchart(0))
+	$hud/opponentStrums.postUpdateNote.connect(func(): updateModchart(1))
 
 	# init stages
 	var targetStage = chart.stage
@@ -182,7 +182,7 @@ func _ready() -> void:
 var curCountdown:int = 0
 func startCountdown():
 	moveCamBySection()
-	$playHud.initHud()
+	$hud/playUI.initHud()
 	onCountdown = true
 	Conductor.songPosition = 0
 	Conductor.songPosition -= Conductor.crotchet * 5
@@ -196,7 +196,7 @@ func startCountdown():
 		var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		sprTween.tween_property(countSprite, "modulate", Color.TRANSPARENT, Conductor.crotchet / 1000 *1.1)
 		sprTween.tween_property(countSprite, "scale", Vector2(0.5, 0.5), Conductor.crotchet / 1000)
-		$playHud/countdownSpawner.add_child(countSprite)
+		$hud/countdownSpawner.add_child(countSprite)
 		
 		match curCountdown:
 			0:
@@ -219,7 +219,7 @@ func startCountdown():
 				countSprite.texture = load(Paths.image("ui/countdown/go"))
 			4:
 				countdownTimer.stop()
-				$playHud/countdownSpawner.queue_free()
+				$hud/countdownSpawner.queue_free()
 				onCountdown = false
 				startSong()
 				
@@ -253,11 +253,11 @@ func _process(delta: float) -> void:
 	camZoomAdd = lerpf(0, camZoomAdd, exp(-delta * 6.25))
 	$camera.zoom.x = camZoom + camZoomAdd
 	$camera.zoom.y = $camera.zoom.x
-	$playHud.scale.x = 1 + camZoomAdd
-	$playHud.scale.y = $playHud.scale.x
+	$hud.scale.x = 1 + camZoomAdd
+	$hud.scale.y = $hud.scale.x
 	# terrible fix of canvaslayer offsetting
-	$playHud.offset.x = (-Constant.width/2)*($playHud.scale.x-1)
-	$playHud.offset.y = (-Constant.height/2)*($playHud.scale.y-1)
+	$hud.offset.x = (-Constant.width/2)*($hud.scale.x-1)
+	$hud.offset.y = (-Constant.height/2)*($hud.scale.y-1)
 	
 	accuracy = (hitNoteDiffs / everyNote)*100
 	
@@ -294,7 +294,7 @@ func beatHit():
 		opponent.idle()
 	if curBeat % 4 == 0:
 		camZoomAdd = 0.02
-	$playHud.beatHit(curBeat)
+	$hud/playUI.beatHit(curBeat)
 	for lua in modules.values(): lua.callLua("onBeatHit", [curBeat])
 
 func goodNoteHit(note, isSustain):
@@ -372,7 +372,7 @@ func moveCameraExtend(position:Vector2, speed:float = 1.4, trans:Tween.Transitio
 
 
 func spawnJudgementSprite(judge:String):
-	var judgeSpawner = $playHud/judgeSpawner
+	var judgeSpawner = $hud/judgeSpawner
 	var judgeWorld = stage.judgeSpawner
 	if (judgeWorld != null): #&& worldJudgeDisplay
 		judgeSpawner = judgeWorld
@@ -421,12 +421,12 @@ static func addLuaVariables(module:LuaModule):
 	module.lua.globals["modchart"] = PlayScene.instance.modchart
 	
 	module.lua.globals["add_stage_sprite"] = func(obj): PlayScene.instance.stage.add_child(obj)
-	module.lua.globals["add_hud_sprite"] = func(obj): PlayScene.instance.get_node("playHud").add_child(obj)
+	module.lua.globals["add_hud_sprite"] = func(obj): PlayScene.instance.get_node("hud").add_child(obj)
 
 func updateModchart(player:int):
-	var target = $playHud/opponentStrums
+	var target = $hud/opponentStrums
 	if player == 0:
-		target = $playHud/playerStrums
+		target = $hud/playerStrums
 
 	for i in target.strums.size():
 		modchart.updateStrum(target, i, player)
