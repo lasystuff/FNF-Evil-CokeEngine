@@ -1,55 +1,56 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbsmuk40o24jr"]
+[gd_scene load_steps=9 format=3 uid="uid://dbsmuk40o24jr"]
 
 [ext_resource type="Script" uid="uid://bwdq22xkt6b1e" path="res://scenes/nodes/Stage2D.gd" id="1_4hqte"]
-[ext_resource type="Texture2D" uid="uid://cisqib1cym6py" path="res://assets/images/stages/default/stageback.png" id="2_6ryxg"]
-[ext_resource type="Texture2D" uid="uid://dbsafwuusqn12" path="res://assets/images/stages/default/stagecurtains.png" id="3_a5gho"]
-[ext_resource type="Texture2D" uid="uid://but0qtku5cro3" path="res://assets/images/stages/default/stagefront.png" id="4_xecc6"]
+[ext_resource type="Script" uid="uid://d0iqys2psbgdu" path="res://scenes/objects/FNFSprite2D.gd" id="2_p75cs"]
+[ext_resource type="Texture2D" uid="uid://but0qtku5cro3" path="res://assets/images/stages/default/stagefront.png" id="4_gnmcd"]
 [ext_resource type="Texture2D" uid="uid://o1s640b3oqgb" path="res://art/silhouetteGF.png" id="5_7b51v"]
 [ext_resource type="Texture2D" uid="uid://hhqdwy7d08t4" path="res://art/silhouetteBF.png" id="5_ej7ts"]
 [ext_resource type="Texture2D" uid="uid://bwsclponhe3a6" path="res://art/silhouetteDad.png" id="6_7b51v"]
+[ext_resource type="Texture2D" uid="uid://cisqib1cym6py" path="res://assets/images/stages/default/stageback.png" id="6_7ckda"]
+[ext_resource type="Texture2D" uid="uid://dbsafwuusqn12" path="res://assets/images/stages/default/stagecurtains.png" id="8_7ckda"]
 
 [node name="Stage" type="Node2D"]
 script = ExtResource("1_4hqte")
 zoom = 1.1
 metadata/_custom_type_script = "uid://bwdq22xkt6b1e"
 
-[node name="Stageback" type="Parallax2D" parent="."]
+[node name="stageback" type="Node2D" parent="."]
+position = Vector2(24, -48)
+script = ExtResource("2_p75cs")
+texture = ExtResource("6_7ckda")
+scroll_scale = Vector2(0.85, 0.85)
+metadata/_custom_type_script = "uid://d0iqys2psbgdu"
+
+[node name="stagefront" type="Node2D" parent="."]
+position = Vector2(24, 392)
+script = ExtResource("2_p75cs")
+texture = ExtResource("4_gnmcd")
 scroll_scale = Vector2(0.9, 0.9)
-
-[node name="sprite" type="Sprite2D" parent="Stageback"]
-texture = ExtResource("2_6ryxg")
-
-[node name="stagefront" type="Parallax2D" parent="."]
-scale = Vector2(1.1, 1.1)
-scroll_scale = Vector2(0.9, 0.9)
-
-[node name="sprite" type="Sprite2D" parent="stagefront"]
-position = Vector2(0, 408)
-texture = ExtResource("4_xecc6")
+metadata/_custom_type_script = "uid://d0iqys2psbgdu"
 
 [node name="djPos" type="Sprite2D" parent="."]
-position = Vector2(-32, -72)
+position = Vector2(-32, -112)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("5_7b51v")
 
 [node name="playerPos" type="Sprite2D" parent="."]
-position = Vector2(320, 120)
+position = Vector2(320, 80)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("5_ej7ts")
 
 [node name="opponentPos" type="Sprite2D" parent="."]
-position = Vector2(-392, -48)
+position = Vector2(-392, -88)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("6_7b51v")
 
-[node name="Stagecurtains" type="Parallax2D" parent="."]
-z_index = 10
-scale = Vector2(0.9, 0.9)
-scroll_scale = Vector2(1.3, 1.3)
-
-[node name="sprite" type="Sprite2D" parent="Stagecurtains"]
-position = Vector2(-26.6667, -257.778)
-texture = ExtResource("3_a5gho")
+[node name="stagecurtains" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(-72, -320)
+scale = Vector2(0.85, 0.85)
+script = ExtResource("2_p75cs")
+texture = ExtResource("8_7ckda")
+scroll_scale = Vector2(1.2, 1.2)
+metadata/_custom_type_script = "uid://d0iqys2psbgdu"
 
 [node name="judgeSpawner" type="Node2D" parent="."]
 z_index = 1

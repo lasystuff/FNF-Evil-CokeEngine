@@ -3,6 +3,8 @@ class_name SaveData
 # Internal value should starts with "_"
 const defaultData = {
 	"_volume": 10,
+	"_score": {},
+	
 	"downscroll": false,
 	"middlescroll": false,
 	"ghostTap": true,

@@ -42,6 +42,8 @@ var camZoomAdd:float = 0
 var onCountdown:bool = false
 var songStarted:bool = false
 
+static var static_stat:Dictionary
+
 var health:float = 1:
 	set(value):
 		if value > 2:
@@ -63,7 +65,7 @@ var combo:int = -1:
 var maxCombo:int = 0
 var comboBreaks:int = 0
 
-var modchart:ModchartManager;
+var modchart:ModchartManager
 var modules:Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -71,7 +73,10 @@ func _ready() -> void:
 	instance = self
 	
 	if song == null:
-		playlist = [preload("res://assets/songs/bopeebo-erect/data.tres"), preload("res://assets/songs/lit-up-bf/data.tres")]
+		playlist = [preload("res://assets/songs/bopeebo-erect/data.tres")]
+		
+	if static_stat == null || static_stat == {}:
+		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
 	
 	$inst.stream = song.instrumental
 	$playerVoices.stream = song.player_vocals
@@ -431,14 +436,21 @@ func updateModchart(player:int):
 # ending song stuff
 func _on_inst_finished() -> void:
 	# continue to next song
+	static_stat["score"] += self.score
+	static_stat["misses"] += self.misses
+	static_stat["accuracy"] += self.accuracy
+		
 	if playlist.size() > 1:
 		playlist.pop_front()
 		Main.switchScene(preload("res://scenes/PlayScene.tscn"))
 	else:
-		match PlayMode:
+		match play_mode:
 			PlayMode.FREEPLAY:
-				Main.switchScene("MainMenuState")
+				SaveData.data._score[song.name] = static_stat
+				Main.switchScene(preload("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
+				SaveData.data._score["story_week1"] = static_stat
 				Main.switchScene("MainMenuState")
 			PlayMode.CHARTER:
 				Main.switchScene("MainMenuState")
+		static_stat = {}
