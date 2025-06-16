@@ -9,7 +9,6 @@
 script = ExtResource("1_5rt5x")
 
 [node name="cinematic" type="Node2D" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="cinematic"]
 offset_right = 1280.0

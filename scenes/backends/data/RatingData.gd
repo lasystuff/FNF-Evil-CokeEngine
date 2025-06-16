@@ -2,7 +2,7 @@ extends Node
 class_name RatingData
 
 const judgements:Dictionary = {
-	"epic": {"scoreMult": 1.2, "accuaracyMult": 1}, # epic has score bonus but not affect to accuracy
+	"killer": {"scoreMult": 1.2, "accuaracyMult": 1}, # epic has score bonus but not affect to accuracy
 	"sick": {"scoreMult": 1, "accuaracyMult": 1},
 	"good": {"scoreMult": 0.8, "accuaracyMult": 0.95},
 	"bad": {"scoreMult": 0.5, "accuaracyMult": 0.75},
@@ -10,13 +10,12 @@ const judgements:Dictionary = {
 }
 
 static func getRatingName(diff:float):
-	if diff < 15:
-		return "epic"
-	if diff < 40:
+	if diff < 20:
+		return "killer"
+	if diff < 75:
 		return "sick"
-	elif diff < 70:
+	elif diff < 100:
 		return "good"
-	elif diff < 90:
+	elif diff < 170:
 		return "bad"
-
 	return "shit"

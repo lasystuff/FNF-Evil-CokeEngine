@@ -42,8 +42,6 @@ Most of the characters, some stages, events etc are loaded using lua.
 ## Special Thanks
 - Forever Engine
     - Note Splashes (i don't support shubs!!!!!)
-- Troll Engine
-    - "Epic!" Judgement texture. (placeholder)
 - cherry
     - made godot_sparrow and gdanimate addons.
 - gilzoide
