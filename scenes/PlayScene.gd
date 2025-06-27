@@ -72,6 +72,8 @@ var modules:Dictionary = {}
 func _ready() -> void:
 	instance = self
 	
+	GlobalSound.stop_music()
+	
 	if song == null:
 		playlist = [preload("res://assets/songs/lit-up-bf/data.tres")]
 		
@@ -200,22 +202,22 @@ func startCountdown():
 		
 		match curCountdown:
 			0:
-				GlobalSound.playSound("countdown/onyourmark")
+				GlobalSound.play_sound("countdown/onyourmark")
 				countSprite.texture = load(Paths.image("ui/countdown/onyourmark"))
 				
 				player.idle()
 				opponent.idle()
 			1:
-				GlobalSound.playSound("countdown/ready")
+				GlobalSound.play_sound("countdown/ready")
 				countSprite.texture = load(Paths.image("ui/countdown/ready"))
 			2:
-				GlobalSound.playSound("countdown/set")
+				GlobalSound.play_sound("countdown/set")
 				countSprite.texture = load(Paths.image("ui/countdown/set"))
 				
 				player.idle()
 				opponent.idle()
 			3:
-				GlobalSound.playSound("countdown/go")
+				GlobalSound.play_sound("countdown/go")
 				countSprite.texture = load(Paths.image("ui/countdown/go"))
 			4:
 				countdownTimer.stop()
@@ -333,7 +335,7 @@ func noteMiss(id:int = 0, healthLoss:float = 1, character = null):
 		comboBreaks += 1
 	
 	var rng = RandomNumberGenerator.new()
-	GlobalSound.playSound("missnote" + str(rng.randi_range(1, 3)))
+	GlobalSound.play_sound("missnote" + str(rng.randi_range(1, 3)))
 	if character != null:
 		doSingAnimation(character, id, "miss")
 

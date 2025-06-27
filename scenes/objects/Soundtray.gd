@@ -17,11 +17,11 @@ func _process(delta: float) -> void:
 	if curVolume != remappedVolume:
 		displayTray()
 		if remappedVolume == 10:
-			GlobalSound.playSound("soundtray/volMax")
+			GlobalSound.play_sound("soundtray/volMax")
 		elif curVolume > remappedVolume:
-			GlobalSound.playSound("soundtray/volUp")
+			GlobalSound.play_sound("soundtray/volUp")
 		elif curVolume < remappedVolume:
-			GlobalSound.playSound("soundtray/volUp")
+			GlobalSound.play_sound("soundtray/volUp")
 		curVolume = remappedVolume
 		if curVolume != 0:
 			$bars.visible = true

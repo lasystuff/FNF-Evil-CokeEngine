@@ -30,3 +30,6 @@ static func list(path:String):
 			if !finalArray.has(file):
 				finalArray.push_back(file)
 	return finalArray
+
+static func exists(path:String):
+	return ResourceLoader.exists(getPath(path))

@@ -1,35 +1,45 @@
 extends Node
 
-var soundPlayer
-var musicPlayer
+var sound_player:AudioStreamPlayer
+var music_player:AudioStreamPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	soundPlayer = AudioStreamPlayer.new()
-	soundPlayer.finished.connect(func():
-		soundPlayer.stream = null
+	sound_player = AudioStreamPlayer.new()
+	sound_player.finished.connect(func():
+		sound_player.stream = null
 	)
-	musicPlayer = AudioStreamPlayer.new()
-	musicPlayer.finished.connect(func():
+	music_player = AudioStreamPlayer.new()
+	music_player.finished.connect(func():
 		# loop
-		if musicPlayer.stream != null:
-			musicPlayer.play()
+		if music_player.stream != null:
+			music_player.play()
 	)
 	
-	$/root.add_child.call_deferred(soundPlayer)
-	$/root.add_child.call_deferred(musicPlayer)
+	$/root.add_child.call_deferred(sound_player)
+	$/root.add_child.call_deferred(music_player)
 
-func playSound(path):
-	stopSound()
-	soundPlayer.stream = load(Paths.audio(path, "sounds/"))
-	soundPlayer.play()
+func play_sound(path):
+	stop_sound()
+	sound_player.stream = load(Paths.audio(path, "sounds/"))
+	sound_player.play()
 
-func playMusic(path):
-	stopMusic()
-	musicPlayer.stream = load(Paths.audio(path, "music/"))
-	musicPlayer.play()
+func play_sound_raw(data):
+	stop_sound()
+	sound_player.stream = data
+	sound_player.play()
+
+func play_music(path):
+	stop_music()
+	music_player.stream = load(Paths.audio(path, "music/"))
+	music_player.play()
 	
-func stopSound():
-	soundPlayer.stop()
+func play_music_raw(data):
+	stop_music()
+	music_player.stream = data
+	music_player.play()
+	
+func stop_sound():
+	sound_player.stop()
 
-func stopMusic():
-	musicPlayer.stop()
+func stop_music():
+	music_player.stop()

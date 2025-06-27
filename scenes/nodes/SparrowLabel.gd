@@ -11,10 +11,13 @@ class_name SparrowLabel
 		
 			var spr = AnimatedSprite2D.new()
 			spr.sprite_frames = frames
-			spr.play(curStr)
 			spr.speed_scale = 0.5
 			spr.scale = Vector2(font_size, font_size)
-			spr.animation_finished.connect(func(): spr.play(curStr))
+			if spr.sprite_frames.has_animation(curStr):
+				spr.play(curStr)
+				spr.animation_finished.connect(func(): spr.play(curStr))
+			else:
+				spr.visible = false
 			self.add_child(spr)
 			spr.position.x = texture_width*(i*(font_size/1))
 
