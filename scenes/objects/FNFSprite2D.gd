@@ -49,7 +49,6 @@ const blends = {
 	"multiply": 3
 }
 func set_blend(blend:String):
-	print(blends[blend.to_lower()])
 	_sprite.material.blend_mode = blends[blend.to_lower()]
 
 func set_alpha(value:float):

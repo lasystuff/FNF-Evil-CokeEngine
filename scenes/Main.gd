@@ -11,9 +11,9 @@ static var nextTransOut = "gradOut"
 
 static var instance
 
-static func switchScene(scene):
+static func switch_scene(scene):
 	if instance != null:
-		instance._switchScene(scene)
+		instance._switch_scene(scene)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,7 +31,7 @@ func _ready() -> void:
 		2:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
 	
-	_switchScene(initalScene)
+	_switch_scene(initalScene)
 	
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 	# RELOADING SHIT
 	if Input.is_action_just_pressed("hotreload"):
 		nextTransIn = "quickIn"
-		_switchScene(nextState)
+		_switch_scene(nextState)
 		
 	match SaveData.data.debugCounterType:
 		0:
@@ -74,10 +74,14 @@ func _process(delta: float) -> void:
 			$overlay/debugTextExtra.visible = false
 
 var nextState
-func _switchScene(scene):
+func _switch_scene(scene):
 	if scene != nextState:
 		nextState = scene
 	$Transition/animation.play(nextTransIn)
+	
+func _open_subscene(scene):
+	Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
+	self.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _on_transition_animation_finished(anim_name: StringName) -> void:
 	if anim_name == nextTransIn:

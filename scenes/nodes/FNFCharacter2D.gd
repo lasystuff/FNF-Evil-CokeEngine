@@ -43,7 +43,8 @@ func playAnim(name:String, force:bool = false):
 
 	curAnim = name
 	curFrameIndex = 0
-	play(anim.prefix, anim.fps/24)
+	var thing = float(anim.fps) / 24
+	play(anim.prefix, thing)
 	self.offset = Vector2(anim.offset.x, anim.offset.y)
 
 	if (anim.name.begins_with("sing") && interruptible):

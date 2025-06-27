@@ -73,18 +73,18 @@ func selectItem(item):
 		"Resume":
 			resume()
 		"Restart Song":
-			Main.switchScene(load("res://scenes/PlayScene.tscn"))
+			Main.switch_scene(load("res://scenes/PlayScene.tscn"))
 		"Options":
 			OptionMenu.backToGame = true
-			Main.switchScene(load("res://scenes/menu/OptionMenu.tscn"))
+			Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
 		"Exit Song":
-			Main.switchScene(load("res://scenes/menu/OptionMenu.tscn"))
+			Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
 
 		"Toggle Botplay":
 			PlayScene.instance.get_node("hud/playerStrums").botplay = !PlayScene.instance.get_node("hud/playerStrums").botplay
 			resume()
 		"Back Charter":
-			Main.switchScene(load("res://scenes/menu/debug/ChartEditor.tscn"))
+			Main.switch_scene(load("res://scenes/menu/debug/ChartEditor.tscn"))
 
 func resume():
 	PlayScene.instance.process_mode = Node.PROCESS_MODE_INHERIT

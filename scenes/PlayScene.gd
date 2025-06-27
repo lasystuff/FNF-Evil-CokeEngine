@@ -73,7 +73,7 @@ func _ready() -> void:
 	instance = self
 	
 	if song == null:
-		playlist = [preload("res://assets/songs/bopeebo-erect/data.tres")]
+		playlist = [preload("res://assets/songs/lit-up-bf/data.tres")]
 		
 	if static_stat == null || static_stat == {}:
 		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
@@ -151,12 +151,12 @@ func _ready() -> void:
 		stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
 	
-	dj = FNFCharacter2D.new("gf")
+	dj = FNFCharacter2D.new(chart.gf)
 	add_child(dj)
-	player = FNFCharacter2D.new("bf")
+	player = FNFCharacter2D.new(chart.player1)
 	add_child(player)
 	player.flip_h = !player.flip_h
-	opponent = FNFCharacter2D.new("dad")
+	opponent = FNFCharacter2D.new(chart.player2)
 	add_child(opponent)
 	
 	dj.idle()
@@ -282,7 +282,7 @@ func _process(delta: float) -> void:
 		else:
 			CharacterDebug.characterName = opponent.characterName
 			CharacterDebug.player = false
-		Main.switchScene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
+		Main.switch_scene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
 		
 	for lua in modules.values(): lua.callLua("onProcess", [delta])
 
@@ -442,15 +442,15 @@ func _on_inst_finished() -> void:
 		
 	if playlist.size() > 1:
 		playlist.pop_front()
-		Main.switchScene(preload("res://scenes/PlayScene.tscn"))
+		Main.switch_scene(preload("res://scenes/PlayScene.tscn"))
 	else:
 		match play_mode:
 			PlayMode.FREEPLAY:
 				SaveData.data._score[song.name] = static_stat
-				Main.switchScene(preload("res://scenes/menu/Freeplay.tscn"))
+				Main.switch_scene(preload("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
 				SaveData.data._score["story_week1"] = static_stat
-				Main.switchScene("MainMenuState")
+				Main.switch_scene("MainMenuState")
 			PlayMode.CHARTER:
-				Main.switchScene("MainMenuState")
+				Main.switch_scene("MainMenuState")
 		static_stat = {}

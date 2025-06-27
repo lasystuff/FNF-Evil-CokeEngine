@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dbsmuk40o24jr"]
 
-[ext_resource type="Script" uid="uid://bwdq22xkt6b1e" path="res://scenes/nodes/Stage2D.gd" id="1_4hqte"]
+[ext_resource type="Script" uid="uid://ckk5tht6d8vb4" path="res://scenes/stages/Stage.gd" id="1_gnmcd"]
 [ext_resource type="Script" uid="uid://d0iqys2psbgdu" path="res://scenes/objects/FNFSprite2D.gd" id="2_p75cs"]
 [ext_resource type="Texture2D" uid="uid://but0qtku5cro3" path="res://assets/images/stages/default/stagefront.png" id="4_gnmcd"]
 [ext_resource type="Texture2D" uid="uid://o1s640b3oqgb" path="res://art/silhouetteGF.png" id="5_7b51v"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dbsafwuusqn12" path="res://assets/images/stages/default/stagecurtains.png" id="8_7ckda"]
 
 [node name="Stage" type="Node2D"]
-script = ExtResource("1_4hqte")
+script = ExtResource("1_gnmcd")
 metadata/_custom_type_script = "uid://bwdq22xkt6b1e"
 
 [node name="stageback" type="Node2D" parent="."]

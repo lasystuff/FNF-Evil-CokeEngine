@@ -25,3 +25,5 @@ func _process(delta: float) -> void:
 	$iconP2.position.x = $healthBar.position.x/2 + (580 * remap($healthBar.value, 0, 2, 100, 0) * 0.01 + 140)
 	
 	$scoreText.text = 'Score: ' + str(int(game.score)) + ' // Misses: ' + str(int(game.misses)) + ' // Accuracy: ' + str(int(game.accuracy)) + '%'
+	if PlayScene.instance.get_node("hud/playerStrums").botplay:
+		$scoreText.text += ' (Botplay)'

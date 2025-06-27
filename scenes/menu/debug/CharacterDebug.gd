@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 		character.playAnim(character.data.animations[curAnimIndex].name, true)
 	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection"):
 		Main.nextTransIn = "quickIn"
-		Main.switchScene(load("res://scenes/PlayScene.tscn"))
+		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
 
 	$overlay/debugText.text = ""
 	for anim in character.data.animations:
