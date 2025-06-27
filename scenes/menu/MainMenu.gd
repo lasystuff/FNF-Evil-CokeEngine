@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 		current_item -= 1
 	elif Input.is_action_just_pressed("ui_down") && controllable:
 		current_item += 1
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") && controllable:
 		GlobalSound.play_sound("menu/confirm")
 		GlobalSound.music_player.volume_db = 0.0
 		controllable = false

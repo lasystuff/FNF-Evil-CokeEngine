@@ -49,6 +49,10 @@ var health:float = 1:
 		if value > 2:
 			value = 2
 		health = value
+		if health <= 0:
+			if health < 0:
+				health = 0
+			death()
 		return value
 var misses:int = 0
 var score:float = 0
@@ -285,6 +289,8 @@ func _process(delta: float) -> void:
 			CharacterDebug.characterName = opponent.characterName
 			CharacterDebug.player = false
 		Main.switch_scene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
+	if Input.is_action_just_pressed("kill"):
+		self.health = 0
 		
 	for lua in modules.values(): lua.callLua("onProcess", [delta])
 
@@ -359,8 +365,8 @@ func moveCamBySection():
 	else:
 		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
 
-var defaultCameraTrans = Tween.TRANS_EXPO
-var defaultCameraEase = Tween.EASE_OUT
+static var defaultCameraTrans = Tween.TRANS_EXPO
+static var defaultCameraEase = Tween.EASE_OUT
 
 func moveCamera(position:Vector2, speed:float = 1.9, trans:Tween.TransitionType = defaultCameraTrans, ease:Tween.EaseType = defaultCameraEase):
 	var camFollowTween = get_tree().create_tween()
@@ -449,10 +455,23 @@ func _on_inst_finished() -> void:
 		match play_mode:
 			PlayMode.FREEPLAY:
 				SaveData.data._score[song.name] = static_stat
-				Main.switch_scene(preload("res://scenes/menu/Freeplay.tscn"))
+				Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
 				SaveData.data._score["story_week1"] = static_stat
 				Main.switch_scene("MainMenuState")
 			PlayMode.CHARTER:
 				Main.switch_scene("MainMenuState")
 		static_stat = {}
+
+var died:bool = false
+# haha funny thing lmfao
+func death():
+	if died:
+		return
+	died = true
+
+	$hud.visible = false #grrr kys kys kys
+	var thing = load("res://scenes/GameOverScreen.tscn").instantiate()
+	thing.global_position = self.player.global_position
+	add_child(thing)
+	self.process_mode = Node.PROCESS_MODE_DISABLED

@@ -50,12 +50,12 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_down") && controllable:
 		GlobalSound.play_sound("menu/scroll")
 		curItem += 1
-	elif Input.is_action_just_pressed("ui_accept"):
+	elif Input.is_action_just_pressed("ui_accept") && controllable:
 		GlobalSound.stop_music()
 		GlobalSound.music_player.volume_db = 0.0
 		controllable = false
 		selectItem(itemList[curItem])
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection"):
+	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
 		resume()
 		
 	curItem = wrap(curItem, 0, itemList.size())

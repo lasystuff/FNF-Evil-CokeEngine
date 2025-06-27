@@ -75,6 +75,31 @@ animations = {
 		indices = {},
 		loop = false,
 		fps = 24
+	},
+
+	{
+		name = "death",
+		prefix = "BF dies",
+		offset = Vector2(-12, 7),
+		indices = {},
+		loop = false,
+		fps = 24
+	},
+	{
+		name = "deathLoop",
+		prefix = "BF Dead Loop",
+		offset = Vector2(-12, 8),
+		indices = {},
+		loop = true,
+		fps = 24
+	},
+	{
+		name = "deathConfirm",
+		prefix = "BF Dead confirm",
+		offset = Vector2(-12, -24),
+		indices = {},
+		loop = false,
+		fps = 24
 	}
 }
 

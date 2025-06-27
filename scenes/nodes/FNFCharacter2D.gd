@@ -31,6 +31,7 @@ func _ready() -> void:
 	singDuration = data.singDuration
 	
 	self.frame_changed.connect(onFrameChange)
+	self.animation_finished.connect(onAnimationFinish)
 
 func playAnim(name:String, force:bool = false):
 	var anim = getAnimData(name)
@@ -88,5 +89,10 @@ func onFrameChange():
 			curFrameIndex = data.indices.size() - 1
 
 		autoChanged = true
-		frame =  data.indices[curFrameIndex]
+		frame = data.indices[curFrameIndex]
 		autoChanged = false
+
+func onAnimationFinish():
+	var data = getAnimData(curAnim)
+	if data.loop:
+		playAnim(curAnim)

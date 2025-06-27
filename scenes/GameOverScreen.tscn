@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cofudd6vskyh4"]
+
+[ext_resource type="Script" uid="uid://ccik4qrsua3is" path="res://scenes/GameOverScreen.gd" id="1_jb1p3"]
+
+[node name="GameOverScreen" type="Node2D"]
+process_mode = 3
+z_index = 10
+script = ExtResource("1_jb1p3")
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0, 0)
+scroll_offset = Vector2(-2552, -1432)
+
+[node name="ColorRect" type="ColorRect" parent="Parallax2D"]
+offset_left = 1264.0
+offset_top = 160.0
+offset_right = 6384.0
+offset_bottom = 3040.0
+color = Color(0, 0, 0, 1)
+
+[node name="funnyTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="retryTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="funnyTimer" to="." method="_on_funny_timer_timeout"]
+[connection signal="timeout" from="retryTimer" to="." method="_on_retry_timer_timeout"]

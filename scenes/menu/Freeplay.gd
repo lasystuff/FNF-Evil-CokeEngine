@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_pressed("ui_down") && controllable:
 		current_item += 1
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") && controllable:
 		GlobalSound.play_sound("menu/confirm")
 		GlobalSound.stop_music()
 		controllable = false
@@ -53,7 +53,7 @@ func _process(delta: float) -> void:
 		PlayScene.playlist = [load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))]
 		PlayScene.difficulty = difficulties[current_difficulty]
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection"):
+	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
 		GlobalSound.play_sound("menu/cancel")
 		Main.switch_scene(preload("res://scenes/menu/MainMenu.tscn"))
 		
