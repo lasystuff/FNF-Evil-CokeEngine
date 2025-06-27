@@ -1,7 +1,7 @@
 extends Node2D
 class_name Main
 
-const initalScene = preload("res://scenes/menu/Freeplay.tscn")
+const initalScene = preload("res://scenes/menu/MainMenu.tscn")
 
 static var defaultTransIn = "gradIn"
 static var defaultTransOut = "gradOut"

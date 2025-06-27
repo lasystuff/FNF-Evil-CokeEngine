@@ -1,7 +1,7 @@
 extends FNFScene2D
 
 var menuItems:Dictionary = {
-	"storymode": func(): Main.switch_scene(load("res://scenes/PlayScene.tscn")),
+	"storymode": func(): Main.switch_scene(load("res://scenes/menu/StoryMode.tscn")),
 	"freeplay": func(): Main.switch_scene(load("res://scenes/menu/Freeplay.tscn")),
 	"credits": null,
 	"options":  func(): Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
@@ -17,7 +17,7 @@ static var current_item_save:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# GlobalSound.play_music("freakyMenu")
+	GlobalSound.play_music("freakyMenu")
 	var index:int = 0
 	for item in menuItems.keys():
 		var sprite = AnimatedSprite2D.new()
@@ -44,13 +44,35 @@ func _process(delta: float) -> void:
 		GlobalSound.music_player.volume_db = 0.0
 		controllable = false
 		if menuItems[menuItems.keys()[current_item]] != null:
-			menuItems[menuItems.keys()[current_item]].call()
-		
+			flicker($items.get_child(current_item), 1, 0.1, false, false, menuItems[menuItems.keys()[current_item]])
+			
+			var charTween = get_tree().create_tween().set_parallel()
+			charTween.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+			for i in menuItems.size():
+				if i != current_item:
+					charTween.tween_property($items.get_child(i), "self_modulate", Color.TRANSPARENT, 0.5)
 
 	$Camera2D.global_position = $items.get_children()[current_item].global_position
 	
 	for i in menuItems.size():
 		if i == current_item:
-			$items.get_children()[i].play(menuItems.keys()[i] + " selected")
+			$items.get_child(i).play(menuItems.keys()[i] + " selected")
 		else:
-			$items.get_children()[i].play(menuItems.keys()[i] + " idle")
+			$items.get_child(i).play(menuItems.keys()[i] + " idle")
+
+# recreation of FlxFlicker
+func flicker(object:Node2D, duration = 1, interval = 0.04, endVisibility:bool = true, forceRestart:bool = true, callback:Callable = func(): pass):
+	if endVisibility:
+		for i in (duration/interval):
+			object.visible = false
+			await get_tree().create_timer(interval/2).timeout
+			object.visible = true
+			await get_tree().create_timer(interval/2).timeout
+	else:
+		for i in (duration/interval):
+			object.visible = true
+			await get_tree().create_timer(interval/2).timeout
+			object.visible = false
+			await get_tree().create_timer(interval/2).timeout
+			
+	callback.call()

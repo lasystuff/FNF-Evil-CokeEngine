@@ -365,8 +365,8 @@ func moveCamBySection():
 	else:
 		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
 
-static var defaultCameraTrans = Tween.TRANS_EXPO
-static var defaultCameraEase = Tween.EASE_OUT
+const defaultCameraTrans = Tween.TRANS_EXPO
+const defaultCameraEase = Tween.EASE_OUT
 
 func moveCamera(position:Vector2, speed:float = 1.9, trans:Tween.TransitionType = defaultCameraTrans, ease:Tween.EaseType = defaultCameraEase):
 	var camFollowTween = get_tree().create_tween()
