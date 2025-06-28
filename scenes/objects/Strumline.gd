@@ -32,6 +32,7 @@ var confirmAnims = ["left confirm", "down confirm", "up confirm", "right confirm
 signal noteHit(note:Note, sustain:bool)
 signal noteMiss(note:Note, sustain:bool)
 
+signal ghostTapped(id:int)
 signal postUpdateNote()
 
 func addNoteData(raw:Dictionary) -> void:
@@ -106,7 +107,7 @@ func _noteHit(note, isSustain):
 		else:
 			note.queue_free()
 	else:
-		if note.sustain.length <= 0.5:
+		if note.sustain.length <= 0.:
 			note.queue_free()
 			return
 		
@@ -124,10 +125,15 @@ func inputProcess(delta:float):
 	for i in controlArray.size():
 		if Input.is_action_just_pressed(controlArray[i]):
 			strumPlay(i, "press")
+			var hasHittableNote = false
+			for note in $noteSpawner.get_children():
+				if note.status == Note.HITTABLE: hasHittableNote = true
+			if !hasHittableNote && notePressTimer[i] == 0:
+				ghostTapped.emit(i)
 			notePressTimer[i] = 1
 	
 	for i in notePressTimer.size():
-		notePressTimer[i] -= delta*9
+		notePressTimer[i] -= delta*5
 		if notePressTimer[i] < 0:
 			notePressTimer[i] = 0
 

@@ -101,6 +101,8 @@ func _ready() -> void:
 	
 	$hud/playerStrums.noteHit.connect(goodNoteHit)
 	$hud/playerStrums.noteMiss.connect(noteMissCallback)
+	if !SaveData.data.ghostTap:
+		$hud/playerStrums.ghostTapped.connect(func(i): noteMiss(i, 0.02, player))
 	$hud/opponentStrums.noteHit.connect(opponentNoteHit)
 	
 	if SaveData.data.downscroll:
