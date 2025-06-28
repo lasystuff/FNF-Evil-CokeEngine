@@ -109,7 +109,7 @@ func _noteHit(note, isSustain):
 			note.queue_free()
 	else:
 		if note.sustain.length <= 0.1:
-			strums[note.noteData].get_node("cover").end()
+			strums[note.noteData].get_node("cover").end(playNoteSplash)
 			note.queue_free()
 			return
 		
