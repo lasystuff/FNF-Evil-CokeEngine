@@ -4,6 +4,12 @@ extends FNFScene2D
 
 @onready var itemsY = $items.global_position.y
 
+var targetScore:int = 0
+var scoreLerp:int = 0
+
+var targetAccuracy:float = 0
+var accuracyLerp:float = 0
+
 var current_item:int = 0:
 	set(value):
 		GlobalSound.play_sound("menu/scroll")
@@ -64,3 +70,17 @@ func _process(delta: float) -> void:
 			$items.get_children()[i].modulate.a = 1
 		else:
 			$items.get_children()[i].modulate.a = 0.5
+			
+	if SaveData.data["_score"].has(song_list_final[current_item] + "-" + difficulties[current_difficulty]):
+		var savedScore = SaveData.data._score[song_list_final[current_item] + "-" + difficulties[current_difficulty]]
+		targetScore = savedScore.score
+		targetAccuracy = savedScore.accuracy
+	else:
+		targetScore = 0
+		targetAccuracy = 0
+		
+	var lerpSize = 0.01
+	scoreLerp = lerp(scoreLerp, targetScore, lerpSize)
+	accuracyLerp = lerp(accuracyLerp, targetAccuracy, lerpSize)
+	
+	$scoreLabel.text = "PERSONAL BEST: " + str(scoreLerp) + " (" + str(snapped(accuracyLerp, 0.01)) + "%)"

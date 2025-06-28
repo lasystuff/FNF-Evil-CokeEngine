@@ -57,7 +57,7 @@ var health:float = 1:
 var misses:int = 0
 var score:float = 0
 
-var accuracy:float = 1
+var accuracy:float = 100
 var everyNote:float = 0
 var hitNoteDiffs:float = 0
 
@@ -459,7 +459,13 @@ func _on_inst_finished() -> void:
 	else:
 		match play_mode:
 			PlayMode.FREEPLAY:
-				SaveData.data._score[song.name] = static_stat
+				var replace:bool = true
+				if SaveData.data._score.has(song.name + "-" + difficulty):
+					var ogData = SaveData.data._score[song.name + "-" + difficulty]
+					if ogData.score < static_stat.score:
+						replace = false
+				if replace:
+					SaveData.data._score[song.name + "-" + difficulty] = static_stat
 				Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
 				SaveData.data._score["story_week1"] = static_stat
