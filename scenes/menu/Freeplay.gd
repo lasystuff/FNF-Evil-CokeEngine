@@ -51,6 +51,7 @@ func _process(delta: float) -> void:
 		
 		# ok starting song lol
 		PlayScene.playlist = [load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))]
+		PlayScene.playlist.push_back(preload("res://assets/songs/bopeebo-erect/data.tres"))
 		PlayScene.difficulty = difficulties[current_difficulty]
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
 	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:

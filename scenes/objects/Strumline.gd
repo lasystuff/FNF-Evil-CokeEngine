@@ -131,7 +131,7 @@ func inputProcess(delta:float):
 			if !hasHittableNote && notePressTimer[i] == 0:
 				ghostTapped.emit(i)
 			notePressTimer[i] = 1
-	
+
 	for i in notePressTimer.size():
 		notePressTimer[i] -= delta*5
 		if notePressTimer[i] < 0:

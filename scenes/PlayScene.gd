@@ -77,12 +77,13 @@ func _ready() -> void:
 	instance = self
 	
 	GlobalSound.stop_music()
-	
-	if song == null:
-		playlist = [preload("res://assets/songs/lit-up-bf/data.tres")]
-		
+
 	if static_stat == null || static_stat == {}:
-		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
+		static_stat = {"score": 0, "misses": 0, "accuracy": 100}
+		# guh
+		$hud/playUI.healthLerp = 1
+		$hud/playUI.scoreLerp = 0
+		$hud/playUI.missesLerp = 0
 	
 	$inst.stream = song.instrumental
 	$playerVoices.stream = song.player_vocals
@@ -452,6 +453,8 @@ func _on_inst_finished() -> void:
 		
 	if playlist.size() > 1:
 		playlist.pop_front()
+		Main.nextTransIn = "quickIn"
+		Main.nextTransOut = "quickOut"
 		Main.switch_scene(preload("res://scenes/PlayScene.tscn"))
 	else:
 		match play_mode:
