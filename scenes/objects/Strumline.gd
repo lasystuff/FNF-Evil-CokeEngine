@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 		inputProcess(delta)
 	for strum in strums.size():
 		strumPlay(strum, "default")
-		
+
 	postUpdateNote.emit()
 
 # yoo guys guyz
@@ -99,7 +99,8 @@ func _noteHit(note, isSustain):
 			var splash = preload("res://scenes/objects/NoteSplash.tscn").instantiate()
 			strums[note.noteData].add_child(splash)
 			splash.start(note)
-		if note.sustainLength >= 0:
+		if note.sustainLength > 0:
+			strums[note.noteData].get_node("cover").start()
 			note.autoFollow = false
 			note.position.y = strumPositions[note.noteData].y
 			# oh! worst take for sustain note! nice!
@@ -107,12 +108,14 @@ func _noteHit(note, isSustain):
 		else:
 			note.queue_free()
 	else:
-		if note.sustain.length <= 0.:
+		if note.sustain.length <= 0.1:
+			strums[note.noteData].get_node("cover").end()
 			note.queue_free()
 			return
 		
 		note.position.x = strums[note.noteData].position.x
 		if !botplay && !Input.is_action_pressed(controlArray[note.noteData]):
+			strums[note.noteData].get_node("cover").end()
 			noteMiss.emit(note, true)
 
 	strumPlay(note.noteData, "confirm")

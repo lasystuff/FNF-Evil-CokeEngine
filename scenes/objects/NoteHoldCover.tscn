@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxol71mscbejr"]
+
+[ext_resource type="SpriteFrames" uid="uid://x6rh4n56fsls" path="res://assets/images/ui/holdCovers.xml" id="1_1driy"]
+[ext_resource type="Script" uid="uid://bc2185xarfcmp" path="res://scenes/objects/NoteHoldCover.gd" id="1_3owh4"]
+
+[node name="NoteHoldCover" type="AnimatedSprite2D"]
+visible = false
+z_index = 1
+scale = Vector2(1.3, 1.3)
+sprite_frames = ExtResource("1_1driy")
+animation = &"sustain cover end blue"
+script = ExtResource("1_3owh4")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

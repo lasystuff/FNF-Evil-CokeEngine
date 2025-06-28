@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ihmvrl1nn75c"]
+[gd_scene load_steps=4 format=3 uid="uid://ihmvrl1nn75c"]
 
 [ext_resource type="SpriteFrames" uid="uid://bjaatvolbqtbq" path="res://assets/images/ui/NOTE_assets.xml" id="1_hr7gl"]
 [ext_resource type="Script" uid="uid://cp10pubg0pxxe" path="res://scenes/objects/Strumline.gd" id="1_j51n0"]
+[ext_resource type="PackedScene" uid="uid://bxol71mscbejr" path="res://scenes/objects/NoteHoldCover.tscn" id="3_nmjfn"]
 
 [node name="Strumline" type="Node2D"]
 script = ExtResource("1_j51n0")
@@ -12,11 +13,19 @@ scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_hr7gl")
 animation = &"arrowLEFT"
 
+[node name="cover" parent="left" instance=ExtResource("3_nmjfn")]
+animation = &"sustain cover purple"
+offset = Vector2(5, 0)
+
 [node name="down" type="AnimatedSprite2D" parent="."]
 position = Vector2(-56, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_hr7gl")
 animation = &"arrowDOWN"
+
+[node name="cover" parent="down" instance=ExtResource("3_nmjfn")]
+animation = &"sustain cover blue"
+id = 1
 
 [node name="up" type="AnimatedSprite2D" parent="."]
 position = Vector2(56, 0)
@@ -24,10 +33,19 @@ scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_hr7gl")
 animation = &"arrowUP"
 
+[node name="cover" parent="up" instance=ExtResource("3_nmjfn")]
+animation = &"sustain cover blue"
+id = 2
+
 [node name="right" type="AnimatedSprite2D" parent="."]
 position = Vector2(168, 0)
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_hr7gl")
 animation = &"arrowRIGHT"
+
+[node name="cover" parent="right" instance=ExtResource("3_nmjfn")]
+position = Vector2(11.4286, 0)
+animation = &"sustain cover red"
+id = 3
 
 [node name="noteSpawner" type="Node2D" parent="."]
