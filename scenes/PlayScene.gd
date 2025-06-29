@@ -79,7 +79,7 @@ func _ready() -> void:
 	GlobalSound.stop_music()
 
 	if static_stat == null || static_stat == {}:
-		static_stat = {"score": 0, "misses": 0, "accuracy": 100}
+		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
 		# guh
 		$hud/playUI.healthLerp = 1
 		$hud/playUI.scoreLerp = 0
@@ -268,7 +268,10 @@ func _process(delta: float) -> void:
 	$hud.offset.x = (-Constant.width/2)*($hud.scale.x-1)
 	$hud.offset.y = (-Constant.height/2)*($hud.scale.y-1)
 	
-	accuracy = (hitNoteDiffs / everyNote)*100
+	if everyNote < 1:
+		accuracy = 0
+	else:
+		accuracy = (hitNoteDiffs / everyNote)*100
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
@@ -433,6 +436,16 @@ static func addLuaVariables(module:LuaModule):
 	
 	module.lua.globals["add_stage_sprite"] = func(obj): PlayScene.instance.stage.add_child(obj)
 	module.lua.globals["add_hud_sprite"] = func(obj): PlayScene.instance.get_node("hud").add_child(obj)
+	
+	# h,s,v,b
+	module.lua.globals["set_hsv_adjust"] = func(obj, h:float = 0, s:float = 1, v:float = 1, b:float = 0):
+		obj.material = ShaderMaterial.new()
+		obj.material.shader = preload("res://assets/shaders/hsv_adjust.gdshader")
+		
+		obj.material.set_shader_parameter("hue_shift", h)
+		obj.material.set_shader_parameter("saturation_mult", s)
+		obj.material.set_shader_parameter("value_mult", v)
+		obj.material.set_shader_parameter("brightness_add", b)
 
 func updateModchart(player:int):
 	var target = $hud/opponentStrums
@@ -450,6 +463,8 @@ func _on_inst_finished() -> void:
 	static_stat["score"] += self.score
 	static_stat["misses"] += self.misses
 	static_stat["accuracy"] += self.accuracy
+	if static_stat["accuracy"] > 100:
+		static_stat["accuracy"] = 100
 		
 	if playlist.size() > 1:
 		playlist.pop_front()

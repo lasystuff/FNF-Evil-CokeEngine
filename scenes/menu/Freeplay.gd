@@ -20,7 +20,6 @@ var current_item:int = 0:
 		var data = load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))
 		var beforeDifficulties = difficulties
 		difficulties = data.difficulties
-		print(data.difficulties)
 		if difficulties.has(beforeDifficulties[current_difficulty]):
 			current_difficulty = difficulties.find(beforeDifficulties[current_difficulty])
 		else:

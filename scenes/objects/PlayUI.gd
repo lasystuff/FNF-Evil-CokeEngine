@@ -37,4 +37,4 @@ func _process(delta: float) -> void:
 	
 	$scoreText.text = 'Score: ' + str(scoreLerp) + ' // Misses: ' + str(missesLerp) + ' // Accuracy: ' + str(int(game.accuracy)) + '%'
 	if PlayScene.instance.get_node("hud/playerStrums").botplay:
-		$scoreText.text += ' (Botplay)'
+		$scoreText.text += ' [color=GRAY](Botplay)[/color]'
