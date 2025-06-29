@@ -80,10 +80,6 @@ func _ready() -> void:
 
 	if static_stat == null || static_stat == {}:
 		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
-		# guh
-		$hud/playUI.healthLerp = 1
-		$hud/playUI.scoreLerp = 0
-		$hud/playUI.missesLerp = 0
 	
 	$inst.stream = song.instrumental
 	$playerVoices.stream = song.player_vocals

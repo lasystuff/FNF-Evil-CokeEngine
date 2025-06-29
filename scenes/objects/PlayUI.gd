@@ -6,7 +6,6 @@ var game
 static var healthLerp:float = 1
 
 static var scoreLerp:int = 1
-static var missesLerp:int = 1
 
 func initHud():
 	$iconP1.load(game.player.icon)
@@ -33,8 +32,7 @@ func _process(delta: float) -> void:
 	
 	var lerpSize = 0.01
 	scoreLerp = lerp(scoreLerp, int(game.score), lerpSize)
-	missesLerp = lerp(missesLerp, int(game.misses), lerpSize)
 	
-	$scoreText.text = 'Score: ' + str(scoreLerp) + ' // Misses: ' + str(missesLerp) + ' // Accuracy: ' + str(int(game.accuracy)) + '%'
+	$scoreText.text = 'Score: ' + CokeUtil.format_money(scoreLerp) + ' // Misses: ' + str(int(game.misses)) + ' // Accuracy: ' + str(int(game.accuracy)) + '%'
 	if PlayScene.instance.get_node("hud/playerStrums").botplay:
 		$scoreText.text += ' [color=GRAY](Botplay)[/color]'
