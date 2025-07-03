@@ -41,10 +41,9 @@ func _process(delta: float) -> void:
 		current_item += 1
 	if Input.is_action_just_pressed("ui_accept") && controllable:
 		GlobalSound.play_sound("menu/confirm")
-		GlobalSound.music_player.volume_db = 0.0
 		controllable = false
 		if menuItems[menuItems.keys()[current_item]] != null:
-			flicker($items.get_child(current_item), 1, 0.1, false, false, menuItems[menuItems.keys()[current_item]])
+			CokeUtil.flicker($items.get_child(current_item), 1, 0.1, false, false, menuItems[menuItems.keys()[current_item]])
 			
 			var charTween = get_tree().create_tween().set_parallel()
 			charTween.set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
@@ -59,20 +58,3 @@ func _process(delta: float) -> void:
 			$items.get_child(i).play(menuItems.keys()[i] + " selected")
 		else:
 			$items.get_child(i).play(menuItems.keys()[i] + " idle")
-
-# recreation of FlxFlicker
-func flicker(object:Node2D, duration = 1, interval = 0.04, endVisibility:bool = true, forceRestart:bool = true, callback:Callable = func(): pass):
-	if endVisibility:
-		for i in (duration/interval):
-			object.visible = false
-			await get_tree().create_timer(interval/2).timeout
-			object.visible = true
-			await get_tree().create_timer(interval/2).timeout
-	else:
-		for i in (duration/interval):
-			object.visible = true
-			await get_tree().create_timer(interval/2).timeout
-			object.visible = false
-			await get_tree().create_timer(interval/2).timeout
-			
-	callback.call()

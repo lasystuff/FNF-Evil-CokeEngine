@@ -25,6 +25,7 @@ static var chart:
 		else:
 			return null
 
+static var level:String = ""
 static var difficulty:String = "hard"
 static var play_mode:PlayMode = PlayMode.FREEPLAY
 
@@ -479,7 +480,7 @@ func _on_inst_finished() -> void:
 					SaveData.data._score[song.name + "-" + difficulty] = static_stat
 				Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
-				SaveData.data._score["story_week1"] = static_stat
+				SaveData.data._score["story_" + level] = static_stat
 				Main.switch_scene("MainMenuState")
 			PlayMode.CHARTER:
 				Main.switch_scene("MainMenuState")

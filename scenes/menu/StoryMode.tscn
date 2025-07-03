@@ -1,11 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfogvvo6fk5gp"]
+[gd_scene load_steps=7 format=3 uid="uid://dfogvvo6fk5gp"]
 
-[ext_resource type="Script" uid="uid://r60w6aww8gaq" path="res://scenes/nodes/FNFScene2D.gd" id="1_syu8j"]
+[ext_resource type="Script" uid="uid://bqn0aoipxoudr" path="res://scenes/menu/StoryMode.gd" id="1_sg78s"]
 [ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="2_sg78s"]
+[ext_resource type="SpriteFrames" uid="uid://clbd4eh3uayex" path="res://assets/images/menu/storymode/arrows.xml" id="3_qu8u5"]
+[ext_resource type="SpriteFrames" uid="uid://bh1x8oya6rovn" path="res://assets/images/menu/storymode/props/dad.xml" id="4_05vhr"]
+[ext_resource type="SpriteFrames" uid="uid://b3fl3mp1sfc6n" path="res://assets/images/menu/storymode/props/bf.xml" id="5_cmxek"]
+[ext_resource type="SpriteFrames" uid="uid://c87cfoicfkckq" path="res://assets/images/menu/storymode/props/gf.xml" id="6_kud6w"]
 
 [node name="StoryMode" type="Node2D"]
-script = ExtResource("1_syu8j")
+script = ExtResource("1_sg78s")
 metadata/_custom_type_script = "uid://r60w6aww8gaq"
+
+[node name="bottom" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="items" type="Node2D" parent="."]
+position = Vector2(640, 552)
+
+[node name="difficultySprite" type="Sprite2D" parent="."]
+position = Vector2(1056, 552)
+
+[node name="leftArrow" type="AnimatedSprite2D" parent="."]
+position = Vector2(864, 552)
+sprite_frames = ExtResource("3_qu8u5")
+animation = &"leftIdle"
+
+[node name="rightArrow" type="AnimatedSprite2D" parent="."]
+position = Vector2(1240, 552)
+sprite_frames = ExtResource("3_qu8u5")
+animation = &"rightIdle"
 
 [node name="bg" type="ColorRect" parent="."]
 offset_top = 56.0
@@ -13,11 +38,27 @@ offset_right = 1280.0
 offset_bottom = 456.0
 color = Color(0.976471, 0.811765, 0.317647, 1)
 
-[node name="bottom" type="ColorRect" parent="."]
-offset_top = 456.0
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0, 0, 0, 1)
+[node name="props" type="Node2D" parent="."]
+position = Vector2(288, 256)
+
+[node name="opponent" type="AnimatedSprite2D" parent="props"]
+position = Vector2(-16, -8)
+sprite_frames = ExtResource("4_05vhr")
+animation = &"idle"
+frame = 13
+frame_progress = 1.0
+
+[node name="player" type="AnimatedSprite2D" parent="props"]
+position = Vector2(352, 0)
+sprite_frames = ExtResource("5_cmxek")
+animation = &"idle"
+frame = 13
+frame_progress = 1.0
+
+[node name="dj" type="AnimatedSprite2D" parent="props"]
+position = Vector2(720, 0)
+sprite_frames = ExtResource("6_kud6w")
+animation = &"idle"
 
 [node name="topRect" type="ColorRect" parent="."]
 offset_right = 1280.0
@@ -27,15 +68,15 @@ color = Color(0, 0, 0, 1)
 [node name="scoreLabel" type="Label" parent="."]
 offset_left = 16.0
 offset_top = 8.0
-offset_right = 260.0
+offset_right = 512.0
 offset_bottom = 48.0
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_sg78s")
 theme_override_font_sizes/font_size = 34
-text = "LEVEL SCORE:99999999"
+text = "LEVEL SCORE:0"
 vertical_alignment = 1
 
-[node name="scoreLabel2" type="Label" parent="."]
+[node name="titleLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.701961)
 offset_left = 512.0
 offset_top = 8.0

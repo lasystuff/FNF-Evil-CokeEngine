@@ -79,10 +79,11 @@ func selectItem(item):
 			OptionMenu.backToGame = true
 			Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
 		"Exit Song":
-			if PlayScene.instance.play_mode == PlayScene.PlayMode.FREEPLAY:
-				Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
-			else:
-				Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
+			match PlayScene.instance.play_mode:
+				PlayScene.PlayMode.STORY:
+					Main.switch_scene(load("res://scenes/menu/StoryMode.tscn"))
+				_:
+					Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
 		"Toggle Botplay":
 			PlayScene.instance.get_node("hud/playerStrums").botplay = !PlayScene.instance.get_node("hud/playerStrums").botplay
 			resume()

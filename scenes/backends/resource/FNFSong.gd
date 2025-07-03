@@ -23,7 +23,7 @@ const default_chart:Dictionary = {
 @export var artist:String = ""
 @export var charter:String = ""
 
-@export var difficulties:Array = []
+@export var difficulties:Array[String] = []
 
 @export_category("Audio")
 @export var instrumental:AudioStream

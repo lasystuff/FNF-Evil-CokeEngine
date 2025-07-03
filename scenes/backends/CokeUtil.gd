@@ -30,3 +30,20 @@ func format_money(Amount:float, EnglishStyle:bool = true):
 		if (isNegative):
 			string = "-" + string;
 		return string;
+
+# recreation of FlxFlicker
+func flicker(object:Node2D, duration = 1, interval = 0.04, endVisibility:bool = true, forceRestart:bool = true, callback:Callable = func(): pass):
+	if endVisibility:
+		for i in (duration/interval):
+			object.visible = false
+			await get_tree().create_timer(interval/2).timeout
+			object.visible = true
+			await get_tree().create_timer(interval/2).timeout
+	else:
+		for i in (duration/interval):
+			object.visible = true
+			await get_tree().create_timer(interval/2).timeout
+			object.visible = false
+			await get_tree().create_timer(interval/2).timeout
+			
+	callback.call()

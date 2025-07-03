@@ -77,9 +77,11 @@ func _process(delta: float) -> void:
 		# ok starting song lol
 		PlayScene.playlist = [load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))]
 		PlayScene.difficulty = difficulties[current_difficulty]
+		PlayScene.play_mode = PlayScene.PlayMode.FREEPLAY
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
 	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
 		GlobalSound.play_sound("menu/cancel")
+		controllable = false
 		Main.switch_scene(preload("res://scenes/menu/MainMenu.tscn"))
 		
 	$items.global_position.y = lerpf($items.global_position.y, itemsY - $items.get_children()[current_item].position.y, 0.02)
@@ -89,7 +91,7 @@ func _process(delta: float) -> void:
 			$items.get_children()[i].modulate.a = 1
 		else:
 			$items.get_children()[i].modulate.a = 0.5
-			
+
 	if SaveData.data["_score"].has(song_list_final[current_item] + "-" + difficulties[current_difficulty]):
 		var savedScore = SaveData.data._score[song_list_final[current_item] + "-" + difficulties[current_difficulty]]
 		targetScore = savedScore.score
