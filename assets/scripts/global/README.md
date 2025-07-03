@@ -1,5 +1,6 @@
-## External Script
-"Evil" Coke Engine supports scripting in Lua (Fucking Psych engine reference!!!!) that is independent of stages and states. (This is **NOT** made for softcoding, it is really for general purpose scripting.)
+## Global Script
+This is **NOT** made for softcoding, it is really for general purpose scripting.
+Global scripts are independent of stages and states.
 
 ### Script Example
 ```lua
