@@ -9,6 +9,7 @@ func _ready() -> void:
 	CokeUtil.set_mouse_visibility(true)
 	GlobalSound.play_music("optionMenu")
 	$tab.current_tab = 0
+	DiscordData.set_rpc("In Option Menu")
 	
 	for tab in [$tab/Gameplay, $tab/Appearance, $tab/Misc]:
 		for child in tab.get_children():

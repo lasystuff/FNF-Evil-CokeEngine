@@ -38,6 +38,7 @@ var controllable:bool = true
 @onready var og_difficultyY:float = $difficultySprite.global_position.y
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	DiscordData.set_rpc("In Story Mode Menu")
 	if !GlobalSound.music_player.playing:
 		GlobalSound.play_music("freakyMenu")
 	# this literally fucking sucks what?????

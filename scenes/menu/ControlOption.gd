@@ -9,7 +9,7 @@ var current_item:int:
 var controllable = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	DiscordData.set_rpc("Editing Keybinds")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 		controllable = false
 		self.queue_free()
 		Main.scene.process_mode = Node.PROCESS_MODE_INHERIT
+		DiscordData.set_rpc("In Option Menu")
 
 	for i in $items.get_children().size():
 		if i == current_item:

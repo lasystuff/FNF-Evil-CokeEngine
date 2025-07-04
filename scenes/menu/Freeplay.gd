@@ -39,6 +39,8 @@ var preview_musics:Array = []
 static var current_item_save:int = 0
 
 func _ready() -> void:
+	DiscordData.set_rpc("In Freeplay Menu")
+
 	for i in song_list.size():
 		if Paths.exists("songs/" + song_list[i] + "/data.tres"):
 			var lab = SparrowLabel.new()

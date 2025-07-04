@@ -21,6 +21,7 @@ Init="*res://scenes/backends/Init.gd"
 GlobalSound="*res://scenes/backends/GlobalSound.gd"
 Constant="*res://scenes/Constant.gd"
 CokeUtil="*res://scenes/backends/CokeUtil.gd"
+DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 
 [display]
 
@@ -30,7 +31,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdanimate/plugin.cfg", "res://addons/godot_sparrow/plugin.cfg", "res://addons/lua-gdextension/plugin.cfg")
+enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdanimate/plugin.cfg", "res://addons/godot_sparrow/plugin.cfg", "res://addons/lua-gdextension/plugin.cfg")
 
 [input]
 

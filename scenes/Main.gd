@@ -23,6 +23,8 @@ static func switch_scene(scene):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instance = self
+	
+	DiscordData.init()
 	SaveData.load()
 
 	$overlay/Soundtray.curVolume = SaveData.data._volume

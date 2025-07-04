@@ -37,7 +37,7 @@ Most of the characters, some stages, events etc are loaded using lua.
     ```
 - Highly optimized note rendering with implemented cue system and tiled sustained notes
 - A pretty decent input system based from original research from Vanilla, FPS Plus, Psych, and Osu!Mania
-- An optional ~~overly~~ organized character debugger etc...
+- ~~Overly~~ organized character debugger etc...
 
 ## Special Thanks
 - Forever Engine
@@ -46,3 +46,5 @@ Most of the characters, some stages, events etc are loaded using lua.
     - made godot_sparrow and gdanimate addons.
 - gilzoide
     - made lua-gdextension addon.
+- vaporvee
+    - made discord-rpc-godot addon.

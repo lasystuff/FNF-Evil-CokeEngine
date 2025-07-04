@@ -17,6 +17,7 @@ static var current_item_save:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	DiscordData.set_rpc("In Main Menu")
 	if !GlobalSound.music_player.playing:
 		GlobalSound.play_music("freakyMenu")
 	var index:int = 0

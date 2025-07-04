@@ -90,6 +90,8 @@ func _ready() -> void:
 	Conductor.bpm = chart.bpm
 	Conductor.mapBPMChanges(chart)
 	
+	DiscordData.set_rpc("Playing " + song.display_name + " (" + difficulty + ")")
+	
 	$hud/playUI.game = instance
 	$hud/opponentStrums.scrollSpeed = chart.speed
 	$hud/playerStrums.scrollSpeed = chart.speed
@@ -499,3 +501,5 @@ func death():
 	thing.global_position = self.player.global_position
 	add_child(thing)
 	self.process_mode = Node.PROCESS_MODE_DISABLED
+
+	DiscordData.set_rpc("Game Over - " + song.display_name + " (" + difficulty + ")")
