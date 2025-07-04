@@ -25,6 +25,7 @@ func _process(delta: float) -> void:
 		$items.get_children()[current_item].bind()
 
 	if Input.is_action_just_pressed("ui_exit") && controllable:
+		CokeUtil.set_mouse_visibility(true)
 		GlobalSound.play_sound("menu/cancel")
 		controllable = false
 		self.queue_free()

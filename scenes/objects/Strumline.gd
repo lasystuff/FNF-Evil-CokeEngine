@@ -23,7 +23,7 @@ var botplay:bool = false
 var playNoteSplash:bool = false
 
 var notePressTimer = [0, 0, 0, 0]
-var controlArray = ["ui_left", "ui_down", "ui_up", "ui_right"]
+var controlArray = ["note_left", "note_down", "note_up", "note_right"]
 
 var defaultAnims = ["arrowLEFT", "arrowDOWN", "arrowUP", "arrowRIGHT"]
 var pressAnims = ["left press", "down press", "up press", "right press"]

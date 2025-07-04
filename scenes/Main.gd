@@ -34,6 +34,8 @@ func _ready() -> void:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 		2:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+			
+	CokeUtil.set_mouse_visibility(false)
 	
 	_switch_scene(initalScene)
 	

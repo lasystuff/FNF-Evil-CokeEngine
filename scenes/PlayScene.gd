@@ -78,6 +78,7 @@ func _ready() -> void:
 	instance = self
 	
 	GlobalSound.stop_music()
+	CokeUtil.set_mouse_visibility(false)
 
 	if static_stat == null || static_stat == {}:
 		static_stat = {"score": 0, "misses": 0, "accuracy": 0}

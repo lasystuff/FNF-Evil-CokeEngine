@@ -6,6 +6,7 @@ var controllable:bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	CokeUtil.set_mouse_visibility(true)
 	GlobalSound.play_music("optionMenu")
 	$tab.current_tab = 0
 	
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 		$checker/Sprite2D.global_position = Vector2(0, -1400)
 		
 	if Input.is_action_just_pressed("ui_exit") && controllable:
+		CokeUtil.set_mouse_visibility(false)
 		GlobalSound.play_sound("menu/cancel")
 		controllable = false
 		GlobalSound.music_player.stop()
@@ -82,5 +84,6 @@ func _on_tab_tab_changed(tab: int) -> void:
 			tween.tween_property($bg, "modulate", Color8(0, 182, 126), 0.5)
 
 func _on_edit_controls_pressed() -> void:
+	CokeUtil.set_mouse_visibility(false)
 	Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/menu/ControlOption.tscn").instantiate())
 	self.process_mode = Node.PROCESS_MODE_DISABLED

@@ -13,11 +13,6 @@ func _ready() -> void:
 		print(event.keycode)
 		$keyName.text = OS.get_keycode_string(event.keycode)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 var waiting_for_bind:bool = false
 func bind():
 	$keyName.text = "WAITING FOR INPUT"
@@ -32,4 +27,4 @@ func _input(event: InputEvent) -> void:
 			waiting_for_bind = false
 			SaveData.data._inputs[target_bind] = event.keycode
 			$keyName.text = OS.get_keycode_string(event.key_label)
-			Main.scene.controllable = true
+			Main.instance.get_node("SubSceneLoader").get_children()[0].controllable = true

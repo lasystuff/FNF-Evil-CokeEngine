@@ -47,3 +47,13 @@ func flicker(object:Node2D, duration = 1, interval = 0.04, endVisibility:bool = 
 			await get_tree().create_timer(interval/2).timeout
 			
 	callback.call()
+
+var mouse_mode = Input.MOUSE_MODE_VISIBLE
+func set_mouse_visibility(b:bool):
+	if b:
+		mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		mouse_mode = Input.MOUSE_MODE_HIDDEN
+
+func _process(delta: float) -> void:
+	Input.set_mouse_mode(mouse_mode)
