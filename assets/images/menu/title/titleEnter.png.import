@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxtl1ldrl0ia5"
-path="res://.godot/imported/gfDanceTitle.png-6612653b9fb7c3bb5e8bfc41a8604941.ctex"
+uid="uid://88thk7isgkut"
+path="res://.godot/imported/titleEnter.png-132943e3383e617fbdbaa548d6c2196f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gfDanceTitle.png"
-dest_files=["res://.godot/imported/gfDanceTitle.png-6612653b9fb7c3bb5e8bfc41a8604941.ctex"]
+source_file="res://assets/images/menu/title/titleEnter.png"
+dest_files=["res://.godot/imported/titleEnter.png-132943e3383e617fbdbaa548d6c2196f.ctex"]
 
 [params]
 

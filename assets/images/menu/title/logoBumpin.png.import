@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://88thk7isgkut"
-path="res://.godot/imported/titleEnter.png-48e917f0b8760932dd29589a5144eb83.ctex"
+uid="uid://lwq6kar4mcnh"
+path="res://.godot/imported/logoBumpin.png-c65358b4566720a4ce4c991bbede448f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/titleEnter.png"
-dest_files=["res://.godot/imported/titleEnter.png-48e917f0b8760932dd29589a5144eb83.ctex"]
+source_file="res://assets/images/menu/title/logoBumpin.png"
+dest_files=["res://.godot/imported/logoBumpin.png-c65358b4566720a4ce4c991bbede448f.ctex"]
 
 [params]
 

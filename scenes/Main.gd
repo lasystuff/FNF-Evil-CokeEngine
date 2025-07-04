@@ -1,7 +1,7 @@
 extends Node2D
 class_name Main
 
-const initalScene = preload("res://scenes/menu/MainMenu.tscn")
+const initalScene = preload("res://scenes/menu/IntroText.tscn")
 
 static var defaultTransIn = "gradIn"
 static var defaultTransOut = "gradOut"
@@ -86,10 +86,6 @@ func _switch_scene(scene):
 	if scene != nextState:
 		nextState = scene
 	$Transition/animation.play(nextTransIn)
-	
-func _open_subscene(scene):
-	Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
-	self.process_mode = Node.PROCESS_MODE_DISABLED
 
 func _on_transition_animation_finished(anim_name: StringName) -> void:
 	if anim_name == nextTransIn:

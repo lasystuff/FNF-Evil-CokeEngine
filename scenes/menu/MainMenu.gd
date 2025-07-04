@@ -3,7 +3,7 @@ extends FNFScene2D
 var menuItems:Dictionary = {
 	"storymode": func(): Main.switch_scene(load("res://scenes/menu/StoryMode.tscn")),
 	"freeplay": func(): Main.switch_scene(load("res://scenes/menu/Freeplay.tscn")),
-	"credits": null,
+	#"credits": null,
 	"options":  func(): Main.switch_scene(load("res://scenes/menu/OptionMenu.tscn"))
 }
 
@@ -31,7 +31,10 @@ func _ready() -> void:
 	current_item = current_item_save
 
 	$Camera2D.limit_top = $items.get_children()[0].global_position.y - 150
-	$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 150
+	if menuItems.size() > 3:
+		$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 150
+	else:
+		$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 300
 	
 	var versionPostfix = "v" + ProjectSettings.get_setting("application/config/version")
 	if versionPostfix == "v": # prerelease
@@ -58,7 +61,12 @@ func _process(delta: float) -> void:
 			for i in menuItems.size():
 				if i != current_item:
 					charTween.tween_property($items.get_child(i), "self_modulate", Color.TRANSPARENT, 0.5)
-
+	if Input.is_action_just_pressed("ui_exit") && controllable:
+		GlobalSound.play_sound("menu/cancel")
+		controllable = false
+		Main.nextTransOut = "quickOut"
+		Main.switch_scene(load("res://scenes/menu/TitleScreen.tscn"))
+		
 	$Camera2D.global_position = $items.get_children()[current_item].global_position
 	
 	for i in menuItems.size():

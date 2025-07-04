@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp7hj85kg34ej"
-path="res://.godot/imported/logo.png-bacb448eabae556bdb0659359ea4e4af.ctex"
+uid="uid://qtjxmxgb6ud1"
+path="res://.godot/imported/newgrounds_logo.png-f25624d336ffcd7d77ab96c995ab4918.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/discord-rpc-gd/logo.png"
-dest_files=["res://.godot/imported/logo.png-bacb448eabae556bdb0659359ea4e4af.ctex"]
+source_file="res://assets/images/menu/title/newgrounds_logo.png"
+dest_files=["res://.godot/imported/newgrounds_logo.png-f25624d336ffcd7d77ab96c995ab4918.ctex"]
 
 [params]
 

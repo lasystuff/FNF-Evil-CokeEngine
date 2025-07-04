@@ -1,4 +1,4 @@
-extends FNFScene2D
+extends Node2D
 
 var current_item:int:
 	set(value):
