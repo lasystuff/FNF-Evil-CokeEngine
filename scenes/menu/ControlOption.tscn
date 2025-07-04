@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://blvbmawoy8p0w"]
+
+[ext_resource type="Script" uid="uid://ciyqbode4aq4l" path="res://scenes/menu/ControlOption.gd" id="1_4l3m1"]
+[ext_resource type="PackedScene" uid="uid://drkcrk6tfv4hb" path="res://scenes/objects/KeyboundItem.tscn" id="3_4l3m1"]
+
+[node name="ControlOption" type="Node2D"]
+script = ExtResource("1_4l3m1")
+metadata/_custom_type_script = "uid://r60w6aww8gaq"
+
+[node name="rect" type="ColorRect" parent="."]
+offset_left = 320.0
+offset_right = 960.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.513726)
+
+[node name="items" type="Node2D" parent="."]
+position = Vector2(320, 0)
+
+[node name="accept" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 80)
+bind_name = "Accept"
+target_bind = "ui_accept"
+
+[node name="exit" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 112)
+bind_name = "Exit"
+target_bind = "ui_exit"
+
+[node name="left" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 168)
+bind_name = "Left"
+target_bind = "ui_left"
+
+[node name="down" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 208)
+bind_name = "Down"
+target_bind = "ui_down"
+
+[node name="up" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 248)
+bind_name = "Up"
+target_bind = "ui_up"
+
+[node name="right" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 288)
+bind_name = "Right"
+target_bind = "ui_right"
+
+[node name="volup" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 344)
+bind_name = "Volume Up"
+target_bind = "volume_up"
+
+[node name="voldown" parent="items" instance=ExtResource("3_4l3m1")]
+position = Vector2(320, 384)
+bind_name = "Volume Down"
+target_bind = "volume_down"

@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		character.playAnim(character.data.animations[curAnimIndex].name, true)
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection"):
+	if Input.is_action_just_pressed("ui_exit"):
 		Main.nextTransIn = "quickIn"
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
 

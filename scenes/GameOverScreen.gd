@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 		GlobalSound.play_music("gameOverEnd")
 		$retryTimer.start()
 		controllable = false
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
+	if Input.is_action_just_pressed("ui_exit") && controllable:
 		pass
 
 

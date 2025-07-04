@@ -110,7 +110,7 @@ func _process(delta: float) -> void:
 
 				Main.switch_scene(load("res://scenes/PlayScene.tscn")))
 
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
+	if Input.is_action_just_pressed("ui_exit") && controllable:
 		GlobalSound.play_sound("menu/cancel")
 		controllable = false
 		Main.switch_scene(preload("res://scenes/menu/MainMenu.tscn"))

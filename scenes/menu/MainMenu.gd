@@ -17,7 +17,8 @@ static var current_item_save:int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	GlobalSound.play_music("freakyMenu")
+	if !GlobalSound.music_player.playing:
+		GlobalSound.play_music("freakyMenu")
 	var index:int = 0
 	for item in menuItems.keys():
 		var sprite = AnimatedSprite2D.new()
@@ -30,6 +31,12 @@ func _ready() -> void:
 
 	$Camera2D.limit_top = $items.get_children()[0].global_position.y - 150
 	$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 150
+	
+	var versionPostfix = "v" + ProjectSettings.get_setting("application/config/version")
+	if versionPostfix == "v": # prerelease
+		versionPostfix = ""
+	$overlay/RichTextLabel.text = '[color="red"]EVIL[/color] Coke Engine Indev ' + versionPostfix
+	$overlay/RichTextLabel.text += "\nFriday Night Funkin' Rewritten"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

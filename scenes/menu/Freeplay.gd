@@ -1,6 +1,6 @@
 extends FNFScene2D
 
-@export var song_list:Array = []
+@export var song_list:Array[String] = []
 
 @onready var itemsY = $items.global_position.y
 
@@ -79,10 +79,10 @@ func _process(delta: float) -> void:
 		PlayScene.difficulty = difficulties[current_difficulty]
 		PlayScene.play_mode = PlayScene.PlayMode.FREEPLAY
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
+	if Input.is_action_just_pressed("ui_exit") && controllable:
 		GlobalSound.play_sound("menu/cancel")
 		controllable = false
-		Main.switch_scene(preload("res://scenes/menu/MainMenu.tscn"))
+		Main.switch_scene(load("res://scenes/menu/MainMenu.tscn"))
 		
 	$items.global_position.y = lerpf($items.global_position.y, itemsY - $items.get_children()[current_item].position.y, 0.02)
 	

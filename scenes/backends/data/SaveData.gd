@@ -4,6 +4,7 @@ class_name SaveData
 const defaultData = {
 	"_volume": 10,
 	"_score": {},
+	"_inputs": {},
 	
 	"downscroll": false,
 	"middlescroll": false,
@@ -24,6 +25,17 @@ static func load():
 		# savedata compatibility via version or something idk
 		for key in savedData.keys():
 			data[key] = savedData[key]
+			
+	# input shit
+	for action in data._inputs.keys():
+		set_key_bind(action, data._inputs[action])
+		
+static func set_key_bind(action, keycode):
+	var event = InputEventKey.new()
+	event.keycode = keycode
+	
+	InputMap.action_erase_events(action)
+	InputMap.action_add_event(action, event)
 
 static func save():
 	var f = FileAccess.open("user://config.save", FileAccess.WRITE)

@@ -9,6 +9,10 @@ static var defaultTransOut = "gradOut"
 static var nextTransIn = "quickIn"
 static var nextTransOut = "gradOut"
 
+static var scene:
+	get():
+		return instance.get_node("SceneLoader").get_child(0)
+
 static var instance
 
 static func switch_scene(scene):

@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 		GlobalSound.music_player.volume_db = 0.0
 		controllable = false
 		selectItem(itemList[curItem])
-	if Input.is_action_just_pressed("ui_text_clear_carets_and_selection") && controllable:
+	if Input.is_action_just_pressed("ui_exit") && controllable:
 		resume()
 		
 	curItem = wrap(curItem, 0, itemList.size())
