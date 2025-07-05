@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 	if memoryUsing > 800:
 		thing = '[color="red"]' + thing + '[/color]'
 	$overlay/debugText.text += "\n" + thing + '[color="gray"] / ' + str(oldMem) + ' MB[/color]'
-	$overlay/debugText.text += '\n[color="red"]Evil[/color] Coke Engine Indev'
+	$overlay/debugText.text += '\n[color="red"]Evil[/color] Coke Engine v' + ProjectSettings.get_setting("application/config/version")
 	
 	$overlay/debugTextExtra.text = "Total Object: " + str(int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)))
 	$overlay/debugTextExtra.text += "\nTotal Draw Calls (in Frame): " + str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))

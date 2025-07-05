@@ -13,7 +13,7 @@ const defaultData = {
 	
 	"vsync": 0, # Disabled, Enabled, Addaptive
 	"flashing": true,
-	"debugCounterType": 1 # Disabled, Full, Simple
+	"debugCounterType": 2 # Disabled, Full, Simple
 }
 static var data = {}
 

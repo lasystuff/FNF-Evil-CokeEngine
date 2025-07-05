@@ -35,11 +35,8 @@ func _ready() -> void:
 		$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 150
 	else:
 		$Camera2D.limit_bottom = $items.get_children()[menuItems.size() - 1].global_position.y + 300
-	
-	var versionPostfix = "v" + ProjectSettings.get_setting("application/config/version")
-	if versionPostfix == "v": # prerelease
-		versionPostfix = ""
-	$overlay/RichTextLabel.text = '[color="red"]EVIL[/color] Coke Engine Indev ' + versionPostfix
+
+	$overlay/RichTextLabel.text = '[color="red"]EVIL[/color] Coke Engine v' + ProjectSettings.get_setting("application/config/version")
 	$overlay/RichTextLabel.text += "\nFriday Night Funkin' Rewritten"
 
 

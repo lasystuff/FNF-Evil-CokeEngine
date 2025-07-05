@@ -127,7 +127,7 @@ theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
 text = "FPS: 50
 Memory: 0 MB [color=\"gray\"]/ 500 MB[/color]
-[color=\"red\"]Evil[/color] Coke Engine Indev"
+[color=\"red\"]Evil[/color] Coke Engine v1.0"
 scroll_active = false
 
 [node name="debugTextExtra" type="RichTextLabel" parent="overlay"]
