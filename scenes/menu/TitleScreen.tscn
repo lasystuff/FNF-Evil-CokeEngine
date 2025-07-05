@@ -21,7 +21,7 @@ animation = &"gfDance"
 
 [node name="logo" type="AnimatedSprite2D" parent="."]
 clip_children = 2
-position = Vector2(376, 320)
+position = Vector2(376, 264)
 sprite_frames = ExtResource("2_y8icr")
 animation = &"logo bumpin"
 
