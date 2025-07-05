@@ -5,15 +5,13 @@ var controllable:bool = true
 func _ready() -> void:
 	if !GlobalSound.music_player.playing:
 		GlobalSound.play_music("freakyMenu")
-	Conductor.bpm = 102
+	conductor.bpm = 102
 	$flash.modulate.a = 1
-
+	conductor.song_position = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	super(delta)
-	var instTime = GlobalSound.music_player.get_playback_position() + AudioServer.get_time_since_last_mix()
-	Conductor.songPosition = (instTime * 1000.0)
+	conductor.song_position += (delta * 1000.0)
 	
 	if controllable:
 		$titleenter.play("Press Enter to Begin")
@@ -26,12 +24,11 @@ func _process(delta: float) -> void:
 		$titleenter.play("ENTER PRESSED")
 		$transTimer.start()
 
-func beatHit():
-	super()
+func beat_Hit(beat):
 	$logo.stop()
 	$logo.play("logo bumpin")
 	
-	if curBeat % 2 == 0:
+	if beat % 2 == 0:
 		$gfdance.stop()
 		$gfdance.play("gfDance")
 

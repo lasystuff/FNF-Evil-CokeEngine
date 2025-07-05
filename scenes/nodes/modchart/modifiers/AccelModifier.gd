@@ -11,7 +11,7 @@ func note_process(note:Note, player:int):
 	if !note.autoFollow:
 		return
 		
-	var noteDiff = Conductor.songPosition - note.strumTime
+	var noteDiff = PlayScene.instance.conductor.song_position - note.strumTime
 
 	var boost = percent[player]
 	var brake = submods["brake"].percent[player]

@@ -13,8 +13,8 @@ func _process(delta: float) -> void:
 		# destroying sustain lol shitty implement
 		if !parentNote.autoFollow:
 			speedAdjust = 1
-			var lastLength = ((parentNote.strumTime + parentNote.sustainLength) - Conductor.songPosition) * (parentNote.strumline.scrollSpeed*0.45)
-			var susLengthAdjust = (lastLength / Conductor.stepCrotchet)
+			var lastLength = ((parentNote.strumTime + parentNote.sustainLength) - Main.scene.conductor.song_position) * (parentNote.strumline.scrollSpeed*0.45)
+			var susLengthAdjust = (lastLength / Main.scene.conductor.step_crotchet)
 			self.length = susLengthAdjust
 			if lastLengthOld != susLengthAdjust:
 				lastLengthOld = susLengthAdjust

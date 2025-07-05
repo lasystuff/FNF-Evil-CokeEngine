@@ -40,11 +40,11 @@ class ChartConverter
 				var note = section.sectionNotes[i];
 
 				var isPlayer:Bool = section.mustHitSection;
-				if (note[0] > 3)
+				if (note[1] > 3)
 					isPlayer = !isPlayer;
 
 				var newNote:EvilNote = {
-					id: note[1],
+					id: note[1] % 4,
 					time: note[0],
 					length: note[2]
 				}
@@ -71,7 +71,7 @@ class ChartConverter
 				lastMustHit = section.mustHitSection;
 				if (section.sectionNotes.length > 0){
 					var e:EvilEvent = {
-						event: "Move Camera",
+						name: "Move Camera",
 						id: 0,
 						time: sectionStart,
 						data: {target: "player"}
@@ -121,7 +121,7 @@ class ChartConverter
 // funny FPS+ style
 @:structInit class EvilEvent
 {
-	public var event:String = "";
+	public var name:String = "";
 	public var data:Dynamic = {};
 	public var id:Int = 0;
 	public var time:Float = 0;

@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 	if (singing):
 		holdTimer += delta
 
-		var singTimeSec:float = (Conductor.stepCrotchet*0.0011) * singDuration
+		var singTimeSec:float = (Main.scene.conductor.step_crotchet*0.0011) * singDuration
 		if (holdTimer > singTimeSec):
 			singing = false
 			holdTimer = 0

@@ -1,0 +1,292 @@
+{
+	"events": [
+		{
+			"id": 0,
+			"time": 0,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 1951.21951219512198,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 3902.43902439024396,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 5853.65853658536616,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 7804.87804878048792,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 9756.09756097561,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 11707.3170731707323,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 13658.536585365855,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 15609.7560975609777,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 17560.9756097561,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 19512.195121951223,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 21463.4146341463456,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 23414.6341463414683,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 25365.853658536591,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 27317.0731707317136,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 29268.2926829268363,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 46829.2682926829366,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 48780.4878048780593,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 50731.7073170731819,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 52682.9268292683046,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 54634.1463414634272,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 56585.3658536585499,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 58536.5853658536726,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 60487.8048780487952,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 78048.7804878048919,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 80000.0000000000146,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 81951.2195121951372,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 83902.4390243902599,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 85853.6585365853825,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 87804.8780487805,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 89756.0975609756279,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 91707.3170731707505,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 93658.5365853658732,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 95609.756097561,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		},
+		{
+			"id": 0,
+			"time": 97560.9756097561185,
+			"name": "Move Camera",
+			"data": {
+				"target": "opponent"
+			}
+		},
+		{
+			"id": 0,
+			"time": 99512.1951219512412,
+			"name": "Move Camera",
+			"data": {
+				"target": "player"
+			}
+		}
+	]
+}

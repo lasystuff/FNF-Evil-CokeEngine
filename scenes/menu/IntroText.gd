@@ -71,14 +71,13 @@ func _ready() -> void:
 	current_intro = intro_texts[rng.randi_range(0, intro_texts.size() - 1)]
 	if !GlobalSound.music_player.playing:
 		GlobalSound.play_music("freakyMenu")
-	Conductor.bpm = 102
+	conductor.bpm = 102
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	super(delta)
 	var instTime = GlobalSound.music_player.get_playback_position() + AudioServer.get_time_since_last_mix()
-	Conductor.songPosition = (instTime * 1000.0)
+	conductor.song_position = (instTime * 1000.0)
 	
 	if Input.is_action_just_pressed("ui_accept") && controllable:
 		go_to_title()
@@ -89,9 +88,8 @@ func go_to_title():
 	Main.nextTransOut = "quickOut"
 	Main.switch_scene(load("res://scenes/menu/TitleScreen.tscn"))
 
-func beatHit():
-	super()
-	match curBeat:
+func beat_hit(beat):
+	match beat:
 		1:
 			add_text("The", -70)
 			add_text("Funkin Crew Inc")

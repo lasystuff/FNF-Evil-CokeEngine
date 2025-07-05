@@ -58,8 +58,6 @@ func _ready() -> void:
 	current_item = current_item_save
 			
 func _process(delta: float) -> void:
-	super(delta)
-	
 	current_item_save = current_item
 	if Input.is_action_just_pressed("ui_up") && controllable:
 		current_item -= 1

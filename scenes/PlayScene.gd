@@ -24,6 +24,7 @@ static var chart:
 			return song.charts[difficulty]
 		else:
 			return null
+static var events:Array = []
 
 static var level:String = ""
 static var difficulty:String = "hard"
@@ -82,19 +83,20 @@ func _ready() -> void:
 
 	if static_stat == null || static_stat == {}:
 		static_stat = {"score": 0, "misses": 0, "accuracy": 0}
+	events = song.events.duplicate(true)
 	
 	$inst.stream = song.instrumental
 	$playerVoices.stream = song.player_vocals
 	$opponentVoices.stream = song.opponent_vocals
 		
-	Conductor.bpm = chart.bpm
-	Conductor.mapBPMChanges(chart)
+	conductor.bpm = chart.bpm
+	conductor.mapBPMChanges(song)
 	
 	DiscordData.set_rpc("Playing " + song.display_name + " (" + difficulty + ")")
 	
 	$hud/playUI.game = instance
-	$hud/opponentStrums.scrollSpeed = chart.speed
-	$hud/playerStrums.scrollSpeed = chart.speed
+	$hud/opponentStrums.scrollSpeed = chart.scroll_speed
+	$hud/playerStrums.scrollSpeed = chart.scroll_speed
 	
 	$hud/opponentStrums.botplay = true
 	$hud/playerStrums.botplay = true
@@ -115,21 +117,21 @@ func _ready() -> void:
 		$hud/playerStrums.position.x = Constant.width/2
 	
 	# pushing notes
-	for section in chart.notes:
-		for note in section.sectionNotes:
-			var mustHit:bool = section.mustHitSection;
-			if (note[1] > 3):
-				mustHit = !section.mustHitSection
-			
-			var rawData = {
-				"strumTime": note[0],
-				"noteData": int(note[1]) % 4,
-				"sustainLength": note[2]
-			}
-			if mustHit:
-				$hud/playerStrums.addNoteData(rawData)
-			else:
-				$hud/opponentStrums.addNoteData(rawData)
+	for opponentNote in chart.opponent.notes:
+		var rawData = {
+			"strumTime": opponentNote.time,
+			"noteData": int(opponentNote.id),
+			"sustainLength": opponentNote.length
+		}
+		$hud/opponentStrums.addNoteData(rawData)
+
+	for playerNote in chart.player.notes:
+		var rawData = {
+			"strumTime": playerNote.time,
+			"noteData": int(playerNote.id),
+			"sustainLength": playerNote.length
+		}
+		$hud/playerStrums.addNoteData(rawData)
 
 
 	modchart = ModchartManager.new()
@@ -160,12 +162,12 @@ func _ready() -> void:
 		stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
 	
-	dj = FNFCharacter2D.new(chart.gf)
+	dj = FNFCharacter2D.new(chart.dj.character)
 	add_child(dj)
-	player = FNFCharacter2D.new(chart.player1)
+	player = FNFCharacter2D.new(chart.player.character)
 	add_child(player)
 	player.flip_h = !player.flip_h
-	opponent = FNFCharacter2D.new(chart.player2)
+	opponent = FNFCharacter2D.new(chart.opponent.character)
 	add_child(opponent)
 	
 	dj.idle()
@@ -190,11 +192,10 @@ func _ready() -> void:
 
 var curCountdown:int = 0
 func startCountdown():
-	moveCamBySection()
 	$hud/playUI.initHud()
 	onCountdown = true
-	Conductor.songPosition = 0
-	Conductor.songPosition -= Conductor.crotchet * 5
+	conductor.song_position = 0
+	conductor.song_position -= conductor.crotchet * 5
 	
 	var countdownTimer = Timer.new()
 	
@@ -203,8 +204,8 @@ func startCountdown():
 		var countSprite = Sprite2D.new()
 		countSprite.scale = Vector2(0.52, 0.52)
 		var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-		sprTween.tween_property(countSprite, "modulate", Color.TRANSPARENT, Conductor.crotchet / 1000 *1.1)
-		sprTween.tween_property(countSprite, "scale", Vector2(0.5, 0.5), Conductor.crotchet / 1000)
+		sprTween.tween_property(countSprite, "modulate", Color.TRANSPARENT, conductor.crotchet / 1000 *1.1)
+		sprTween.tween_property(countSprite, "scale", Vector2(0.5, 0.5), conductor.crotchet / 1000)
 		$hud/countdownSpawner.add_child(countSprite)
 		
 		match curCountdown:
@@ -236,8 +237,12 @@ func startCountdown():
 
 		curCountdown += 1
 	)
-	countdownTimer.start(Conductor.crotchet / 1000)
+	countdownTimer.start(conductor.crotchet / 1000)
 	for lua in modules.values(): lua.callLua("onStartCountdown")
+	for event in events:
+		if event.time == 0 && event.name == "Move Camera":
+			call_event(event.name, event.data)
+			events.erase(event)
 	
 func startSong():
 	songStarted = true
@@ -245,17 +250,20 @@ func startSong():
 	$playerVoices.play()
 	$opponentVoices.play()
 	
-	Conductor.songPosition = 0
+	conductor.song_position = 0
 	for lua in modules.values(): lua.callLua("onSongStart")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	super(delta)
 	if !songStarted:
-		Conductor.songPosition += delta * 1000
+		conductor.song_position += delta * 1000
 	else:
 		var instTime = $inst.get_playback_position() + AudioServer.get_time_since_last_mix()
-		Conductor.songPosition = instTime * 1000
+		conductor.song_position = instTime * 1000
+		for event in events:
+			if  conductor.song_position >= event.time:
+				call_event(event.name, event.data)
+				events.erase(event)
 
 	# Peak absolutely cinema guys
 	$camera.global_position = camFollow.global_position + camFollowExt.global_position
@@ -300,16 +308,15 @@ func _process(delta: float) -> void:
 		
 	for lua in modules.values(): lua.callLua("onProcess", [delta])
 
-func beatHit():
-	super()
+func beat_hit(beat):
 	dj.idle()
-	if curBeat % 2 == 0:
+	if beat % 2 == 0:
 		player.idle()
 		opponent.idle()
-	if curBeat % 4 == 0:
+	if beat % 4 == 0:
 		camZoomAdd = 0.02
-	$hud/playUI.beatHit(curBeat)
-	for lua in modules.values(): lua.callLua("onBeatHit", [curBeat])
+	$hud/playUI.beatHit(beat)
+	for lua in modules.values(): lua.callLua("onBeatHit", [beat])
 
 func goodNoteHit(note, isSustain):
 	for lua in modules.values(): lua.callLua("onGoodNoteHit", [note, isSustain])
@@ -360,17 +367,6 @@ func doSingAnimation(char:FNFCharacter2D, data:int, postfix:String = ""):
 	if char.interruptible:
 		char.playAnim(animArray[data] + postfix, true)
 
-func sectionHit():
-	super()
-	moveCamBySection()
-	for lua in modules.values(): lua.callLua("onSectionHit", [curSection])
-
-func moveCamBySection():
-	if chart.notes.size() > curSection && chart.notes[curSection].mustHitSection:
-		moveCamera(player.position + player.cameraPosition + stage.playerCameraOffset)
-	else:
-		moveCamera(opponent.position + opponent.cameraPosition + stage.opponentCameraOffset)
-
 const defaultCameraTrans = Tween.TRANS_EXPO
 const defaultCameraEase = Tween.EASE_OUT
 
@@ -398,9 +394,9 @@ func spawnJudgementSprite(judge:String):
 
 	var sprTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	sprTween.finished.connect(func(): judgeSprite.queue_free())
-	sprTween.tween_property(judgeSprite, "scale", Vector2(1, 1), (Conductor.crotchet / 1000))
-	sprTween.tween_property(judgeSprite, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*2)
-	sprTween.tween_property(judgeSprite, "position:y", judgeSprite.position.y + 140, (Conductor.crotchet / 1000)*2.3)
+	sprTween.tween_property(judgeSprite, "scale", Vector2(1, 1), (conductor.crotchet / 1000))
+	sprTween.tween_property(judgeSprite, "modulate", Color.TRANSPARENT, (conductor.crotchet / 1000)*2)
+	sprTween.tween_property(judgeSprite, "position:y", judgeSprite.position.y + 140, (conductor.crotchet / 1000)*2.3)
 
 	if combo > 0:
 		var comboDisplay = preload("res://scenes/objects/ComboDisplay.tscn").instantiate()
@@ -410,9 +406,9 @@ func spawnJudgementSprite(judge:String):
 		judgeSpawner.add_child(comboDisplay)
 		
 		sprTween.finished.connect(func(): comboDisplay.queue_free())
-		sprTween.tween_property(comboDisplay, "scale", Vector2(0.75, 0.75), (Conductor.crotchet / 1000))
-		sprTween.tween_property(comboDisplay, "modulate", Color.TRANSPARENT, (Conductor.crotchet / 1000)*3)
-		sprTween.tween_property(comboDisplay, "position:y", comboDisplay.position.y + 50, (Conductor.crotchet / 1000)*3)
+		sprTween.tween_property(comboDisplay, "scale", Vector2(0.75, 0.75), (conductor.crotchet / 1000))
+		sprTween.tween_property(comboDisplay, "modulate", Color.TRANSPARENT, (conductor.crotchet / 1000)*3)
+		sprTween.tween_property(comboDisplay, "position:y", comboDisplay.position.y + 50, (conductor.crotchet / 1000)*3)
 
 func listGlobalScript() -> Array:
 	var finalArray = []
@@ -503,3 +499,24 @@ func death():
 	self.process_mode = Node.PROCESS_MODE_DISABLED
 
 	DiscordData.set_rpc("Game Over - " + song.display_name + " (" + difficulty + ")")
+
+func call_event(name:String, data:Dictionary):
+	for lua in modules.values(): lua.callLua("onCallEvent", [name, data])
+	
+	match name:
+		"Move Camera":
+			var target_pos = Vector2.ZERO
+			if data.has("position"):
+				target_pos = Vector2(data.position[0], data.position[1])
+			elif data.has("target"):
+				if data.target == "player":
+					target_pos = player.position + player.cameraPosition + stage.playerCameraOffset
+				else:
+					target_pos = opponent.position + opponent.cameraPosition + stage.opponentCameraOffset
+			# idk how to make em custom cuz they are enum
+			#var trans = defaultCameraTrans
+			#var ease = defaultCameraEase
+			var speed = 1.9
+			if data.has("speed"):
+				speed = data.speed
+			moveCamera(target_pos, speed)

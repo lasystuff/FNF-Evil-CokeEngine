@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 	if queuedNotes.size() > 0:
 		var raw = queuedNotes[0]
 		# spawn note if in the spawn distance
-		if raw.strumTime - Conductor.songPosition < spawnDistance:
+		if raw.strumTime - PlayScene.instance.conductor.song_position < spawnDistance:
 			var note = Note.new(raw.strumTime, raw.noteData, raw.sustainLength)
 			$noteSpawner.add_child(note)
 			note.strumline = self
@@ -65,10 +65,10 @@ func _process(delta: float) -> void:
 			var targetY = strumPositions[note.noteData].y
 			note.position.x = targetX
 			#strum rotation do cool stuffs so i dont need to edit sustain shit yay!!
-			note.position.y = targetY - (Conductor.songPosition - note.strumTime) * (0.45 * scrollSpeed)
+			note.position.y = targetY - (PlayScene.instance.conductor.song_position - note.strumTime) * (0.45 * scrollSpeed)
 			updateNoteStatus(note)
 		
-		if botplay && Conductor.songPosition >= note.strumTime && note.status == Note.HITTABLE:
+		if botplay && PlayScene.instance.conductor.song_position >= note.strumTime && note.status == Note.HITTABLE:
 			note.hitDiff = 0 # relly awrsome
 			noteHit.emit(note, false)
 			
@@ -84,9 +84,9 @@ func updateNoteStatus(note:Note):
 	if note.status == Note.HIT || note.status == Note.MISSED:
 		return
 
-	if note.strumTime > Conductor.songPosition - Constant.noteSafeZone && note.strumTime < Conductor.songPosition + Constant.noteSafeZone:
+	if note.strumTime > PlayScene.instance.conductor.song_position - Constant.noteSafeZone && note.strumTime < PlayScene.instance.conductor.song_position + Constant.noteSafeZone:
 		note.status = Note.HITTABLE
-	elif (note.strumTime < Conductor.songPosition - Constant.noteSafeZone):
+	elif (note.strumTime < PlayScene.instance.conductor.song_position - Constant.noteSafeZone):
 		noteMiss.emit(note, false)
 	else:
 		note.status = Note.NEUTRAL
@@ -145,7 +145,7 @@ func inputProcess(delta:float):
 		if note.status == Note.HITTABLE && notePressTimer[note.noteData] > 0 && !frameDirections.has(note.noteData):
 			notePressTimer[note.noteData] = 0
 			frameDirections.push_back(note.noteData)
-			note.hitDiff = Conductor.songPosition - note.strumTime
+			note.hitDiff = PlayScene.instance.conductor.song_position - note.strumTime
 			noteHit.emit(note, false)
 
 

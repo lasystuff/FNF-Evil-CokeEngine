@@ -2,13 +2,14 @@ extends Resource
 class_name FNFSong
 
 const default_chart:Dictionary = {
-	"song": "",
 	"bpm": 100,
-	"notes": [],
-	"stage": "Stage",
-	"player1": "bf",
-	"player2": "bf",
-	"gf": "gf"
+	"scroll_speed": 1.0,
+
+	"player": {"character": "bf", "notes":[]},
+	"opponent": {"character": "dad", "notes":[]},
+	"dj": {"character": "gf", "notes":[]},
+
+	"stage": "Stage"
 }
 
 @export var name:String
@@ -36,31 +37,18 @@ var charts:Dictionary:
 	get():
 		if charts.size() <= 0:
 			for diff in difficulties:
-				var d:Dictionary = {"song": default_chart}
+				var d:Dictionary = default_chart
 				var chartPath = Paths.getPath("songs/" + self.name + "/chart/" + diff + ".json")
 				if FileAccess.file_exists(chartPath):
 					d = JSON.parse_string(FileAccess.get_file_as_string(chartPath))
-				charts[diff] = d.song
+				charts[diff] = d
 		
 		return charts
 		
 var events:Array:
 	get():
-		var result:Array = []
 		var eventPath = Paths.getPath("songs/" + self.name + "/events.json")
 		if FileAccess.file_exists(eventPath):
 			var d = JSON.parse_string(FileAccess.get_file_as_string(eventPath))
-			# Default/FPS+ Format
-			if d.has("events"):
-				var target = d.events
-				#...but fps+ have two events field some reason fuck
-				if target.has("events"):
-					target = d.events.events
-				for event in target:
-					result.push_back(event)
-			elif d.has("events") && typeof(d.events[0][1]) == TYPE_ARRAY: # Psych Format
-				for event in d.events:
-					# sec, time, id, event
-					for e in event:
-						var new_event:Array = [0, event[0], 1, ""]
-		return result
+			return d.events
+		return []

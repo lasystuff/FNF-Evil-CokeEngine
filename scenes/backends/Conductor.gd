@@ -1,60 +1,57 @@
 extends Node
 class_name Conductor
 
-static var bpm:float = 0:
+var bpm:float = 0:
 	set(value):
 		bpm = value
 		crotchet = (60 / bpm) * 1000
-		stepCrotchet = crotchet / 4
+		step_crotchet = crotchet / 4
 
-static var crotchet:float
-static var stepCrotchet:float
-
-static var songPosition:float = 0
-static var lastSongPos:float = 0
-static var offset:float = 0
-
-static var safeZoneOffset:float:
+var crotchet:float:
 	get():
-		return 6000; # is safeFrames in milliseconds
-static var bpmChangeMap:Array = [];
+		return (60 / bpm) * 1000
+var step_crotchet:float:
+	get():
+		return crotchet/4
 
-static func getBPMFromSeconds(time:float):
-	var lastChange = {
-		"stepTime": 0,
-		"songTime": 0,
-		"bpm": bpm,
-		"stepCrotchet": stepCrotchet
-	}
-	for i in range(bpmChangeMap.size() - 1):
-		if time >= bpmChangeMap[i].songTime:
-			lastChange = bpmChangeMap[i];
-	return lastChange
-	
-static func mapBPMChanges(song):
-	bpmChangeMap = []
-	
-	var curBPM:float = song.bpm
-	var totalSteps:int = 0
-	var totalPos:int = 0
-	for i in range(song.notes.size() - 1):
-		if song.notes[i].has("changeBPM") && song.notes[i].changeBPM && song.notes[i].bpm != curBPM:
-			curBPM = song.notes[i].bpm
-			var event= {
-				"stepTime": totalSteps,
-				"songTime": totalPos,
-				"bpm": curBPM,
-				"stepCrotchet": (60 / curBPM) * 1000
-			}
-			bpmChangeMap.append(event)
-		
-		var deltaSteps = round(getSectionBeats(song, i) * 4)
-		totalSteps += deltaSteps
-		totalPos += ((60 / curBPM) * 1000 / 4) * deltaSteps
-		
-	print("new BPM map BUDDY " + str(bpmChangeMap))
+var song_position:float = 0
+var lastSongPos:float = 0
+var offset:float = 0
 
-static func getSectionBeats(song, section:int):
-	if (song.notes[section].has("sectionBeats")):
-		return song.notes[section].sectionBeats
-	return 4
+var current_step:int = 0
+var current_beat:int = 0
+
+signal step_hit(s:int)
+signal beat_hit(b:int)
+
+var bpmChanges:Array = []
+	
+func mapBPMChanges(song):
+	bpmChanges = []
+	var current_bpm:float = song.charts[song.difficulties[0]].bpm
+	var current_step:int = 0
+	for event in song.events:
+		if event.name == "Change BPM" && event.data.bpm != current_bpm:
+			var steps:float = (event.time - event.time) / ((60 / current_bpm) * 1000 / 4)
+			current_step += steps
+			bpmChanges.push_back({"step": current_step, "time": event.time, "bpm": current_bpm})
+
+func _process(delta: float) -> void:
+	var bpmChange = {"step": 0, "time": 0, "bpm": self.bpm}
+	
+	for event in bpmChanges:
+		if  song_position >= event.time:
+			bpmChange = event
+			break
+	if (bpm != bpmChange.bpm):
+		bpm = bpmChange.bpm
+		
+	var oldStep:int = current_step
+	var oldBeat:int = current_beat
+	current_step = floor((bpmChange.step + (song_position - bpmChange.time) / step_crotchet))
+	current_beat = floor(current_step / 4)
+
+	if(oldStep != current_step):
+		step_hit.emit(current_step)
+		if (current_step % 4 == 0 && current_beat != oldBeat):
+			beat_hit.emit(current_beat)

@@ -50,7 +50,7 @@ func _ready() -> void:
 		3:
 			play("red")
 	self.position.y += 3000
-	var susLengthAdjust = sustainLength / Conductor.stepCrotchet
+	var susLengthAdjust = sustainLength / Main.scene.conductor.step_crotchet
 	if(roundf(susLengthAdjust) > 0):
 		var sustainNote = preload("res://scenes/objects/SustainNote.tscn").instantiate()
 		sustainNote.parentNote = self

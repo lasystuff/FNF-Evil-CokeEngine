@@ -8,7 +8,6 @@ var char:FNFCharacter2D = FNFCharacter2D.new(character)
 var controllable:bool = true
 
 func _ready() -> void:
-	Conductor.bpm = 100
 	add_child(char)
 	char.flip_h = !char.flip_h
 	GlobalSound.play_sound("fnf_loss_sfx")
