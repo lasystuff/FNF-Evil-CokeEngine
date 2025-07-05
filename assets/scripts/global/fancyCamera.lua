@@ -1,13 +1,13 @@
 -- make game camera move based off current target player's note
 -- also this is example of scripting!1!!
 function onOpponentNoteHit(note, isSustain)
-	if not isSustain and not PlayScene.chart.notes[game.curSection].mustHitSection then
+	if not isSustain and game.camera_target == "opponent" then
 		moveCamByNote(note.noteData)
 	end
 end
 
 function onGoodNoteHit(note, isSustain)
-	if not isSustain and PlayScene.chart.notes[game.curSection].mustHitSection then
+	if not isSustain and game.camera_target == "player" then
 		moveCamByNote(note.noteData)
 	end
 end

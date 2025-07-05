@@ -284,16 +284,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		Main.instance.get_node("SubSceneLoader").add_child(load("res://scenes/PauseScreen.tscn").instantiate())
 		self.process_mode = Node.PROCESS_MODE_DISABLED
-	
-	if Input.is_action_just_pressed("ui_debug1"):
-		var p = $inst.get_playback_position()
-		$inst.stop()
-		$playerVoices.stop()
-		$opponentVoices.stop()
-		
-		$inst.play(p + 10)
-		$playerVoices.play(p + 10)
-		$opponentVoices.play(p + 10)
+
 	if Input.is_action_just_pressed("ui_debug2"):
 		Main.nextTransIn = "quickIn"
 		if Input.is_key_pressed(KEY_SHIFT):
@@ -367,6 +358,7 @@ func doSingAnimation(char:FNFCharacter2D, data:int, postfix:String = ""):
 	if char.interruptible:
 		char.playAnim(animArray[data] + postfix, true)
 
+var camera_target:String = "player"
 const defaultCameraTrans = Tween.TRANS_EXPO
 const defaultCameraEase = Tween.EASE_OUT
 
@@ -509,6 +501,7 @@ func call_event(name:String, data:Dictionary):
 			if data.has("position"):
 				target_pos = Vector2(data.position[0], data.position[1])
 			elif data.has("target"):
+				camera_target = data.target
 				if data.target == "player":
 					target_pos = player.position + player.cameraPosition + stage.playerCameraOffset
 				else:

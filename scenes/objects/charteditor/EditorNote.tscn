@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://f4wh4ovnb7qk"]
+
+[ext_resource type="SpriteFrames" uid="uid://bjaatvolbqtbq" path="res://assets/images/ui/NOTE_assets.xml" id="1_76sev"]
+[ext_resource type="Script" uid="uid://owth5rdnivxu" path="res://scenes/objects/charteditor/EditorNote.gd" id="2_ysuju"]
+
+[node name="EditorNote" type="AnimatedSprite2D"]
+scale = Vector2(0.4, 0.4)
+sprite_frames = ExtResource("1_76sev")
+animation = &"red"
+script = ExtResource("2_ysuju")
+
+[node name="sustainRect" type="ColorRect" parent="."]
+show_behind_parent = true
+anchors_preset = -1
+anchor_top = -1.1465
+anchor_bottom = -1.1465
+offset_left = -14.0
+offset_top = 60.0
+offset_right = 16.0
+offset_bottom = 260.0
+color = Color(0.976471, 0.223529, 0.247059, 1)
+metadata/_edit_use_anchors_ = true

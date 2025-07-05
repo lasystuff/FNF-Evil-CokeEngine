@@ -8,11 +8,12 @@ func _ready() -> void:
 	conductor.bpm = 102
 	$flash.modulate.a = 1
 	conductor.song_position = 0
+	beat_hit(0) # fucking animation shit
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	conductor.song_position += (delta * 1000.0)
-	
+
 	if controllable:
 		$titleenter.play("Press Enter to Begin")
 	$flash.modulate.a = lerpf($flash.modulate.a, 0, 0.005)
@@ -24,7 +25,7 @@ func _process(delta: float) -> void:
 		$titleenter.play("ENTER PRESSED")
 		$transTimer.start()
 
-func beat_Hit(beat):
+func beat_hit(beat):
 	$logo.stop()
 	$logo.play("logo bumpin")
 	
