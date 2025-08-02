@@ -1,3 +1,0 @@
-# You can sort levels here, like how Psych or CNE do.
-week1
-weekend1
