@@ -40,6 +40,9 @@ var camFollow = Node2D.new()
 var camFollowExt = Node2D.new()
 var camZoom:float = 0.7
 var camZoomAdd:float = 0
+var camZoomMult:float = 1
+
+var camera_bop_rate:int = 4
 
 var onCountdown:bool = false
 var songStarted:bool = false
@@ -112,9 +115,6 @@ func _ready() -> void:
 		for lane in [$hud/opponentStrums, $hud/playerStrums]:
 			lane.downscroll = true
 			lane.position.y += 530
-	if SaveData.data.middlescroll:
-		$hud/opponentStrums.visible = false
-		$hud/playerStrums.position.x = Constant.width/2
 	
 	# pushing notes
 	for opponentNote in chart.opponent.notes:
@@ -138,6 +138,10 @@ func _ready() -> void:
 	add_child(modchart)
 	$hud/playerStrums.postUpdateNote.connect(func(): updateModchart(0))
 	$hud/opponentStrums.postUpdateNote.connect(func(): updateModchart(1))
+	
+	if SaveData.data.middlescroll:
+		modchart.set_percent("opponent", 50)
+		$hud/opponentStrums.visible = false
 
 	# init stages
 	var targetStage = chart.stage
@@ -268,7 +272,7 @@ func _process(delta: float) -> void:
 	# Peak absolutely cinema guys
 	$camera.global_position = camFollow.global_position + camFollowExt.global_position
 	camZoomAdd = lerpf(0, camZoomAdd, exp(-delta * 6.25))
-	$camera.zoom.x = camZoom + camZoomAdd
+	$camera.zoom.x = (camZoom * camZoomMult) + camZoomAdd
 	$camera.zoom.y = $camera.zoom.x
 	$hud.scale.x = 1 + camZoomAdd
 	$hud.scale.y = $hud.scale.x
@@ -304,8 +308,8 @@ func beat_hit(beat):
 	if beat % 2 == 0:
 		player.idle()
 		opponent.idle()
-	if beat % 4 == 0:
-		camZoomAdd = 0.02
+	if beat % camera_bop_rate == 0:
+		camZoomAdd = 0.025
 	$hud/playUI.beatHit(beat)
 	for lua in modules.values(): lua.callLua("onBeatHit", [beat])
 
@@ -500,16 +504,41 @@ func call_event(name:String, data:Dictionary):
 			var target_pos = Vector2.ZERO
 			if data.has("position"):
 				target_pos = Vector2(data.position[0], data.position[1])
-			elif data.has("target"):
+			
+			if data.has("target"):
 				camera_target = data.target
 				if data.target == "player":
-					target_pos = player.position + player.cameraPosition + stage.playerCameraOffset
+					target_pos += player.position + player.cameraPosition + stage.playerCameraOffset
 				else:
-					target_pos = opponent.position + opponent.cameraPosition + stage.opponentCameraOffset
-			# idk how to make em custom cuz they are enum
-			#var trans = defaultCameraTrans
-			#var ease = defaultCameraEase
+					target_pos += opponent.position + opponent.cameraPosition + stage.opponentCameraOffset
+
+			var trans = defaultCameraTrans
+			if data.has("trans"):
+				trans = data.trans
+			var ease = defaultCameraEase
+			if data.has("ease"):
+				ease = data.ease
 			var speed = 1.9
 			if data.has("speed"):
-				speed = data.speed
-			moveCamera(target_pos, speed)
+				speed = conductor.step_crotchet * data.speed / 1000
+			moveCamera(target_pos, speed, trans, ease)
+		"Zoom Camera":
+			var targetZoom = 1;
+			if data.has("value"):
+				targetZoom = data.value
+
+			if data.has("speed"):
+				var trans = defaultCameraTrans
+				if data.has("trans"):
+					trans = data.trans
+				var ease = defaultCameraEase
+				if data.has("ease"):
+					ease = data.ease
+
+				var zoomMultTween = get_tree().create_tween()
+				zoomMultTween.set_trans(trans).set_ease(ease)
+				zoomMultTween.tween_property(self, "camZoomMult", targetZoom, conductor.step_crotchet * data.speed / 1000)
+			else:
+				camZoomMult = targetZoom
+		"Set Camera Bop Rate":
+			camera_bop_rate = int(data.value)

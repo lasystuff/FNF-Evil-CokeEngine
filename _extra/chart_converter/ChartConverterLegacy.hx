@@ -3,18 +3,20 @@ package;
 import sys.FileSystem;
 import sys.io.File;
 
+import ChartCoverterData.*;
+
 using StringTools;
 
-class ChartConverter
+class ChartConverterLegacy
 {
 	public static function main()
 	{
-		trace("Put Charts Folder Path!");
+		trace("Put chart file path!");
 		var chartPath = Sys.stdin().readLine().trim();
 
 		if (!FileSystem.exists(chartPath))
 		{
-			trace('No Chart Exists in ($chartPath) !!');
+			trace('No chart exists in ($chartPath) !!');
 			return;
 		}
 
@@ -29,8 +31,10 @@ class ChartConverter
 
 		if (chart.gfVersion != null)
 			newChart.dj.character = chart.gfVersion;
-		if (chart.gf != null)
+		else if (chart.gf != null)
 			newChart.dj.character = chart.gf;
+		if (chart.stage != null)
+			newChart.stage = ChartCoverterData.getStage(chart.stage);
 
 		for (i in 0...chart.notes.length)
 		{
@@ -91,38 +95,4 @@ class ChartConverter
 
 		File.saveContent(chartPath.replace(".json", "-converted-events.json"), haxe.Json.stringify({events: events}, "\t"));
 	}
-}
-
-@:structInit class EvilChart
-{
-	public var bpm:Float = 100;
-	public var scroll_speed:Float = 1;
-
-	public var player:EvilCharData = {};
-	public var opponent:EvilCharData = {};
-	public var dj:EvilCharData = {character: "gf"};
-	public var stage:String = "Stage";
-}
-
-@:structInit class EvilCharData
-{
-	public var character:String = "bf";
-	public var notes:Array<EvilNote> = [];
-}
-
-@:structInit class EvilNote
-{
-	public var id:Int = 0;
-	public var time:Float = 0;
-	public var length:Float = 0;
-	public var type:String = "";
-}
-
-// funny FPS+ style
-@:structInit class EvilEvent
-{
-	public var name:String = "";
-	public var data:Dynamic = {};
-	public var id:Int = 0;
-	public var time:Float = 0;
 }

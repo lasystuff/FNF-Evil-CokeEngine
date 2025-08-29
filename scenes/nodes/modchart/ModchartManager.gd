@@ -3,11 +3,9 @@ class_name ModchartManager
 
 var modifiers:Dictionary = {
 	"drunk": DrunkModifier.new(),
-	"boost": AccelModifier.new()
+	"boost": AccelModifier.new(),
+	"opponent": OpponentModifier.new()
 }
-
-func _ready() -> void:
-	pass
 	
 func _process(delta: float) -> void:
 	for mod in modifiers.values():

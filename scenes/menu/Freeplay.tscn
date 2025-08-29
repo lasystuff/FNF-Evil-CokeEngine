@@ -6,7 +6,7 @@
 
 [node name="Freeplay" type="Node2D"]
 script = ExtResource("1_cwntj")
-song_list = Array[String](["bopeebo-erect", "lit-up-bf"])
+song_list = Array[String](["bopeebo-erect", "lit-up-bf", "stress-pico"])
 metadata/_custom_type_script = "uid://r60w6aww8gaq"
 
 [node name="MenuBgBlue" type="Sprite2D" parent="."]

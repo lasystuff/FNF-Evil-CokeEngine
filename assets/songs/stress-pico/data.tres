@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FNFSong" load_steps=5 format=3 uid="uid://4tcvecfeyywb"]
+
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="1_bfgvg"]
+[ext_resource type="AudioStream" uid="uid://cmsermqa6qpna" path="res://assets/songs/stress-pico/Inst.ogg" id="1_p0657"]
+[ext_resource type="AudioStream" uid="uid://235vh8l6wlyq" path="res://assets/songs/stress-pico/Voices-tankman.ogg" id="2_hwd72"]
+[ext_resource type="AudioStream" uid="uid://xjrvvoaamjn8" path="res://assets/songs/stress-pico/Voices-pico.ogg" id="3_4sub5"]
+
+[resource]
+script = ExtResource("1_bfgvg")
+name = "stress-pico"
+display_name = "Stress (Pico Mix)"
+artist = ""
+charter = ""
+difficulties = Array[String](["easy", "normal", "hard"])
+instrumental = ExtResource("1_p0657")
+player_vocals = ExtResource("3_4sub5")
+opponent_vocals = ExtResource("2_hwd72")
+extra_description = ""
+metadata/_custom_type_script = "uid://2aeub7duhd1j"

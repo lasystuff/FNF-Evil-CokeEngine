@@ -23,7 +23,10 @@ var current_item:int = 0:
 		if difficulties.has(beforeDifficulties[current_difficulty]):
 			current_difficulty = difficulties.find(beforeDifficulties[current_difficulty])
 		else:
-			current_difficulty = 1 # normal
+			if difficulties.has("normal"):
+				current_difficulty = 1 # normal
+			else:
+				current_difficulty = 0
 var song_list_final:Array = []
 var controllable:bool = true
 

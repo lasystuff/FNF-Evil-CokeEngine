@@ -28,4 +28,4 @@ func note_process(note:Note, player:int):
 	
 	var time = PlayScene.instance.conductor.song_position/1000
 	
-	note.position.x = note.position.x + (drunkPerc*(cos((time + note.noteData*.2 + note.position.y*10/Constant.height)*drunkSpeed) * 112*0.5))
+	note.position.x += (drunkPerc*(cos((time + note.noteData*.2 + note.position.y*10/Constant.height)*drunkSpeed) * 112*0.5))
