@@ -31,8 +31,9 @@ func mapBPMChanges(song):
 	var current_bpm:float = song.charts[song.difficulties[0]].bpm
 	var current_step:int = 0
 	for event in song.events:
-		if event.name == "Change BPM" && event.data.bpm != current_bpm:
+		if event.name == "Change BPM" && event.data.value != current_bpm:
 			var steps:float = (event.time - event.time) / ((60 / current_bpm) * 1000 / 4)
+			current_bpm = event.data.value
 			current_step += steps
 			bpmChanges.push_back({"step": current_step, "time": event.time, "bpm": current_bpm})
 

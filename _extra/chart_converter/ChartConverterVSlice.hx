@@ -93,7 +93,7 @@ class ChartConverterVSlice
 					if (tempPos != [0, 0])
 						temp.data.position = tempPos;
 
-					if (event.v.ease != null && event.v.ease != "CLASSIC")
+					if (event.v.ease != null && event.v.ease != "CLASSIC" && event.v.ease != "INSTANT")
 					{
 						if (event.v.duration != null)
 							temp.data.speed = event.v.duration;
@@ -102,6 +102,9 @@ class ChartConverterVSlice
 						temp.data.trans = thing[0];
 						temp.data.ease = thing[1];
 					}
+
+					if (event.v.ease == "INSTANT")
+						temp.data.speed = 0.000001;
 
 					if (event.v.char != null)
 					{
@@ -117,20 +120,57 @@ class ChartConverterVSlice
 
 					events.push(temp);
 				case "ZoomCamera":
-					var thing = ChartCoverterData.convertEase(event.v.ease);
-					var trans = thing[0];
-					var ease = thing[1];
-					events.push({id: 0, time: event.t, name: "Zoom Camera", data: {speed: event.v.duration, value: event.v.zoom, trans: trans, ease: ease}});
+					var e:ChartCoverterData.EvilEvent = {id: 0, time: event.t, name: "Zoom Camera", data: {value: event.v.zoom}};
+
+					if (event.v.ease != "INSTANT")
+					{
+						var thing = ChartCoverterData.convertEase(event.v.ease);
+						e.data.trans = thing[0];
+						e.data.ease = thing[1];
+
+						e.data.speed = event.v.duration;
+					}
+
+					events.push(e);
 				case "SetCameraBop":
 					// ignore intensity cuz im lazy
 					events.push({id: 0, time: event.t, name: "Set Camera Bop Rate", data: {value: event.v.rate}});
+				case "ScrollSpeed":
+					var e:ChartCoverterData.EvilEvent = {id: 0, time: event.t, name: "Change Scroll Speed", data: {value: event.v.scroll}};
+
+					if (event.v.ease != "INSTANT")
+					{
+						e.data.speed = event.v.duration;
+
+						var thing = ChartCoverterData.convertEase(event.v.ease);
+						e.data.trans = thing[0];
+						e.data.ease = thing[1];
+					}
+					events.push(e);
 				default:
+			}
+		}
+
+		// bpm changes
+		var curBPM:Float = meta.timeChanges[0].bpm;
+		if (meta.timeChanges.length > 1)
+		{
+			var changes:Array<VSliceTimeChange> = meta.timeChanges;
+			for (change in changes)
+			{
+				if (change.bpm != curBPM)
+				{
+					events.push({id: 0, time: change.t, name: "Change BPM", data: {value: change.bpm}});
+					curBPM = change.bpm;
+				}
 			}
 		}
 
 		File.saveContent('$folder/converted/events.json', haxe.Json.stringify({events: events}, "\t"));
 	}
 }
+
+
 
 typedef VSliceNote = {
 	var t:Float;
@@ -143,4 +183,10 @@ typedef VSliceEvent = {
 	var t:Float;
 	var e:String;
 	var v:Dynamic;
+}
+
+// wip!!!!! theres no time signature support on coke engine yet
+typedef VSliceTimeChange = {
+	var t:Float;
+	var bpm:Float;
 }

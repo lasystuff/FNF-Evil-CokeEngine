@@ -35,6 +35,7 @@ var stage = null
 var dj = null
 var player = null
 var opponent = null
+var extra_characters:Dictionary = {}
 
 var camFollow = Node2D.new()
 var camFollowExt = Node2D.new()
@@ -74,6 +75,8 @@ var combo:int = -1:
 var maxCombo:int = 0
 var comboBreaks:int = 0
 
+var scroll_speed_mult:float = 1
+
 var modchart:ModchartManager
 var modules:Dictionary = {}
 
@@ -98,8 +101,6 @@ func _ready() -> void:
 	DiscordData.set_rpc("Playing " + song.display_name + " (" + difficulty + ")")
 	
 	$hud/playUI.game = instance
-	$hud/opponentStrums.scrollSpeed = chart.scroll_speed
-	$hud/playerStrums.scrollSpeed = chart.scroll_speed
 	
 	$hud/opponentStrums.botplay = true
 	$hud/playerStrums.botplay = true
@@ -300,6 +301,9 @@ func _process(delta: float) -> void:
 		Main.switch_scene(preload("res://scenes/menu/debug/CharacterDebug.tscn"))
 	if Input.is_action_just_pressed("kill"):
 		self.health = 0
+		
+	$hud/opponentStrums.scrollSpeed = chart.scroll_speed * scroll_speed_mult
+	$hud/playerStrums.scrollSpeed = chart.scroll_speed * scroll_speed_mult
 		
 	for lua in modules.values(): lua.callLua("onProcess", [delta])
 
@@ -542,3 +546,28 @@ func call_event(name:String, data:Dictionary):
 				camZoomMult = targetZoom
 		"Set Camera Bop Rate":
 			camera_bop_rate = int(data.value)
+		"Change Scroll Speed":
+			if data.has("speed"):
+				var scrollTween = get_tree().create_tween()
+				
+				if data.has("trans"):
+					scrollTween.set_trans(data.trans)
+				if data.has("ease"):
+					scrollTween.set_ease(data.ease)
+
+				scrollTween.tween_property(self, "scroll_speed_mult", data.value, conductor.step_crotchet * data.speed / 1000)
+			else:
+				scroll_speed_mult = data.value
+		"Play Animation":
+			var target
+			match(data.target.to_lower()):
+				"player":
+					target = player
+				"opponent":
+					target = opponent
+				"dj":
+					target = dj
+				_:
+					target = extra_characters.get(data.target, opponent)
+			
+			target.playAnim(data.animation, data.has("force") && data.force)

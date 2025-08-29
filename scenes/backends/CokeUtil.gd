@@ -57,3 +57,12 @@ func set_mouse_visibility(b:bool):
 
 func _process(delta: float) -> void:
 	Input.set_mouse_mode(mouse_mode)
+	
+	
+func parse_animate_timeline(data:Dictionary):
+	var result:Dictionary = {} # [anim => [start frame, end frame]]
+	for labels in data.AN.TL.L:
+		for label in labels.FR:
+			if label.has("N") && label.E.size() < 1:
+				result.set(label.N, [int(label.I), int(label.I + (label.DU - 1))])
+	return result

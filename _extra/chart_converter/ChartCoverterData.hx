@@ -38,7 +38,14 @@ class ChartCoverterData
 			trans = haxeEase.split("InOut")[0];
 		}
 
+		if (trans.endsWith("smoother"))
+			trans = trans.split("smoother")[0].toLowerCase();
+		else if (trans.endsWith("smooth"))
+			trans = trans.split("smooth")[0].toLowerCase();
+
 		result[0] = transes.indexOf(trans);
+		if (result[0] < 0)
+			result[0] = 0;
 
 		return result;
 	}

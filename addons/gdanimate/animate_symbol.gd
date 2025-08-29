@@ -20,6 +20,7 @@ class_name AnimateSymbol extends Node2D
 @export var frame: int = 0:
 	set(v):
 		frame = v
+		frame_changed.emit()
 		queue_redraw()
 
 ## The current symbol used by the animation. Empty uses the timeline symbol.
@@ -56,6 +57,7 @@ var _canvas_items: Array[RID] = []
 var _filters: Array[Filter] = []
 
 signal finished
+signal frame_changed
 signal symbol_changed(symbol: String)
 
 

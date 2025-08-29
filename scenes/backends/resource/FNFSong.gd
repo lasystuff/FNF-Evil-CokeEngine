@@ -24,7 +24,7 @@ const default_chart:Dictionary = {
 @export var artist:String = ""
 @export var charter:String = ""
 
-@export var difficulties:Array[String] = []
+@export var difficulties:Array[String] = ["easy", "normal", "hard"]
 
 @export_category("Audio")
 @export var instrumental:AudioStream
@@ -44,7 +44,7 @@ var charts:Dictionary:
 				charts[diff] = d
 		
 		return charts
-		
+
 var events:Array:
 	get():
 		var eventPath = Paths.getPath("songs/" + self.name + "/events.json")
