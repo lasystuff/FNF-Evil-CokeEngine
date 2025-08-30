@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp1bgn0xu7kxy"]
+[gd_scene load_steps=6 format=3 uid="uid://cp1bgn0xu7kxy"]
 
 [ext_resource type="Script" uid="uid://83aknecyfmd8" path="res://scenes/menu/Freeplay.gd" id="1_cwntj"]
 [ext_resource type="Texture2D" uid="uid://b88ldyshvvbmg" path="res://assets/images/menu/menuBGBlue.png" id="2_3qrqt"]
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="2_dttct"]
 [ext_resource type="FontFile" uid="uid://cx7jfqkafu86f" path="res://assets/fonts/vcr.ttf" id="3_cwntj"]
+[ext_resource type="Resource" uid="uid://4tcvecfeyywb" path="res://assets/songs/stress-pico/data.tres" id="4_7csad"]
 
 [node name="Freeplay" type="Node2D"]
 script = ExtResource("1_cwntj")
-song_list = Array[String](["bopeebo-erect", "lit-up-bf", "stress-pico"])
+song_list = Array[ExtResource("2_dttct")]([ExtResource("4_7csad")])
 metadata/_custom_type_script = "uid://r60w6aww8gaq"
 
 [node name="MenuBgBlue" type="Sprite2D" parent="."]

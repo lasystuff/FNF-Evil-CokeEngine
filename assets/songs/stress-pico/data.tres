@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_bfgvg")
-name = "stress-pico"
+id = "stress-pico"
 display_name = "Stress (Pico Mix)"
 artist = ""
 charter = ""

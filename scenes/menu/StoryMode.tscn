@@ -76,6 +76,21 @@ theme_override_font_sizes/font_size = 34
 text = "LEVEL SCORE:0"
 vertical_alignment = 1
 
+[node name="songsLabel" type="Label" parent="."]
+offset_left = 128.0
+offset_top = 496.0
+offset_right = 297.0
+offset_bottom = 653.0
+theme_override_colors/font_color = Color(0.898039, 0.341176, 0.466667, 1)
+theme_override_fonts/font = ExtResource("2_sg78s")
+theme_override_font_sizes/font_size = 32
+text = "TRACKS:
+
+Bopeebo
+Fresh
+Dadbattle"
+horizontal_alignment = 1
+
 [node name="titleLabel" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.701961)
 offset_left = 512.0

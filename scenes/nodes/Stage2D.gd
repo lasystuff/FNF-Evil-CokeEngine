@@ -10,7 +10,20 @@ class_name FNFStage2D
 
 var judgeSpawner:Node2D
 
-func _ready() -> void:
+func _init() -> void:
+	PlayScene.instance.conductor.step_hit.connect(step_hit)
+	PlayScene.instance.conductor.beat_hit.connect(beat_hit)
+
+func init_characters():
 	$djPos.visible = false
 	$playerPos.visible = false
 	$opponentPos.visible = false
+	
+	PlayScene.instance.dj.position += $djPos.global_position
+	PlayScene.instance.player.position += $playerPos.global_position
+	PlayScene.instance.opponent.position += $opponentPos.global_position
+
+# some callbacks
+func step_hit(beat):pass
+func beat_hit(beat):pass
+func event_called(event, data):pass

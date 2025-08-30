@@ -162,7 +162,7 @@ func _ready() -> void:
 		
 		luaScript.do()
 		modules["_stage_"] = luaScript
-		luaScript.callLua("onReady")
+		luaScript.callLua("build")
 	else:
 		stage = load("res://scenes/stages/" + targetStage + ".tscn").instantiate()
 	add_child(stage)
@@ -182,9 +182,7 @@ func _ready() -> void:
 	# stage var shit
 	camZoom = stage.zoom
 	
-	dj.position += stage.get_node("djPos").global_position
-	player.position += stage.get_node("playerPos").global_position
-	opponent.position += stage.get_node("opponentPos").global_position
+	stage.init_characters()
 	
 	for file in listGlobalScript():
 		var luaScript = LuaModule.new("global/" + file)
@@ -471,12 +469,12 @@ func _on_inst_finished() -> void:
 		match play_mode:
 			PlayMode.FREEPLAY:
 				var replace:bool = true
-				if SaveData.data._score.has(song.name + "-" + difficulty):
-					var ogData = SaveData.data._score[song.name + "-" + difficulty]
+				if SaveData.data._score.has(song.id + "-" + difficulty):
+					var ogData = SaveData.data._score[song.id + "-" + difficulty]
 					if ogData.score < static_stat.score:
 						replace = false
 				if replace:
-					SaveData.data._score[song.name + "-" + difficulty] = static_stat
+					SaveData.data._score[song.id + "-" + difficulty] = static_stat
 				Main.switch_scene(load("res://scenes/menu/Freeplay.tscn"))
 			PlayMode.STORY:
 				SaveData.data._score["story_" + level] = static_stat

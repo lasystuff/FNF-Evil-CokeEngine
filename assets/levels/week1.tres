@@ -1,20 +1,19 @@
-[gd_resource type="Resource" script_class="FNFLevel" load_steps=8 format=3 uid="uid://b1n5njm28tsrj"]
+[gd_resource type="Resource" script_class="FNFLevel" load_steps=7 format=3 uid="uid://b1n5njm28tsrj"]
 
 [ext_resource type="Script" uid="uid://dit0xflq4q0gy" path="res://scenes/backends/resource/FNFLevel.gd" id="1_aapu1"]
 [ext_resource type="SpriteFrames" uid="uid://c87cfoicfkckq" path="res://assets/images/menu/storymode/props/gf.xml" id="1_v4jj7"]
 [ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="2_4i86q"]
 [ext_resource type="SpriteFrames" uid="uid://bh1x8oya6rovn" path="res://assets/images/menu/storymode/props/dad.xml" id="2_phqyd"]
 [ext_resource type="SpriteFrames" uid="uid://b3fl3mp1sfc6n" path="res://assets/images/menu/storymode/props/bf.xml" id="3_c0d6f"]
-[ext_resource type="Resource" uid="uid://dlkqdob5yfiyi" path="res://assets/songs/bopeebo-erect/data.tres" id="3_kqoq2"]
 [ext_resource type="Texture2D" uid="uid://cnxvh2kx0kt1i" path="res://assets/images/menu/storymode/title/week1.png" id="4_1nfpa"]
 
 [resource]
 script = ExtResource("1_aapu1")
 title = "Daddy Dearest"
 texture = ExtResource("4_1nfpa")
-opponentProp = ExtResource("2_phqyd")
-playerProp = ExtResource("3_c0d6f")
-djProp = ExtResource("1_v4jj7")
-songs = Array[ExtResource("2_4i86q")]([ExtResource("3_kqoq2")])
+opponent_prop = ExtResource("2_phqyd")
+player_prop = ExtResource("3_c0d6f")
+dj_prop = ExtResource("1_v4jj7")
+songs = Array[ExtResource("2_4i86q")]([])
 difficulties = Array[String](["easy", "normal", "hard"])
 metadata/_custom_type_script = "uid://dit0xflq4q0gy"

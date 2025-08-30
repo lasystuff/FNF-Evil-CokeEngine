@@ -1,6 +1,6 @@
 extends FNFScene2D
 
-@export var song_list:Array[String] = []
+@export var song_list:Array[FNFSong] = []
 
 @onready var itemsY = $items.global_position.y
 
@@ -14,12 +14,11 @@ var current_item:int = 0:
 	set(value):
 		
 		GlobalSound.play_sound("menu/scroll")
-		current_item = wrap(value, 0, song_list_final.size())
+		current_item = wrap(value, 0, song_list.size())
 		GlobalSound.play_music_raw(preview_musics[current_item])
 
-		var data = load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))
 		var beforeDifficulties = difficulties
-		difficulties = data.difficulties
+		difficulties = song_list[current_item].difficulties
 		if difficulties.has(beforeDifficulties[current_difficulty]):
 			current_difficulty = difficulties.find(beforeDifficulties[current_difficulty])
 		else:
@@ -27,7 +26,6 @@ var current_item:int = 0:
 				current_difficulty = 1 # normal
 			else:
 				current_difficulty = 0
-var song_list_final:Array = []
 var controllable:bool = true
 
 var difficulties:Array = []
@@ -45,19 +43,16 @@ func _ready() -> void:
 	DiscordData.set_rpc("In Freeplay Menu")
 
 	for i in song_list.size():
-		if Paths.exists("songs/" + song_list[i] + "/data.tres"):
-			var lab = SparrowLabel.new()
-			lab.font_size = 1.08
-			lab.frames = preload("res://assets/images/ui/fonts/bold.xml")
-			lab.text = song_list[i].to_upper()
-			$items.add_child(lab)
-			lab.position.y = 130*i
-			
-			song_list_final.push_back(song_list[i])
-			var data = load(Paths.getPath("songs/" + song_list[i] + "/data.tres"))
-			preview_musics.push_back(data.instrumental)
+		var lab = SparrowLabel.new()
+		lab.font_size = 1.08
+		lab.frames = preload("res://assets/images/ui/fonts/bold.xml")
+		lab.text = song_list[i].display_name.to_upper()
+		$items.add_child(lab)
+		lab.position.y = 130*i
 
-	difficulties = load(Paths.getPath("songs/" + song_list_final[0] + "/data.tres")).difficulties
+		preview_musics.push_back(song_list[i].instrumental)
+
+	difficulties = song_list[0].difficulties
 	current_item = current_item_save
 			
 func _process(delta: float) -> void:
@@ -78,7 +73,7 @@ func _process(delta: float) -> void:
 		controllable = false
 		
 		# ok starting song lol
-		PlayScene.playlist = [load(Paths.getPath("songs/" + song_list_final[current_item] + "/data.tres"))]
+		PlayScene.playlist = [song_list[current_item]]
 		PlayScene.difficulty = difficulties[current_difficulty]
 		PlayScene.play_mode = PlayScene.PlayMode.FREEPLAY
 		Main.switch_scene(load("res://scenes/PlayScene.tscn"))
@@ -89,14 +84,14 @@ func _process(delta: float) -> void:
 		
 	$items.global_position.y = lerpf($items.global_position.y, itemsY - $items.get_children()[current_item].position.y, 0.02)
 	
-	for i in song_list_final.size():
+	for i in song_list.size():
 		if i == current_item:
 			$items.get_children()[i].modulate.a = 1
 		else:
 			$items.get_children()[i].modulate.a = 0.5
 
-	if SaveData.data["_score"].has(song_list_final[current_item] + "-" + difficulties[current_difficulty]):
-		var savedScore = SaveData.data._score[song_list_final[current_item] + "-" + difficulties[current_difficulty]]
+	if SaveData.data["_score"].has(song_list[current_item].id + "-" + difficulties[current_difficulty]):
+		var savedScore = SaveData.data._score[song_list[current_item].id + "-" + difficulties[current_difficulty]]
 		targetScore = savedScore.score
 		targetAccuracy = savedScore.accuracy
 	else:

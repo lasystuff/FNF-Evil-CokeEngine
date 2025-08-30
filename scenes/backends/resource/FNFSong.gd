@@ -12,7 +12,7 @@ const default_chart:Dictionary = {
 	"stage": "Stage"
 }
 
-@export var name:String
+@export var id:String
 
 @export_category("Metadata")
 @export var display_name:String:
@@ -38,7 +38,7 @@ var charts:Dictionary:
 		if charts.size() <= 0:
 			for diff in difficulties:
 				var d:Dictionary = default_chart
-				var chartPath = Paths.getPath("songs/" + self.name + "/chart/" + diff + ".json")
+				var chartPath = Paths.getPath("songs/" + self.id + "/chart/" + diff + ".json")
 				if FileAccess.file_exists(chartPath):
 					d = JSON.parse_string(FileAccess.get_file_as_string(chartPath))
 				charts[diff] = d
@@ -47,7 +47,7 @@ var charts:Dictionary:
 
 var events:Array:
 	get():
-		var eventPath = Paths.getPath("songs/" + self.name + "/events.json")
+		var eventPath = Paths.getPath("songs/" + self.id + "/events.json")
 		if FileAccess.file_exists(eventPath):
 			var d = JSON.parse_string(FileAccess.get_file_as_string(eventPath))
 			return d.events

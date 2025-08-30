@@ -24,7 +24,7 @@ position = Vector2(58, 76)
 position = Vector2(960, 96)
 
 [node name="opponentStrums" parent="hud" instance=ExtResource("3_ityjc")]
-position = Vector2(312, 96)
+position = Vector2(320, 96)
 
 [node name="judgeSpawner" type="Node2D" parent="hud"]
 position = Vector2(768, 488)
