@@ -40,7 +40,7 @@ func _ready() -> void:
 func _draw():
 	if Engine.is_editor_hint():
 		if self.texture != null:
-			draw_texture(texture, Vector2(self.global_position.x - (texture.get_width() / 2), self.global_position.x - (texture.get_height() / 2)))
+			draw_texture(texture, Vector2(self.position.x + (texture.get_width() / 2), self.position.y - (texture.get_height() / 2)))
 
 const blends = {
 	"mix": 0,

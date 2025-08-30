@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FNFSong" load_steps=5 format=3 uid="uid://ccawd1m1vdm0e"]
+
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="1_e71nh"]
+[ext_resource type="AudioStream" uid="uid://cxim88rkj6vsh" path="res://assets/songs/reoccurance/Inst.ogg" id="1_ugj8m"]
+[ext_resource type="AudioStream" uid="uid://c8v43igpn5ub1" path="res://assets/songs/reoccurance/Voices-nonsense.ogg" id="2_r1ukx"]
+[ext_resource type="AudioStream" uid="uid://dxisc4s1luawg" path="res://assets/songs/reoccurance/Voices-bf.ogg" id="3_1ets0"]
+
+[resource]
+script = ExtResource("1_e71nh")
+id = "reoccurance"
+display_name = "Reoccurance"
+artist = ""
+charter = ""
+difficulties = Array[String](["easy", "normal", "hard"])
+instrumental = ExtResource("1_ugj8m")
+player_vocals = ExtResource("3_1ets0")
+opponent_vocals = ExtResource("2_r1ukx")
+extra_description = ""
+metadata/_custom_type_script = "uid://2aeub7duhd1j"

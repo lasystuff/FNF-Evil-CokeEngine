@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="FNFLevel" load_steps=8 format=3 uid="uid://dskm5f0bupcys"]
+
+[ext_resource type="SpriteFrames" uid="uid://c87cfoicfkckq" path="res://assets/images/menu/storymode/props/gf.xml" id="1_4c5n6"]
+[ext_resource type="SpriteFrames" uid="uid://bh1x8oya6rovn" path="res://assets/images/menu/storymode/props/dad.xml" id="2_y3eby"]
+[ext_resource type="SpriteFrames" uid="uid://b3fl3mp1sfc6n" path="res://assets/images/menu/storymode/props/bf.xml" id="3_8qaca"]
+[ext_resource type="Script" uid="uid://dit0xflq4q0gy" path="res://scenes/backends/resource/FNFLevel.gd" id="4_n6drk"]
+[ext_resource type="Script" uid="uid://2aeub7duhd1j" path="res://scenes/backends/resource/FNFSong.gd" id="5_kig6t"]
+[ext_resource type="Resource" uid="uid://ccawd1m1vdm0e" path="res://assets/songs/reoccurance/data.tres" id="6_8qaca"]
+[ext_resource type="Texture2D" uid="uid://b5mqsh3kk647h" path="res://assets/images/menu/storymode/title/weeknh.png" id="7_n6drk"]
+
+[resource]
+script = ExtResource("4_n6drk")
+title = "Your own week"
+texture = ExtResource("7_n6drk")
+opponent_prop = ExtResource("2_y3eby")
+player_prop = ExtResource("3_8qaca")
+dj_prop = ExtResource("1_4c5n6")
+songs = Array[ExtResource("5_kig6t")]([ExtResource("6_8qaca")])
+difficulties = Array[String](["easy", "normal", "hard"])
+metadata/_custom_type_script = "uid://dit0xflq4q0gy"

@@ -1,0 +1,207 @@
+{
+	"events": [
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 0,
+			"data": {
+				"position": [
+					0,
+					0
+				],
+				"target": "opponent"
+			}
+		},
+		{
+			"name": "Change Scroll Speed",
+			"id": 0,
+			"time": 34.8837209302326,
+			"data": {
+				"value": 0.2
+			}
+		},
+		{
+			"name": "Change Scroll Speed",
+			"id": 0,
+			"time": 69.7674418604651,
+			"data": {
+				"value": 5
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 1081.39534883721,
+			"data": {
+				"ease": 1,
+				"trans": 5,
+				"value": 1.1,
+				"speed": 24
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 1639.53488372093,
+			"data": {
+				"position": [
+					200,
+					0
+				],
+				"target": "player"
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 3593.02325581395,
+			"data": {
+				"position": [
+					0,
+					0
+				],
+				"target": "opponent"
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 10011.6279069767,
+			"data": {
+				"ease": 1,
+				"trans": 5,
+				"value": 1.2,
+				"speed": 24
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 14476.7441860465,
+			"data": {
+				"ease": 1,
+				"trans": 5,
+				"value": 1.3,
+				"speed": 24
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 18383.7209302326,
+			"data": {
+				"ease": 1,
+				"trans": 5,
+				"value": 1,
+				"speed": 8
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 18802.3255813953,
+			"data": {
+				"ease": 0,
+				"trans": 5,
+				"value": 1.1,
+				"speed": 2
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 18941.8604651163,
+			"data": {
+				"ease": 0,
+				"trans": 0,
+				"value": 1.5,
+				"speed": 130
+			}
+		},
+		{
+			"name": "Change Scroll Speed",
+			"id": 0,
+			"time": 18976.7441860465,
+			"data": {
+				"value": 10
+			}
+		},
+		{
+			"name": "Change Scroll Speed",
+			"id": 0,
+			"time": 19011.6279069767,
+			"data": {
+				"ease": 0,
+				"trans": 0,
+				"value": 13,
+				"speed": 130
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 20058.1395348837,
+			"data": {
+				"position": [
+					150,
+					0
+				],
+				"target": "player"
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 21488.3720930233,
+			"data": {
+				"position": [
+					0,
+					0
+				],
+				"target": "opponent"
+			}
+		},
+		{
+			"name": "Set Camera Bop Rate",
+			"id": 0,
+			"time": 27767.4418604651,
+			"data": {
+				"value": 4
+			}
+		},
+		{
+			"name": "Zoom Camera",
+			"id": 0,
+			"time": 27837.2093023256,
+			"data": {
+				"value": 1
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 27872.0930232558,
+			"data": {
+				"position": [
+					0,
+					0
+				],
+				"target": "player",
+				"speed": 1e-06
+			}
+		},
+		{
+			"name": "Move Camera",
+			"id": 0,
+			"time": 28988.3720930233,
+			"data": {
+				"position": [
+					0,
+					0
+				],
+				"target": "opponent",
+				"speed": 1e-06
+			}
+		}
+	]
+}

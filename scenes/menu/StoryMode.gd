@@ -132,8 +132,8 @@ func _process(delta: float) -> void:
 		$scoreLabel.text = "LEVEL SCORE: 0"
 		
 	$songsLabel.text = "TRACKS\n\n"
-	for song in level_list[current_level].songs:
-		$songsLabel.text += song.display_name
+	for song in level_list[current_level].display_songs:
+		$songsLabel.text += song
 	
 	if !$leftArrow.is_playing():
 		$leftArrow.play("leftIdle")
